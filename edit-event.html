@@ -6,7 +6,8 @@
 
     <title data-fr="Modifier un Événement - MonRdvFacile" data-en="Edit Event - MyEasyMeeting">Modifier un Événement - MonRdvFacile</title>
     <meta name="description" content="Page de modification d'événements pour MonRdvFacile. Mettez à jour les détails de votre événement.">
-    <meta name="robots" content="noindex, nofollow"> <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2JVSXZXNN"></script>
+    <meta name="robots" content="noindex, nofollow">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2JVSXZXNN"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -14,10 +15,10 @@
       gtag('config', 'G-K2JVSXZXNN');
     </script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        /* --- Global Resets & Base Styles (from style.css) --- */
+        /* --- Inline CSS for edit-event.html (Combined from style.css & form-style.css) --- */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
         body {
@@ -26,27 +27,36 @@
             display: flex; flex-direction: column; min-height: 100vh;
             -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
         }
-
-        /* --- Typography (from style.css) --- */
         h1, h2, h3, h4, h5, h6 { font-weight: 600; color: #003366; margin-bottom: 0.75rem; line-height: 1.3; }
         h1 { font-size: 2.25rem; margin-top: 1rem; }
         h2 { font-size: 1.75rem; }
         p { margin-bottom: 1rem; }
         a { color: #005A9C; text-decoration: none; transition: color 0.2s ease-in-out; }
         a:hover, a:focus { color: #003366; text-decoration: underline; }
-
-        /* --- Layout & Container (from style.css) --- */
         .container { width: 90%; max-width: 1200px; margin-left: auto; margin-right: auto; padding: 20px 15px; }
         main.container { flex-grow: 1; }
         .main-title { text-align: center; margin-bottom: 1.5rem; color: #004170; }
 
-        /* --- Language Toggle (from style.css) --- */
         .lang-toggle { text-align: right; margin-bottom: 1rem; font-size: 0.9rem; }
         .lang-link { color: #555555; text-decoration: none; padding: 0.2rem 0.4rem; border-radius: 3px; }
         .lang-link.active { font-weight: bold; color: #005A9C; background-color: #e9ecef; }
         .lang-link:hover { background-color: #dee2e6; text-decoration: none; }
 
-        /* --- Form Styles (from form-style.css, adapted for inline) --- */
+        #app-header { background-color: #005A9C; color: #FFFFFF; padding: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .header-container { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; padding-bottom: 1rem; max-width: 1200px; margin: 0 auto; width: 90%;}
+        .logo a { font-size: 1.5rem; font-weight: bold; color: #FFFFFF; text-decoration: none; }
+        .main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
+        .main-nav li { margin-left: 20px; }
+        .main-nav a { color: #FFFFFF; text-decoration: none; font-size: 1rem; padding: 5px 10px; border-radius: 4px; transition: background-color 0.2s ease; }
+        .main-nav a:hover, .main-nav a.active { background-color: #004170; }
+        .main-nav .nav-text { margin-left: 5px; }
+        .mobile-nav-toggle { display: none; border: none; background: none; color: #FFFFFF; font-size: 1.5rem; cursor: pointer; }
+
+        #app-footer { background-color: #333333; color: #E0E0E0; padding: 2rem 0; text-align: center; font-size: 0.9rem; margin-top: auto; }
+        #app-footer a { color: #B0C4DE; }
+        #app-footer a:hover { color: #FFFFFF; text-decoration: underline; }
+        .footer-container { max-width: 1200px; margin: 0 auto; width: 90%; }
+
         .form-container { background-color: #FFFFFF; padding: 25px 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); margin-top: 20px; margin-bottom: 30px; }
         fieldset { border: 1px solid #CED4DA; padding: 20px; margin-bottom: 25px; border-radius: 6px; }
         legend { font-size: 1.25rem; font-weight: 600; color: #004170; padding: 0 10px; margin-left: 5px; }
@@ -54,8 +64,7 @@
         .form-group-inline { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 1.25rem; }
         .form-group-inline .form-group { flex: 1; min-width: 200px; margin-bottom: 0; }
         label { display: block; font-weight: 500; color: #343A40; margin-bottom: 0.5rem; font-size: 1rem; }
-        input[type="text"], input[type="email"], input[type="tel"], input[type="password"],
-        input[type="date"], input[type="time"], input[type="number"], textarea, select {
+        input[type="text"], input[type="password"], input[type="date"], input[type="time"], input[type="number"], textarea, select {
             width: 100%; padding: 0.75rem 1rem; font-size: 1rem; line-height: 1.5; color: #495057;
             background-color: #FFFFFF; border: 1px solid #CED4DA; border-radius: 5px;
             box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
@@ -69,8 +78,8 @@
             background-repeat: no-repeat; background-position: right 1rem center; background-size: 0.8em; padding-right: 2.5rem;
         }
         select::-ms-expand { display: none; }
-        input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="password"]:focus,
-        input[type="date"]:focus, input[type="time"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+        input[type="text"]:focus, input[type="password"]:focus, input[type="date"]:focus,
+        input[type="time"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
             border-color: #005A9C; outline: 0; box-shadow: 0 0 0 0.2rem rgba(0, 90, 156, 0.25);
         }
         ::placeholder { color: #6C757D; opacity: 1; }
@@ -79,17 +88,11 @@
         .form-group-checkbox label { margin-bottom: 0; font-weight: normal; }
         small, .form-text { display: block; margin-top: 0.35rem; font-size: 0.875rem; color: #6C757D; }
         .form-actions { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #E9ECEF; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: flex-end; }
-        .form-actions .btn { padding: 0.75rem 1.5rem; font-size: 1rem; }
-        .form-actions .btn i { margin-right: 0.5rem; }
-        #menuNameInputsContainer .form-group { padding-left: 15px; border-left: 3px solid #E9ECEF; }
-        #menuNameInputsContainer .form-group:last-child { margin-bottom: 0; }
-
-        /* Button Styles (from style.css, adapted) */
         .btn {
             display: inline-block; font-weight: 500; color: #FFFFFF; text-align: center; vertical-align: middle;
             cursor: pointer; user-select: none; background-color: #007BFF; border: 1px solid transparent;
             padding: 0.5rem 1rem; font-size: 1rem; line-height: 1.5; border-radius: 0.3rem;
-            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            transition: all 0.15s ease-in-out;
         }
         .btn:hover { background-color: #0056b3; text-decoration: none; color: #FFFFFF; }
         .btn-primary { background-color: #005A9C; border-color: #005A9C; }
@@ -98,14 +101,19 @@
         .btn-secondary:hover { background-color: #5A6268; border-color: #545B62; }
         .btn-danger { background-color: #DC3545; border-color: #DC3545; }
         .btn-danger:hover { background-color: #C82333; border-color: #BD2130; }
+        .form-actions .btn i { margin-right: 0.5rem; }
+        #menuNameInputsContainerEdit .form-group { padding-left: 15px; border-left: 3px solid #E9ECEF; }
+        #menuNameInputsContainerEdit .form-group:last-child { margin-bottom: 0; }
 
-        /* Message Area Styling */
-        .form-message { padding: 10px 15px; margin-bottom: 20px; border-radius: 5px; border: 1px solid transparent; font-size: 0.95rem; }
-        .form-message-error { color: #721C24; background-color: #F8D7DA; border-color: #F5C6CB; }
-        .form-message-success { color: #155724; background-color: #D4EDDA; border-color: #C3E6CB; }
-        .form-message-info { color: #0C5460; background-color: #D1ECF1; border-color: #BEE5EB; }
+        .form-message { padding: 10px 15px; margin-bottom: 20px; border-radius: 5px; border: 1px solid transparent; font-size: 0.95rem; display: none; /* Hidden by default */}
+        .form-message-error { color: #721C24; background-color: #F8D7DA; border-color: #F5C6CB; display: block; }
+        .form-message-success { color: #155724; background-color: #D4EDDA; border-color: #C3E6CB; display: block; }
+        .form-message-info { color: #0C5460; background-color: #D1ECF1; border-color: #BEE5EB; display: block; }
 
-        /* Responsive adjustments (from form-style.css and style.css) */
+        .fa-spinner { animation: fa-spin 1s infinite linear; }
+        @keyframes fa-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+
         @media (max-width: 768px) {
             h1 { font-size: 1.8rem; } h2 { font-size: 1.5rem; }
             .container { width: 95%; }
@@ -117,10 +125,18 @@
             .form-actions .btn { width: 100%; margin-bottom: 0.5rem; }
             .form-actions .btn:last-child { margin-bottom: 0; }
             .lang-toggle { font-size: 0.85rem; margin-top: 0.5rem; }
+
+            .main-nav { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: #005A9C; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 10px 0; }
+            .main-nav.active { display: flex; }
+            .main-nav ul { flex-direction: column; width: 100%; }
+            .main-nav li { margin: 0; text-align: center; }
+            .main-nav li a { display: block; padding: 10px; border-bottom: 1px solid #004170; }
+            .main-nav li:last-child a { border-bottom: none; }
+            .mobile-nav-toggle { display: block; }
         }
         @media (max-width: 480px) {
             html { font-size: 15px; }
-            label, input[type="text"], input[type="email"], input[type="tel"], input[type="password"],
+            label, input[type="text"], input[type="password"],
             input[type="date"], input[type="time"], input[type="number"], textarea, select { font-size: 0.95rem; }
             .form-container { padding: 15px 10px; }
             .form-actions .btn { padding: 0.6rem 1.2rem; }
@@ -135,8 +151,8 @@
     <main class="container">
         <h1 class="main-title" data-fr="Modifier un Événement" data-en="Edit Event">Modifier un Événement</h1>
         <p class="lang-toggle">
-            <a href="#" onclick="inlineChangeLang('fr'); return false;" class="lang-link active" id="lang-fr-inline">FR</a> |
-            <a href="#" onclick="inlineChangeLang('en'); return false;" class="lang-link" id="lang-en-inline">EN</a>
+            <a href="#" onclick="inlineChangeLang('fr'); return false;" class="lang-link active" id="lang-fr-edit">FR</a> |
+            <a href="#" onclick="inlineChangeLang('en'); return false;" class="lang-link" id="lang-en-edit">EN</a>
         </p>
 
         <div id="formGeneralMessageInline" class="form-message" style="display: none;"></div>
@@ -153,7 +169,7 @@
                     <input type="password" id="authAdminPassword" name="authAdminPassword" required>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary" data-fr="Charger l'Événement" data-en="Load Event"><i class="fas fa-sign-in-alt"></i> Charger l'Événement</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> <span data-fr="Charger l'Événement" data-en="Load Event">Charger l'Événement</span></button>
                 </div>
             </form>
         </section>
@@ -161,46 +177,45 @@
         <section id="editEventSection" class="form-container" style="display:none;">
             <h2 data-fr="Modifier les Détails de l'Événement" data-en="Edit Event Details">Modifier les Détails de l'Événement</h2>
             <form id="editEventForm">
-                <input type="hidden" id="editingEventId" name="editingEventId">
-                <fieldset>
+                <input type="hidden" id="editingEventId" name="editingEventId"> <fieldset>
                     <legend data-fr="Détails de l'Événement" data-en="Event Details">Détails de l'Événement</legend>
                     <div class="form-group">
-                        <label for="eventName" data-fr="Nom de l'événement :" data-en="Event Name:">Nom de l'événement :</label>
-                        <input type="text" id="eventName" name="eventName" required maxlength="100">
+                        <label for="eventNameEdit" data-fr="Nom de l'événement :" data-en="Event Name:">Nom de l'événement :</label>
+                        <input type="text" id="eventNameEdit" name="eventName" required maxlength="100">
                     </div>
                     <div class="form-group">
-                        <label for="eventDescription" data-fr="Description de l'événement :" data-en="Event Description:">Description de l'événement :</label>
-                        <textarea id="eventDescription" name="eventDescription" rows="4" maxlength="250" required></textarea>
+                        <label for="eventDescriptionEdit" data-fr="Description de l'événement :" data-en="Event Description:">Description de l'événement :</label>
+                        <textarea id="eventDescriptionEdit" name="eventDescription" rows="4" maxlength="250" required></textarea>
                         <small id="charCountEdit" data-fr="250 caractères restants" data-en="250 characters remaining">250 caractères restants</small>
                     </div>
                     <div class="form-group-inline">
                         <div class="form-group">
-                            <label for="eventStartDate" data-fr="Date de début :" data-en="Start Date:">Date de début :</label>
-                            <input type="date" id="eventStartDate" name="eventStartDate" required>
+                            <label for="eventStartDateEdit" data-fr="Date de début :" data-en="Start Date:">Date de début :</label>
+                            <input type="date" id="eventStartDateEdit" name="eventStartDate" required>
                         </div>
                         <div class="form-group">
-                            <label for="eventStartTime" data-fr="Heure de début :" data-en="Start Time:">Heure de début :</label>
-                            <input type="time" id="eventStartTime" name="eventStartTime" required>
-                        </div>
-                    </div>
-                    <div class="form-group-inline">
-                        <div class="form-group">
-                            <label for="eventEndDate" data-fr="Date de fin :" data-en="End Date:">Date de fin :</label>
-                            <input type="date" id="eventEndDate" name="eventEndDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="eventEndTime" data-fr="Heure de fin :" data-en="End Time:">Heure de fin :</label>
-                            <input type="time" id="eventEndTime" name="eventEndTime" required>
+                            <label for="eventStartTimeEdit" data-fr="Heure de début :" data-en="Start Time:">Heure de début :</label>
+                            <input type="time" id="eventStartTimeEdit" name="eventStartTime" required>
                         </div>
                     </div>
                     <div class="form-group-inline">
                         <div class="form-group">
-                            <label for="registrationDeadlineDate" data-fr="Date limite d'inscription :" data-en="Registration Deadline Date:">Date limite d'inscription :</label>
-                            <input type="date" id="registrationDeadlineDate" name="registrationDeadlineDate" required>
+                            <label for="eventEndDateEdit" data-fr="Date de fin :" data-en="End Date:">Date de fin :</label>
+                            <input type="date" id="eventEndDateEdit" name="eventEndDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventEndTimeEdit" data-fr="Heure de fin :" data-en="End Time:">Heure de fin :</label>
+                            <input type="time" id="eventEndTimeEdit" name="eventEndTime" required>
+                        </div>
+                    </div>
+                    <div class="form-group-inline">
+                        <div class="form-group">
+                            <label for="registrationDeadlineDateEdit" data-fr="Date limite d'inscription :" data-en="Registration Deadline Date:">Date limite d'inscription :</label>
+                            <input type="date" id="registrationDeadlineDateEdit" name="registrationDeadlineDate" required>
                         </div>
                          <div class="form-group">
-                            <label for="registrationDeadlineTime" data-fr="Heure limite d'inscription :" data-en="Registration Deadline Time:">Heure limite d'inscription :</label>
-                            <input type="time" id="registrationDeadlineTime" name="registrationDeadlineTime" required>
+                            <label for="registrationDeadlineTimeEdit" data-fr="Heure limite d'inscription :" data-en="Registration Deadline Time:">Heure limite d'inscription :</label>
+                            <input type="time" id="registrationDeadlineTimeEdit" name="registrationDeadlineTime" required>
                         </div>
                     </div>
                 </fieldset>
@@ -209,12 +224,12 @@
                     <legend data-fr="Configuration de la Salle" data-en="Venue Setup">Configuration de la Salle</legend>
                     <div class="form-group-inline">
                         <div class="form-group">
-                            <label for="numTables" data-fr="Nombre de tables :" data-en="Number of Tables:">Nombre de tables :</label>
-                            <input type="number" id="numTables" name="numTables" min="1" required>
+                            <label for="numTablesEdit" data-fr="Nombre de tables :" data-en="Number of Tables:">Nombre de tables :</label>
+                            <input type="number" id="numTablesEdit" name="numTables" min="1" required>
                         </div>
                         <div class="form-group">
-                            <label for="chairsPerTable" data-fr="Chaises par table :" data-en="Chairs per Table:">Chaises par table :</label>
-                            <input type="number" id="chairsPerTable" name="chairsPerTable" min="1" max="50" required>
+                            <label for="chairsPerTableEdit" data-fr="Chaises par table :" data-en="Chairs per Table:">Chaises par table :</label>
+                            <input type="number" id="chairsPerTableEdit" name="chairsPerTable" min="1" max="50" required>
                         </div>
                     </div>
                 </fieldset>
@@ -222,8 +237,9 @@
                 <fieldset>
                     <legend data-fr="Options de Menu" data-en="Menu Options">Options de Menu</legend>
                     <div class="form-group">
-                        <label for="numMenus" data-fr="Nombre de menus proposés (1-5) :" data-en="Number of Menu Options (1-5):">Nombre de menus proposés (1-5) :</label>
-                        <select id="numMenus" name="numMenus">
+                        <label for="numMenusEdit" data-fr="Nombre de menus proposés (0-5) :" data-en="Number of Menu Options (0-5):">Nombre de menus proposés (0-5) :</label>
+                        <select id="numMenusEdit" name="numMenus">
+                            <option value="0" data-fr="Aucun menu" data-en="No menus">0</option>
                             <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5">5</option>
                         </select>
                     </div>
@@ -232,27 +248,22 @@
                 </fieldset>
 
                 <fieldset>
-                    <legend data-fr="Tarification et Accès Admin" data-en="Pricing & Admin Access">Tarification et Accès Admin</legend>
+                    <legend data-fr="Tarification" data-en="Pricing">Tarification</legend>
                     <div class="form-group form-group-checkbox">
-                        <input type="checkbox" id="isPaidEvent" name="isPaidEvent">
-                        <label for="isPaidEvent" data-fr="Cet événement est-il payant ?" data-en="Is this a paid event?">Cet événement est-il payant ?</label>
+                        <input type="checkbox" id="isPaidEventEdit" name="isPaidEvent">
+                        <label for="isPaidEventEdit" data-fr="Cet événement est-il payant ?" data-en="Is this a paid event?">Cet événement est-il payant ?</label>
                     </div>
                     <div class="form-group" id="eventPriceGroupEdit" style="display: none;">
-                        <label for="eventPrice" data-fr="Prix de l'événement (€) :" data-en="Event Price (€):">Prix de l'événement (€) :</label>
-                        <input type="number" id="eventPrice" name="eventPrice" min="0" step="0.01" placeholder="Ex: 25.50">
-                    </div>
-                    <div class="form-group">
-                        <label for="adminPasswordDisplay" data-fr="Mot de passe administrateur actuel :" data-en="Current Admin Password:">Mot de passe administrateur actuel :</label>
-                        <input type="text" id="adminPasswordDisplay" readonly style="background-color: #e9ecef; cursor: not-allowed;">
-                        <small data-fr="Le mot de passe ne peut pas être modifié ici pour des raisons de sécurité." data-en="Password cannot be changed here for security reasons.">Le mot de passe ne peut pas être modifié ici pour des raisons de sécurité.</small>
+                        <label for="eventPriceEdit" data-fr="Prix de l'événement (€) :" data-en="Event Price (€):">Prix de l'événement (€) :</label>
+                        <input type="number" id="eventPriceEdit" name="eventPrice" min="0" step="0.01" placeholder="Ex: 25.50">
                     </div>
                 </fieldset>
 
                  <fieldset>
                     <legend data-fr="Badge de l'Événement (Optionnel)" data-en="Event Badge (Optional)">Badge de l'Événement (Optionnel)</legend>
                     <div class="form-group">
-                        <label for="eventBadge" data-fr="Choisir un badge :" data-en="Choose a badge:">Choisir un badge :</label>
-                        <select id="eventBadge" name="eventBadge">
+                        <label for="eventBadgeEdit" data-fr="Choisir un badge :" data-en="Choose a badge:">Choisir un badge :</label>
+                        <select id="eventBadgeEdit" name="eventBadge">
                             <option value="none" data-fr="Aucun" data-en="None">Aucun</option>
                             <option value="new" data-fr="Nouveau" data-en="New">Nouveau</option>
                             <option value="popular" data-fr="Populaire" data-en="Popular">Populaire</option>
@@ -260,11 +271,10 @@
                         </select>
                     </div>
                 </fieldset>
-
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary" data-fr="Sauvegarder les Modifications" data-en="Save Changes"><i class="fas fa-save"></i> Sauvegarder les Modifications</button>
-                    <button type="button" id="deleteEventButton" class="btn btn-danger" data-fr="Supprimer l'Événement" data-en="Delete Event"><i class="fas fa-trash-alt"></i> Supprimer l'Événement</button>
-                    <button type="button" id="cancelEditButton" class="btn btn-secondary" data-fr="Annuler" data-en="Cancel"><i class="fas fa-times"></i> Annuler</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span data-fr="Sauvegarder les Modifications" data-en="Save Changes">Sauvegarder les Modifications</span></button>
+                    <button type="button" id="deleteEventButton" class="btn btn-danger"><i class="fas fa-trash-alt"></i> <span data-fr="Supprimer l'Événement" data-en="Delete Event">Supprimer l'Événement</span></button>
+                    <button type="button" id="cancelEditButton" class="btn btn-secondary"><i class="fas fa-times"></i> <span data-fr="Annuler" data-en="Cancel">Annuler</span></button>
                 </div>
             </form>
         </section>
@@ -277,90 +287,110 @@
     <script>
     // --- MonRdvFacile - Inline JS for edit-event.html ---
     document.addEventListener('DOMContentLoaded', function() {
-        // --- START: Language Switching Logic (Inline) ---
-        let currentLangInline = 'fr';
-        const translatableElementsInline = [];
+        const WORKER_BASE_URL = 'https://monrdvfacile-api.qmpro.workers.dev/api/events';
+        let currentAuthenticatedPassword = null; // Store the password used for successful auth
+        let currentlyEditingEventId = null; // Store the ID of the event being edited
 
-        function queryTranslatableElements() {
-            translatableElementsInline.length = 0; // Clear array
-            document.querySelectorAll('[data-fr], [data-en]').forEach(el => {
-                translatableElementsInline.push({
-                    element: el,
-                    frText: el.dataset.fr || (el.placeholder && el.dataset.frPlaceholder) || el.textContent || el.value,
-                    enText: el.dataset.en || (el.placeholder && el.dataset.enPlaceholder) || el.textContent || el.value,
-                    isPlaceholder: el.placeholder && (el.dataset.frPlaceholder || el.dataset.enPlaceholder),
-                    isButtonValue: (el.tagName === 'INPUT' && (el.type === 'submit' || el.type === 'button'))
+        // --- START: Language Switching Logic (Inline) ---
+        let currentLangEdit = 'fr';
+        const translatableElementsEdit = [];
+
+        function queryTranslatableElementsEdit() {
+            translatableElementsEdit.length = 0;
+            document.querySelectorAll('[data-fr], [data-en], [placeholder-fr], [placeholder-en]').forEach(el => {
+                 let frText = el.dataset.fr;
+                let enText = el.dataset.en;
+                let isButtonOrAnchorWithSpan = (el.tagName === 'BUTTON' || el.tagName === 'A') && el.querySelector('span');
+                
+                if (isButtonOrAnchorWithSpan) {
+                    const span = el.querySelector('span');
+                    frText = span.dataset.fr || frText || span.textContent;
+                    enText = span.dataset.en || enText || span.textContent;
+                } else {
+                    frText = frText || el.textContent || el.value;
+                    enText = enText || el.textContent || el.value;
+                }
+                translatableElementsEdit.push({
+                    element: el, frText, enText,
+                    isTitle: el.tagName === 'TITLE',
+                    isPlaceholder: el.placeholder && (el.getAttribute('placeholder-fr') || el.getAttribute('placeholder-en')),
+                    frPlaceholder: el.getAttribute('placeholder-fr'),
+                    enPlaceholder: el.getAttribute('placeholder-en'),
+                    isButtonOrAnchorWithSpan: isButtonOrAnchorWithSpan,
+                    isInputButton: (el.tagName === 'INPUT' && (el.type === 'submit' || el.type === 'button'))
                 });
             });
         }
 
-        function updateTextForLanguageInline(lang) {
-            currentLangInline = lang;
+        function updateTextForLanguageEdit(lang) {
+            currentLangEdit = lang;
             document.documentElement.lang = lang;
-            translatableElementsInline.forEach(item => {
+            translatableElementsEdit.forEach(item => {
                 const text = lang === 'fr' ? item.frText : item.enText;
-                if (item.isButtonValue) {
-                    item.element.value = text;
-                } else if (item.isPlaceholder) {
-                    item.element.placeholder = text;
-                } else {
-                    item.element.textContent = text;
+                if(item.isTitle) { item.element.textContent = text; }
+                else if (item.isPlaceholder) { item.element.placeholder = lang === 'fr' ? item.frPlaceholder : item.enPlaceholder; }
+                else if (item.isButtonOrAnchorWithSpan) { const span = item.element.querySelector('span'); if(span) span.textContent = text; }
+                else if (item.isInputButton) { item.element.value = text; }
+                else {
+                    if (item.element.childNodes.length === 1 && item.element.childNodes[0].nodeType === Node.TEXT_NODE) {
+                        item.element.childNodes[0].nodeValue = text;
+                    } else if (item.element.childNodes.length > 1 && item.element.querySelector('i') === item.element.firstChild) {
+                        for (let i = 1; i < item.element.childNodes.length; i++) {
+                            if (item.element.childNodes[i].nodeType === Node.TEXT_NODE && item.element.childNodes[i].textContent.trim() !== '') {
+                                item.element.childNodes[i].nodeValue = ` ${text}`; break;
+                            }
+                        }
+                    } else { item.element.textContent = text; }
                 }
             });
             document.querySelectorAll('.lang-link').forEach(link => link.classList.remove('active'));
-            const activeLink = document.getElementById(`lang-${lang}-inline`);
+            const activeLink = document.getElementById(`lang-${lang}-edit`);
             if (activeLink) activeLink.classList.add('active');
-            try { localStorage.setItem('preferredLang', lang); } catch (e) { console.warn("localStorage unavailable for lang pref."); }
+            try { localStorage.setItem('preferredLang', lang); } catch (e) { /* ignore */ }
+
+            // Update dynamic text if edit form is visible
+            if (editEventSection.style.display !== 'none') {
+                if (eventDescriptionTextareaEdit) eventDescriptionTextareaEdit.dispatchEvent(new Event('input'));
+                if (numMenusSelectEdit) generateMenuInputsEdit(parseInt(numMenusSelectEdit.value, 10), currentLoadedEventData); // Pass current data to re-populate correctly
+            }
         }
 
-        window.inlineChangeLang = function(lang) { // Expose to global for onclick
-            if (lang !== currentLangInline) {
-                updateTextForLanguageInline(lang);
-                // Re-trigger dynamic elements that depend on language
-                if (document.getElementById('editEventSection').style.display !== 'none') {
-                    const numMenusSelectEdit = document.getElementById('numMenus');
-                    if (numMenusSelectEdit) generateMenuInputsEdit(parseInt(numMenusSelectEdit.value, 10));
-                    const eventDescriptionTextareaEdit = document.getElementById('eventDescription');
-                    if (eventDescriptionTextareaEdit) eventDescriptionTextareaEdit.dispatchEvent(new Event('input'));
-                }
+        window.inlineChangeLang = function(lang) {
+            if (lang !== currentLangEdit) {
+                updateTextForLanguageEdit(lang);
             }
-            return false; // Prevent default link behavior
+            return false;
         };
 
-        function detectLanguagePreferenceInline() {
+        function detectLanguagePreferenceEdit() {
             try {
                 const storedLang = localStorage.getItem('preferredLang');
                 if (storedLang && (storedLang === 'fr' || storedLang === 'en')) return storedLang;
             } catch (e) { /* ignore */ }
-            return 'fr'; // Default
+            return 'fr';
         }
-        // --- END: Language Switching Logic (Inline) ---
+        // --- END: Language Switching ---
 
-
-        // --- Form Elements ---
         const authSection = document.getElementById('authSection');
         const editEventSection = document.getElementById('editEventSection');
         const authEventForm = document.getElementById('authEventForm');
         const editEventForm = document.getElementById('editEventForm');
         const messageDivInline = document.getElementById('formGeneralMessageInline');
 
-        // Edit form specific elements
-        const editingEventIdInput = document.getElementById('editingEventId');
-        const eventNameInputEdit = document.getElementById('eventName');
-        const eventDescriptionTextareaEdit = document.getElementById('eventDescription');
+        const eventDescriptionTextareaEdit = document.getElementById('eventDescriptionEdit');
         const charCountDisplayEdit = document.getElementById('charCountEdit');
-        const numMenusSelectEdit = document.getElementById('numMenus');
+        const numMenusSelectEdit = document.getElementById('numMenusEdit');
         const menuNameInputsContainerEdit = document.getElementById('menuNameInputsContainerEdit');
-        const isPaidEventCheckboxEdit = document.getElementById('isPaidEvent');
+        const isPaidEventCheckboxEdit = document.getElementById('isPaidEventEdit');
         const eventPriceGroupEdit = document.getElementById('eventPriceGroupEdit');
-        const eventPriceInputEdit = document.getElementById('eventPrice');
-        const adminPasswordDisplay = document.getElementById('adminPasswordDisplay'); // For displaying, not changing
+        const eventPriceInputEdit = document.getElementById('eventPriceEdit');
+        // Note: adminPasswordDisplay field is gone, password not shown/editable in form
 
         const deleteEventButton = document.getElementById('deleteEventButton');
         const cancelEditButton = document.getElementById('cancelEditButton');
+        let currentLoadedEventData = null; // To store menu names for language change
 
-        // --- Bilingual Messages (Inline) ---
-        const messagesInline = {
+        const messagesEdit = {
             eventIdRequired: { fr: "L'ID de l'événement est requis.", en: "Event ID is required." },
             passwordRequired: { fr: "Le mot de passe est requis.", en: "Password is required." },
             eventNotFound: { fr: "Événement non trouvé ou ID incorrect.", en: "Event not found or incorrect ID." },
@@ -369,15 +399,21 @@
             changesSaved: { fr: "Modifications sauvegardées avec succès !", en: "Changes saved successfully!" },
             eventDeleted: { fr: "Événement supprimé avec succès.", en: "Event deleted successfully." },
             confirmDelete: { fr: "Êtes-vous sûr de vouloir supprimer cet événement ? Cette action est irréversible.", en: "Are you sure you want to delete this event? This action is irreversible." },
-            localStorageError: { fr: "Erreur de stockage local.", en: "Local storage error." },
+            apiError: { fr: "Erreur de communication avec le serveur.", en: "API communication error." },
             formErrors: { fr: "Veuillez corriger les erreurs dans le formulaire.", en: "Please correct the errors in the form." },
-            passwordMismatch: {fr: "Les mots de passe ne correspondent pas.", en: "Passwords do not match."}, // Though not used for new pw
+            charRemaining: { fr: "{count} caractères restants", en: "{count} characters remaining" },
+            menuLabel: { fr: "Nom du Menu {letter}:", en: "Menu Name {letter}:" },
+            menuPlaceholder: { fr: "Détail du Menu {letter}", en: "Details for Menu {letter}" },
             endDateBeforeStart: { fr: "La date de fin ne peut pas être antérieure à la date de début.", en: "End date cannot be before start date."},
-            deadlineAfterStart: { fr: "La date limite d'inscription ne peut pas être postérieure à la date de début de l'événement.", en: "Registration deadline cannot be after the event start date."}
+            deadlineAfterStart: { fr: "La date limite d'inscription ne peut pas être postérieure à la date de début.", en: "Registration deadline cannot be after the event start date."}
         };
 
-        function getMessageInline(key) {
-            return messagesInline[key] ? (messagesInline[key][currentLangInline] || messagesInline[key]['fr']) : "Message error.";
+        function getMessageEdit(key, replacements = {}) {
+            let message = (messagesEdit[key] ? (messagesEdit[key][currentLangEdit] || messagesEdit[key]['fr']) : "Message error.");
+            for (const placeholder in replacements) {
+                message = message.replace(`{${placeholder}}`, replacements[placeholder]);
+            }
+            return message;
         }
 
         function displayMessageInline(message, type = 'error') {
@@ -388,50 +424,42 @@
         function clearMessageInline() {
             messageDivInline.innerHTML = '';
             messageDivInline.style.display = 'none';
+            messageDivInline.className = 'form-message';
         }
 
-        // --- Character Counter for Edit Form ---
+        // Character Counter
         if (eventDescriptionTextareaEdit && charCountDisplayEdit) {
             const maxLengthEdit = parseInt(eventDescriptionTextareaEdit.getAttribute('maxlength'), 10);
             eventDescriptionTextareaEdit.addEventListener('input', function() {
                 const currentLength = this.value.length;
                 const remaining = maxLengthEdit - currentLength;
-                const text = currentLangInline === 'fr' ? `${remaining} caractères restants` : `${remaining} characters remaining`;
-                charCountDisplayEdit.textContent = text;
+                charCountDisplayEdit.textContent = getMessageEdit('charRemaining', {count: remaining});
                 charCountDisplayEdit.style.color = remaining < 0 ? 'red' : '#6C757D';
             });
         }
 
-        // --- Dynamic Menu Name Inputs for Edit Form ---
-        const menuLabelsEdit = {
-            fr: ["Nom du Menu A:", "Nom du Menu B:", "Nom du Menu C:", "Nom du Menu D:", "Nom du Menu E:"],
-            en: ["Menu Name A:", "Menu Name B:", "Menu Name C:", "Menu Name D:", "Menu Name E:"]
-        };
-        const menuPlaceholdersEdit = {
-            fr: ["Ex: Formule Classique", "Ex: Option Végétarienne", "Ex: Menu Enfant"],
-            en: ["Ex: Classic Combo", "Ex: Vegetarian Option", "Ex: Kids Menu"]
-        };
-
-        function generateMenuInputsEdit(count, menuData = []) {
+        // Dynamic Menu Name Inputs
+        function generateMenuInputsEdit(count, existingMenuData = {}) {
             menuNameInputsContainerEdit.innerHTML = '';
-            const currentMenuLabels = menuLabelsEdit[currentLangInline] || menuLabelsEdit['fr'];
-            const currentMenuPlaceholders = menuPlaceholdersEdit[currentLangInline] || menuPlaceholdersEdit['fr'];
+            if (count === 0 || count === "0") return;
 
             for (let i = 0; i < count; i++) {
+                const menuLetter = String.fromCharCode(65 + i);
                 const formGroup = document.createElement('div');
                 formGroup.classList.add('form-group');
                 const label = document.createElement('label');
                 label.setAttribute('for', `menuNameEdit${i}`);
-                label.textContent = currentMenuLabels[i] || (currentLangInline === 'fr' ? `Nom du Menu ${String.fromCharCode(65 + i)}:` : `Menu Name ${String.fromCharCode(65 + i)}:`);
+                label.textContent = getMessageEdit('menuLabel', {letter: menuLetter});
                 const input = document.createElement('input');
                 input.type = 'text';
                 input.id = `menuNameEdit${i}`;
-                input.name = `menuName${i}`; // Ensure name matches original form for data collection
+                input.name = `menuName${i}`;
                 input.required = true;
                 input.maxLength = 50;
-                input.placeholder = currentMenuPlaceholders[i] || (currentLangInline === 'fr' ? `Détail du Menu ${String.fromCharCode(65 + i)}` : `Details for Menu ${String.fromCharCode(65 + i)}`);
-                if (menuData[i]) input.value = menuData[i]; // Populate with existing data
-
+                input.placeholder = getMessageEdit('menuPlaceholder', {letter: menuLetter});
+                if (existingMenuData[`menuName${i}`]) {
+                    input.value = existingMenuData[`menuName${i}`];
+                }
                 formGroup.appendChild(label);
                 formGroup.appendChild(input);
                 menuNameInputsContainerEdit.appendChild(formGroup);
@@ -439,11 +467,13 @@
         }
         if (numMenusSelectEdit) {
             numMenusSelectEdit.addEventListener('change', function() {
-                generateMenuInputsEdit(parseInt(this.value, 10)); // When changing, don't pass old menuData
+                // When user changes number of menus, we don't have old data for new fields
+                // We rely on populateEditForm to fill existing on initial load
+                generateMenuInputsEdit(parseInt(this.value, 10), currentLoadedEventData || {});
             });
         }
         
-        // --- Show/Hide Event Price Field for Edit Form ---
+        // Show/Hide Event Price Field
         if (isPaidEventCheckboxEdit && eventPriceGroupEdit) {
             isPaidEventCheckboxEdit.addEventListener('change', function() {
                 eventPriceGroupEdit.style.display = this.checked ? 'block' : 'none';
@@ -452,14 +482,14 @@
             });
         }
 
-        // --- Date Validation for Edit Form ---
+         // Date Validation
         function validateDatesEdit() {
-            const startDateInput = document.getElementById('eventStartDate');
-            const startTimeInput = document.getElementById('eventStartTime');
-            const endDateInput = document.getElementById('eventEndDate');
-            const endTimeInput = document.getElementById('eventEndTime');
-            const deadlineDateInput = document.getElementById('registrationDeadlineDate');
-            const deadlineTimeInput = document.getElementById('registrationDeadlineTime');
+            const startDateInput = document.getElementById('eventStartDateEdit');
+            const startTimeInput = document.getElementById('eventStartTimeEdit');
+            const endDateInput = document.getElementById('eventEndDateEdit');
+            const endTimeInput = document.getElementById('eventEndTimeEdit');
+            const deadlineDateInput = document.getElementById('registrationDeadlineDateEdit');
+            const deadlineTimeInput = document.getElementById('registrationDeadlineTimeEdit');
             let isValid = true;
 
             const startDate = new Date(`${startDateInput.value}T${startTimeInput.value || "00:00"}`);
@@ -470,156 +500,213 @@
             deadlineDateInput.setCustomValidity("");
 
             if (startDateInput.value && endDateInput.value && startTimeInput.value && endTimeInput.value && endDate < startDate) {
-                endDateInput.setCustomValidity(getMessageInline('endDateBeforeStart'));
+                endDateInput.setCustomValidity(getMessageEdit('endDateBeforeStart'));
                 isValid = false;
             }
             if (startDateInput.value && deadlineDateInput.value && startTimeInput.value && deadlineTimeInput.value && deadlineDate > startDate) {
-                deadlineDateInput.setCustomValidity(getMessageInline('deadlineAfterStart'));
+                deadlineDateInput.setCustomValidity(getMessageEdit('deadlineAfterStart'));
                 isValid = false;
             }
             return isValid;
         }
-        ['eventStartDate', 'eventStartTime', 'eventEndDate', 'eventEndTime', 'registrationDeadlineDate', 'registrationDeadlineTime'].forEach(id => {
-            const el = document.getElementById(id); // These IDs are on the edit form
+        ['eventStartDateEdit', 'eventStartTimeEdit', 'eventEndDateEdit', 'eventEndTimeEdit', 'registrationDeadlineDateEdit', 'registrationDeadlineTimeEdit'].forEach(id => {
+            const el = document.getElementById(id);
             if (el) el.addEventListener('change', validateDatesEdit);
         });
 
-
-        // --- Populate Edit Form ---
+        // Populate Edit Form
         function populateEditForm(eventData) {
-            editingEventIdInput.value = eventData.id;
-            // Simple fields
-            ['eventName', 'eventDescription', 'eventStartDate', 'eventStartTime', 'eventEndDate', 'eventEndTime', 'registrationDeadlineDate', 'registrationDeadlineTime', 'numTables', 'chairsPerTable', 'eventBadge'].forEach(key => {
-                const el = editEventForm.elements[key];
-                if (el) el.value = eventData[key] || '';
-            });
+            currentLoadedEventData = eventData; // Store for menu regeneration on lang change
+            document.getElementById('editingEventId').value = eventData.id; // Corrected to use the hidden input's ID
 
-            // Checkbox
-            isPaidEventCheckboxEdit.checked = eventData.isPaidEvent === 'on' || eventData.isPaidEvent === true;
-            isPaidEventCheckboxEdit.dispatchEvent(new Event('change')); // Trigger change to show/hide price
-            if (isPaidEventCheckboxEdit.checked && eventData.eventPrice) {
-                eventPriceInputEdit.value = eventData.eventPrice;
+            // Use specific IDs for edit form
+            document.getElementById('eventNameEdit').value = eventData.eventName || '';
+            document.getElementById('eventDescriptionEdit').value = eventData.eventDescription || '';
+            document.getElementById('eventStartDateEdit').value = eventData.eventStartDate || '';
+            document.getElementById('eventStartTimeEdit').value = eventData.eventStartTime || '';
+            document.getElementById('eventEndDateEdit').value = eventData.eventEndDate || '';
+            document.getElementById('eventEndTimeEdit').value = eventData.eventEndTime || '';
+            document.getElementById('registrationDeadlineDateEdit').value = eventData.registrationDeadlineDate || '';
+            document.getElementById('registrationDeadlineTimeEdit').value = eventData.registrationDeadlineTime || '';
+            document.getElementById('numTablesEdit').value = eventData.numTables || '';
+            document.getElementById('chairsPerTableEdit').value = eventData.chairsPerTable || '';
+            document.getElementById('eventBadgeEdit').value = eventData.eventBadge || 'none';
+            
+            isPaidEventCheckboxEdit.checked = eventData.isPaidEvent === 1 || eventData.isPaidEvent === true; // D1 returns 0 or 1
+            isPaidEventCheckboxEdit.dispatchEvent(new Event('change'));
+            if (isPaidEventCheckboxEdit.checked) {
+                document.getElementById('eventPriceEdit').value = eventData.eventPrice || '';
             }
 
-            // Admin Password (display only)
-            adminPasswordDisplay.value = eventData.adminPassword ? '********' : getMessageInline('notSet'); // Mask or indicate if not set
+            numMenusSelectEdit.value = eventData.numMenus !== null ? String(eventData.numMenus) : '0';
+            generateMenuInputsEdit(parseInt(numMenusSelectEdit.value, 10), eventData);
 
-            // Number of menus and their names
-            if (eventData.numMenus) {
-                numMenusSelectEdit.value = eventData.numMenus;
-                const existingMenuNames = [];
-                for (let i = 0; i < parseInt(eventData.numMenus, 10); i++) {
-                    if (eventData[`menuName${i}`]) {
-                        existingMenuNames.push(eventData[`menuName${i}`]);
-                    }
-                }
-                generateMenuInputsEdit(parseInt(eventData.numMenus, 10), existingMenuNames);
-            } else {
-                 generateMenuInputsEdit(parseInt(numMenusSelectEdit.value, 10)); // Default
-            }
-
-
-            // Trigger char count update
-            if (eventDescriptionTextareaEdit) eventDescriptionTextareaEdit.dispatchEvent(new Event('input'));
+            if (eventDescriptionTextareaEdit) eventDescriptionTextareaEdit.dispatchEvent(new Event('input')); // Update char count
 
             authSection.style.display = 'none';
             editEventSection.style.display = 'block';
-            displayMessageInline(getMessageInline('eventLoaded'), 'success');
+            displayMessageInline(getMessageEdit('eventLoaded'), 'success');
+        }
+        
+        // Helper to show loading state on buttons
+        function setButtonLoading(button, isLoading, originalTextKey) {
+            const textSpan = button.querySelector('span');
+            if (isLoading) {
+                button.disabled = true;
+                if (textSpan) textSpan.textContent = currentLangEdit === 'fr' ? 'Chargement...' : 'Loading...';
+                // You can add a spinner icon here if you want
+                const icon = button.querySelector('i');
+                if (icon) { // Save original icon and set spinner
+                    button.dataset.originalIcon = icon.className;
+                    icon.className = 'fas fa-spinner fa-spin';
+                }
+            } else {
+                button.disabled = false;
+                 if (textSpan && originalTextKey) textSpan.textContent = getMessageEdit(originalTextKey);
+                 const icon = button.querySelector('i');
+                 if (icon && button.dataset.originalIcon) { // Restore original icon
+                    icon.className = button.dataset.originalIcon;
+                 }
+            }
         }
 
+
         // --- Authentication Form Submission ---
-        authEventForm.addEventListener('submit', function(event) {
+        authEventForm.addEventListener('submit', async function(event) {
             event.preventDefault();
             clearMessageInline();
             const eventId = this.elements.authEventId.value.trim();
             const password = this.elements.authAdminPassword.value;
+            const submitButton = this.querySelector('button[type="submit"]');
 
-            if (!eventId) { displayMessageInline(getMessageInline('eventIdRequired')); return; }
-            if (!password) { displayMessageInline(getMessageInline('passwordRequired')); return; }
+            if (!eventId) { displayMessageInline(getMessageEdit('eventIdRequired'), 'error'); return; }
+            if (!password) { displayMessageInline(getMessageEdit('passwordRequired'), 'error'); return; }
+
+            setButtonLoading(submitButton, true, 'loadEvent'); // Assuming 'loadEvent' key in messages for original text
 
             try {
-                const storedEventDataJSON = localStorage.getItem(eventId);
-                if (!storedEventDataJSON) {
-                    displayMessageInline(getMessageInline('eventNotFound'));
-                    return;
-                }
-                const storedEventData = JSON.parse(storedEventDataJSON);
-                if (storedEventData.adminPassword !== password) {
-                    displayMessageInline(getMessageInline('incorrectPassword'));
-                    return;
-                }
-                // Success
-                populateEditForm(storedEventData);
+                // The worker expects POST /api/events/:id for auth and fetching
+                const response = await fetch(`${WORKER_BASE_URL}/${eventId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ adminPassword: password })
+                });
 
+                const result = await response.json();
+
+                if (response.ok) {
+                    currentAuthenticatedPassword = password; // Store for update/delete
+                    currentlyEditingEventId = eventId;
+                    populateEditForm(result); // Worker returns full event data on successful auth
+                    authEventForm.reset();
+                } else {
+                    displayMessageInline(result.error || getMessageEdit('apiError'), 'error');
+                }
             } catch (e) {
-                console.error("Auth error:", e);
-                displayMessageInline(getMessageInline('localStorageError') + ` (${e.message})`);
+                console.error("Auth fetch error:", e);
+                displayMessageInline(getMessageEdit('apiError') + `: ${e.message}`, 'error');
+            } finally {
+                 setButtonLoading(submitButton, false, 'loadEvent'); // Restore button
             }
         });
 
-        // --- Edit Event Form Submission ---
-        editEventForm.addEventListener('submit', function(event) {
+        // --- Edit Event Form Submission (Save Changes) ---
+        editEventForm.addEventListener('submit', async function(event) {
             event.preventDefault();
             clearMessageInline();
+            const submitButton = this.querySelector('button[type="submit"]');
 
             if (!validateDatesEdit() || !this.checkValidity()) {
-                 displayMessageInline(getMessageInline('formErrors'), 'error');
-                 const firstInvalidField = this.querySelector(':invalid:not(fieldset)');
-                 if (firstInvalidField) firstInvalidField.focus();
-                 return;
+                displayMessageInline(getMessageEdit('formErrors'), 'error');
+                const firstInvalidField = this.querySelector(':invalid:not(fieldset)');
+                if (firstInvalidField) firstInvalidField.focus();
+                return;
             }
 
-            const eventId = editingEventIdInput.value;
-            if (!eventId) { displayMessageInline("Error: Event ID missing for update."); return; } // Should not happen
+            const eventId = document.getElementById('editingEventId').value;
+            if (!eventId || !currentAuthenticatedPassword) {
+                displayMessageInline("Erreur: Authentification manquante ou ID d'événement.", 'error');
+                return;
+            }
 
             const formData = new FormData(this);
-            const updatedEventData = { id: eventId }; // Keep existing ID
-            
-            // Retrieve original password as it's not in the edit form to be changed
-            const originalEventDataJSON = localStorage.getItem(eventId);
-            if (!originalEventDataJSON) {
-                 displayMessageInline(getMessageInline('eventNotFound')); return;
-            }
-            const originalEventData = JSON.parse(originalEventDataJSON);
-            updatedEventData.adminPassword = originalEventData.adminPassword; // Preserve original password
-
+            const eventDataToUpdate = {};
             formData.forEach((value, key) => {
-                if (key !== 'editingEventId') { // Don't double-add ID
-                     updatedEventData[key] = value;
+                if (key === 'isPaidEventEdit') { // Name of checkbox in edit form
+                    eventDataToUpdate['isPaidEvent'] = true;
+                } else if (key.startsWith('menuName')) { // Ensure menu names are collected from edit form
+                    eventDataToUpdate[key.replace('Edit', '')] = value; // Store as menuName0, menuName1 etc.
+                } else {
+                     eventDataToUpdate[key] = value;
                 }
             });
-             // Ensure checkbox value is correctly captured (FormData returns 'on' or nothing)
-            updatedEventData.isPaidEvent = isPaidEventCheckboxEdit.checked;
+             if (!formData.has('isPaidEventEdit')) {
+                eventDataToUpdate['isPaidEvent'] = false;
+            }
+             // Ensure correct name for 'numMenus' (it's numMenusEdit in form, but API expects numMenus)
+            if (eventDataToUpdate.numMenusEdit) {
+                eventDataToUpdate.numMenus = parseInt(eventDataToUpdate.numMenusEdit, 10);
+                delete eventDataToUpdate.numMenusEdit;
+            }
 
+
+            setButtonLoading(submitButton, true, 'saveChanges');
 
             try {
-                localStorage.setItem(eventId, JSON.stringify(updatedEventData));
-                console.log("Event Updated in localStorage:", updatedEventData);
-                displayMessageInline(getMessageInline('changesSaved'), 'success');
-                // Optionally, stay on the edit form or redirect/hide
+                const response = await fetch(`${WORKER_BASE_URL}/${eventId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ eventData: eventDataToUpdate, adminPassword: currentAuthenticatedPassword })
+                });
+                const result = await response.json();
+                if (response.ok && result.success) {
+                    displayMessageInline(getMessageEdit('changesSaved'), 'success');
+                } else {
+                    displayMessageInline(result.error || getMessageEdit('apiError'), 'error');
+                }
             } catch (e) {
-                console.error("Error saving changes:", e);
-                displayMessageInline(getMessageInline('localStorageError') + ` (${e.message})`);
+                console.error("Update fetch error:", e);
+                displayMessageInline(getMessageEdit('apiError') + `: ${e.message}`, 'error');
+            } finally {
+                setButtonLoading(submitButton, false, 'saveChanges');
             }
         });
 
         // --- Delete Event ---
-        deleteEventButton.addEventListener('click', function() {
+        deleteEventButton.addEventListener('click', async function() {
             clearMessageInline();
-            const eventId = editingEventIdInput.value;
-            if (!eventId) { displayMessageInline("Error: No event loaded to delete."); return; }
+            const eventId = document.getElementById('editingEventId').value;
+            if (!eventId || !currentAuthenticatedPassword) {
+                displayMessageInline("Erreur: Authentification manquante ou ID d'événement.", 'error');
+                return;
+            }
 
-            if (confirm(getMessageInline('confirmDelete'))) {
+            if (confirm(getMessageEdit('confirmDelete'))) {
+                setButtonLoading(this, true, 'deleteEvent');
                 try {
-                    localStorage.removeItem(eventId);
-                    console.log("Event Deleted:", eventId);
-                    displayMessageInline(getMessageInline('eventDeleted'), 'success');
-                    editEventSection.style.display = 'none';
-                    authSection.style.display = 'block'; // Show auth form again
-                    authEventForm.reset(); // Reset auth form
+                    // Worker expects DELETE /api/events/:id, password in body
+                    const response = await fetch(`${WORKER_BASE_URL}/${eventId}`, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ adminPassword: currentAuthenticatedPassword })
+                    });
+                    const result = await response.json();
+                    if (response.ok && result.success) {
+                        displayMessageInline(getMessageEdit('eventDeleted'), 'success');
+                        editEventSection.style.display = 'none';
+                        authSection.style.display = 'block';
+                        authEventForm.reset();
+                        currentAuthenticatedPassword = null;
+                        currentlyEditingEventId = null;
+                        currentLoadedEventData = null;
+                    } else {
+                        displayMessageInline(result.error || getMessageEdit('apiError'), 'error');
+                    }
                 } catch (e) {
-                    console.error("Error deleting event:", e);
-                    displayMessageInline(getMessageInline('localStorageError') + ` (${e.message})`);
+                    console.error("Delete fetch error:", e);
+                    displayMessageInline(getMessageEdit('apiError') + `: ${e.message}`, 'error');
+                } finally {
+                     setButtonLoading(this, false, 'deleteEvent');
                 }
             }
         });
@@ -630,21 +717,32 @@
             editEventSection.style.display = 'none';
             authSection.style.display = 'block';
             authEventForm.reset();
+            currentAuthenticatedPassword = null;
+            currentlyEditingEventId = null;
+            currentLoadedEventData = null;
         });
 
-        // --- Initial Language Setup ---
-        queryTranslatableElements(); // Initial scan for elements
-        const preferredLangInline = detectLanguagePreferenceInline();
-        updateTextForLanguageInline(preferredLangInline);
-        // Make sure header/footer also update if hf.js uses the same localStorage key
-        if (typeof window.updateTextForLanguage === "function") { // if main.js's function is somehow available
-             window.updateTextForLanguage(preferredLangInline);
-        } else if (typeof window.updateHeaderFooterLanguage === "function") { // if hf.js has its own
-             window.updateHeaderFooterLanguage(preferredLangInline);
-        }
+        // --- Initial Page Setup ---
+        queryTranslatableElementsEdit();
+        const preferredLangEdit = detectLanguagePreferenceEdit();
+        updateTextForLanguageEdit(preferredLangEdit);
+        
+        // Update button texts initially based on language
+        ['loadEvent', 'saveChanges', 'deleteEvent', 'cancel'].forEach(key => {
+            const button = editEventForm.querySelector(`[data-fr*="${messagesEdit[key]?.fr}"], [data-en*="${messagesEdit[key]?.en}"]`) || 
+                           authEventForm.querySelector(`[data-fr*="${messagesEdit[key]?.fr}"], [data-en*="${messagesEdit[key]?.en}"]`);
+             if (button && button.querySelector('span')) {
+                button.querySelector('span').textContent = getMessageEdit(key);
+            }
+        });
 
 
-        console.log("edit-event.html inline JS loaded.");
+        setTimeout(() => { // Ensure hf.js has loaded
+            queryTranslatableElementsEdit(); // Re-query for header/footer
+            updateTextForLanguageEdit(currentLangEdit);
+        }, 300);
+
+        console.log("edit-event.html inline JS with API calls loaded.");
     });
     </script>
 </body>
