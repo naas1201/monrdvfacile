@@ -1,5 +1,6 @@
 // --- MonRdvFacile - js/create-event.js ---
 // --- Handles interactivity and validation for the create event form ---
+// --- Updated to generate Event ID and save to localStorage ---
 
 document.addEventListener('DOMContentLoaded', function() {
     // --- Get Form Elements ---
@@ -14,8 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const adminPasswordInput = document.getElementById('adminPassword');
     const confirmAdminPasswordInput = document.getElementById('confirmAdminPassword');
 
-    // --- Helper: Bilingual Error Messages ---
-    const errorMessages = {
+    // --- Helper: Bilingual Messages ---
+    const messages = {
         passwordMismatch: {
             fr: "Les mots de passe ne correspondent pas.",
             en: "Passwords do not match."
@@ -36,12 +37,27 @@ document.addEventListener('DOMContentLoaded', function() {
             fr: "La date limite d'inscription ne peut pas être postérieure à la date de début de l'événement.",
             en: "Registration deadline cannot be after the event start date."
         },
-        // Add more as needed
+        formErrors: {
+            fr: "Veuillez corriger les erreurs dans le formulaire.",
+            en: "Please correct the errors in the form."
+        },
+        eventCreatedSuccess: {
+            fr: "Événement créé avec succès ! Votre ID d'Événement est : ",
+            en: "Event created successfully! Your Event ID is: "
+        },
+        eventCreatedNote: {
+            fr: "Veuillez conserver cet ID précieusement pour toute modification future.",
+            en: "Please keep this ID safe for future edits."
+        },
+        localStorageError: {
+            fr: "Erreur : Impossible de sauvegarder l'événement. Le stockage local n'est peut-être pas disponible ou plein.",
+            en: "Error: Could not save event. Local storage might be unavailable or full."
+        }
     };
 
-    function getErrorMessage(key, lang) {
-        lang = lang || document.documentElement.lang || 'fr'; // Default to 'fr' or current page lang
-        return errorMessages[key] ? (errorMessages[key][lang] || errorMessages[key]['fr']) : "Erreur inconnue.";
+    function getMessage(key, lang) {
+        lang = lang || document.documentElement.lang || 'fr';
+        return messages[key] ? (messages[key][lang] || messages[key]['fr']) : "Message non défini.";
     }
 
     // --- 1. Character Counter for Event Description ---
@@ -56,10 +72,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (remaining < 0) {
                 charCountDisplay.style.color = 'red';
             } else {
-                charCountDisplay.style.color = '#6C757D'; // Default small text color
+                charCountDisplay.style.color = '#6C757D';
             }
         });
-        // Trigger input event to set initial count
         eventDescriptionTextarea.dispatchEvent(new Event('input'));
     }
 
@@ -73,9 +88,8 @@ document.addEventListener('DOMContentLoaded', function() {
         en: ["Ex: Classic Combo", "Ex: Vegetarian Option", "Ex: Kids Menu"]
     };
 
-
     function generateMenuInputs(count) {
-        menuNameInputsContainer.innerHTML = ''; // Clear existing inputs
+        menuNameInputsContainer.innerHTML = '';
         const lang = document.documentElement.lang || 'fr';
         const currentMenuLabels = menuLabels[lang] || menuLabels['fr'];
         const currentMenuPlaceholders = menuPlaceholders[lang] || menuPlaceholders['fr'];
@@ -83,11 +97,9 @@ document.addEventListener('DOMContentLoaded', function() {
         for (let i = 0; i < count; i++) {
             const formGroup = document.createElement('div');
             formGroup.classList.add('form-group');
-
             const label = document.createElement('label');
             label.setAttribute('for', `menuName${i}`);
             label.textContent = currentMenuLabels[i] || (lang === 'fr' ? `Nom du Menu ${String.fromCharCode(65 + i)}:` : `Menu Name ${String.fromCharCode(65 + i)}:`);
-
             const input = document.createElement('input');
             input.type = 'text';
             input.id = `menuName${i}`;
@@ -95,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
             input.required = true;
             input.maxLength = 50;
             input.placeholder = currentMenuPlaceholders[i] || (lang === 'fr' ? `Détail du Menu ${String.fromCharCode(65 + i)}` : `Details for Menu ${String.fromCharCode(65 + i)}`);
-
             formGroup.appendChild(label);
             formGroup.appendChild(input);
             menuNameInputsContainer.appendChild(formGroup);
@@ -106,14 +117,9 @@ document.addEventListener('DOMContentLoaded', function() {
         numMenusSelect.addEventListener('change', function() {
             generateMenuInputs(parseInt(this.value, 10));
         });
-        // Initial generation
         generateMenuInputs(parseInt(numMenusSelect.value, 10));
     }
 
-    // Re-generate menu inputs if language changes
-    // This requires main.js to expose currentLang or an event system
-    // A simpler way is to re-trigger generation when language changes.
-    // Assuming `updateTextForLanguage` in main.js is available and sets `document.documentElement.lang`
     const observer = new MutationObserver(mutations => {
         mutations.forEach(mutation => {
             if (mutation.type === 'attributes' && mutation.attributeName === 'lang') {
@@ -121,13 +127,12 @@ document.addEventListener('DOMContentLoaded', function() {
                      generateMenuInputs(parseInt(numMenusSelect.value, 10));
                 }
                 if (eventDescriptionTextarea && charCountDisplay) {
-                    eventDescriptionTextarea.dispatchEvent(new Event('input')); // Update char count language
+                    eventDescriptionTextarea.dispatchEvent(new Event('input'));
                 }
             }
         });
     });
     observer.observe(document.documentElement, { attributes: true });
-
 
     // --- 3. Show/Hide Event Price Field ---
     if (isPaidEventCheckbox && eventPriceGroup) {
@@ -138,10 +143,9 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 eventPriceGroup.style.display = 'none';
                 eventPriceInput.required = false;
-                eventPriceInput.value = ''; // Clear value if unchecked
+                eventPriceInput.value = '';
             }
         });
-        // Initial state
         if (isPaidEventCheckbox.checked) {
             eventPriceGroup.style.display = 'block';
             eventPriceInput.required = true;
@@ -155,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function validatePasswords() {
         const lang = document.documentElement.lang || 'fr';
         if (adminPasswordInput.value !== confirmAdminPasswordInput.value) {
-            confirmAdminPasswordInput.setCustomValidity(getErrorMessage('passwordMismatch', lang));
+            confirmAdminPasswordInput.setCustomValidity(getMessage('passwordMismatch', lang));
             return false;
         } else {
             confirmAdminPasswordInput.setCustomValidity('');
@@ -176,130 +180,142 @@ document.addEventListener('DOMContentLoaded', function() {
         const lang = document.documentElement.lang || 'fr';
         let isValid = true;
 
-        const startDate = new Date(startDateInput.value);
-        const endDate = new Date(endDateInput.value);
-        const deadlineDate = new Date(deadlineDateInput.value);
+        const startDate = new Date(startDateInput.value + "T" + (document.getElementById('eventStartTime').value || "00:00"));
+        const endDate = new Date(endDateInput.value + "T" + (document.getElementById('eventEndTime').value || "00:00"));
+        const deadlineDate = new Date(deadlineDateInput.value + "T" + (document.getElementById('registrationDeadlineTime').value || "00:00"));
 
-        // Clear previous custom validity
+
         endDateInput.setCustomValidity("");
         deadlineDateInput.setCustomValidity("");
 
-        if (startDateInput.value && endDateInput.value && endDate < startDate) {
-            endDateInput.setCustomValidity(getErrorMessage('endDateBeforeStart', lang));
+        if (startDateInput.value && endDateInput.value && document.getElementById('eventStartTime').value && document.getElementById('eventEndTime').value && endDate < startDate) {
+            endDateInput.setCustomValidity(getMessage('endDateBeforeStart', lang));
             isValid = false;
         }
 
-        if (startDateInput.value && deadlineDateInput.value && deadlineDate > startDate) {
-            deadlineDateInput.setCustomValidity(getErrorMessage('deadlineAfterStart', lang));
+        if (startDateInput.value && deadlineDateInput.value && document.getElementById('eventStartTime').value && document.getElementById('registrationDeadlineTime').value && deadlineDate > startDate) {
+            deadlineDateInput.setCustomValidity(getMessage('deadlineAfterStart', lang));
             isValid = false;
         }
         return isValid;
     }
 
-    ['eventStartDate', 'eventEndDate', 'registrationDeadlineDate'].forEach(id => {
+    ['eventStartDate', 'eventStartTime', 'eventEndDate', 'eventEndTime', 'registrationDeadlineDate', 'registrationDeadlineTime'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('change', validateDates);
     });
+
+    // --- Function to display messages on the form ---
+    function displayFormMessage(message, type = 'error') {
+        let messageDiv = document.getElementById('formGeneralMessage');
+        if (!messageDiv) {
+            messageDiv = document.createElement('div');
+            messageDiv.id = 'formGeneralMessage';
+            // Insert after the h1 title, before the form or language toggle
+            const mainTitle = document.querySelector('.form-container .main-title');
+            if (mainTitle && mainTitle.parentNode) {
+                 mainTitle.parentNode.insertBefore(messageDiv, mainTitle.nextSibling.nextSibling); // after title and lang toggle
+            } else {
+                createEventForm.parentNode.insertBefore(messageDiv, createEventForm);
+            }
+        }
+        messageDiv.innerHTML = message; // Use innerHTML to allow for bold tags or multiple lines
+        messageDiv.className = `form-message form-message-${type}`; // for styling
+        // Basic styling for message types (can be moved to CSS)
+        messageDiv.style.padding = '10px';
+        messageDiv.style.marginBottom = '15px';
+        messageDiv.style.borderRadius = '4px';
+        messageDiv.style.border = '1px solid';
+        if (type === 'success') {
+            messageDiv.style.color = '#155724';
+            messageDiv.style.backgroundColor = '#D4EDDA';
+            messageDiv.style.borderColor = '#C3E6CB';
+        } else { // error
+            messageDiv.style.color = '#721C24';
+            messageDiv.style.backgroundColor = '#F8D7DA';
+            messageDiv.style.borderColor = '#F5C6CB';
+        }
+    }
 
 
     // --- 6. Form Submission ---
     if (createEventForm) {
         createEventForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent actual submission for now
+            event.preventDefault();
+            const lang = document.documentElement.lang || 'fr';
 
-            // Perform all validations
+            // Clear previous messages
+            const existingMessageDiv = document.getElementById('formGeneralMessage');
+            if (existingMessageDiv) existingMessageDiv.innerHTML = ''; existingMessageDiv.className='form-message';
+
+
             const passwordsValid = validatePasswords();
-            const datesValid = validateDates(); // Ensure this is called and checked
+            const datesValid = validateDates();
 
-            // Check HTML5 validation status
             if (!this.checkValidity() || !passwordsValid || !datesValid) {
-                // Create a general error message element if it doesn't exist
-                let generalErrorDiv = document.getElementById('formGeneralError');
-                if (!generalErrorDiv) {
-                    generalErrorDiv = document.createElement('div');
-                    generalErrorDiv.id = 'formGeneralError';
-                    generalErrorDiv.style.color = 'red';
-                    generalErrorDiv.style.marginBottom = '1rem';
-                    this.insertBefore(generalErrorDiv, this.firstChild);
-                }
-                const lang = document.documentElement.lang || 'fr';
-                generalErrorDiv.textContent = lang === 'fr' ? "Veuillez corriger les erreurs dans le formulaire." : "Please correct the errors in the form.";
-                
-                // Optionally, scroll to the first invalid field
-                const firstInvalidField = this.querySelector(':invalid');
+                displayFormMessage(getMessage('formErrors', lang), 'error');
+                const firstInvalidField = this.querySelector(':invalid:not(fieldset)'); // Exclude fieldset
                 if (firstInvalidField) {
                     firstInvalidField.focus();
+                    // Scroll into view if needed, especially for elements low on the page
+                    firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
-                return; // Stop submission
+                return;
             }
 
-            // If all validations pass
-            const generalErrorDiv = document.getElementById('formGeneralError');
-            if(generalErrorDiv) generalErrorDiv.textContent = '';
-
-
-            // Collect form data
+            // --- START: New localStorage and Event ID logic ---
+            const eventID = `event-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
             const formData = new FormData(this);
-            const eventData = {};
+            const eventData = { id: eventID }; // Add eventID to the data
             formData.forEach((value, key) => {
                 eventData[key] = value;
             });
 
-            // For demonstration: log data to console
-            console.log("Form Submitted Successfully!");
-            console.log("Event Data:", eventData);
+            try {
+                // For demonstration, store the raw password. In a real app, hash it before storage.
+                localStorage.setItem(eventID, JSON.stringify(eventData));
+                console.log("Event Data Saved to localStorage:", eventData);
 
-            // Here you would typically send data to a server:
-            // fetch('/api/create-event', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(eventData)
-            // })
-            // .then(response => response.json())
-            // .then(data => {
-            //     console.log('Success:', data);
-            //     alert(document.documentElement.lang === 'fr' ? 'Événement créé avec succès !' : 'Event created successfully!');
-            //     createEventForm.reset(); // Reset form
-            //     // Trigger updates for dynamic fields after reset
-            //     if (eventDescriptionTextarea) eventDescriptionTextarea.dispatchEvent(new Event('input'));
-            //     if (numMenusSelect) numMenusSelect.dispatchEvent(new Event('change'));
-            //     if (isPaidEventCheckbox) isPaidEventCheckbox.dispatchEvent(new Event('change'));
-            // })
-            // .catch((error) => {
-            //     console.error('Error:', error);
-            //     alert(document.documentElement.lang === 'fr' ? 'Erreur lors de la création de l\'événement.' : 'Error creating event.');
-            // });
+                // Display success message with Event ID
+                let successMsg = `${getMessage('eventCreatedSuccess', lang)} <strong>${eventID}</strong>`;
+                successMsg += `<br><small>${getMessage('eventCreatedNote', lang)}</small>`;
+                displayFormMessage(successMsg, 'success');
 
-            // --- Placeholder for success ---
-            const lang = document.documentElement.lang || 'fr';
-            alert(lang === 'fr' ? 'Événement créé (simulation) ! Vérifiez la console pour les données.' : 'Event created (simulation)! Check console for data.');
-            // createEventForm.reset(); // Uncomment when ready
-            // Manually trigger updates for fields that need it after reset
-            // eventDescriptionTextarea.dispatchEvent(new Event('input'));
-            // numMenusSelect.dispatchEvent(new Event('change'));
-            // isPaidEventCheckbox.dispatchEvent(new Event('change'));
+                createEventForm.reset(); // Reset form fields
+                // Manually trigger updates for fields that need it after reset
+                if (eventDescriptionTextarea) eventDescriptionTextarea.dispatchEvent(new Event('input'));
+                if (numMenusSelect) numMenusSelect.dispatchEvent(new Event('change'));
+                if (isPaidEventCheckbox) isPaidEventCheckbox.dispatchEvent(new Event('change'));
+
+            } catch (e) {
+                console.error("Error saving to localStorage:", e);
+                displayFormMessage(getMessage('localStorageError', lang) + (e.message ? `<br><small>${e.message}</small>` : ''), 'error');
+            }
+            // --- END: New localStorage and Event ID logic ---
         });
 
         createEventForm.addEventListener('reset', function() {
-            // Reset custom validation messages and dynamic elements
-            confirmAdminPasswordInput.setCustomValidity('');
-            const generalErrorDiv = document.getElementById('formGeneralError');
-            if(generalErrorDiv) generalErrorDiv.textContent = '';
+            const lang = document.documentElement.lang || 'fr';
+            if(confirmAdminPasswordInput) confirmAdminPasswordInput.setCustomValidity('');
 
-            // Delay these to allow form to reset first
+            const messageDiv = document.getElementById('formGeneralMessage');
+            if (messageDiv) {
+                messageDiv.innerHTML = '';
+                messageDiv.className = 'form-message'; // Reset class
+                messageDiv.removeAttribute('style'); // Clear inline styles
+            }
+
             setTimeout(() => {
                 if (eventDescriptionTextarea) eventDescriptionTextarea.dispatchEvent(new Event('input'));
-                if (numMenusSelect) generateMenuInputs(parseInt(numMenusSelect.options[numMenusSelect.selectedIndex].value, 10)); // Reset to default selected
+                if (numMenusSelect) generateMenuInputs(parseInt(numMenusSelect.options[numMenusSelect.selectedIndex].value, 10));
                 if (isPaidEventCheckbox) {
-                    isPaidEventCheckbox.checked = false; // Ensure it's visually unchecked
+                    isPaidEventCheckbox.checked = false;
                     isPaidEventCheckbox.dispatchEvent(new Event('change'));
                 }
-                 // Reset date custom validity
                 document.getElementById('eventEndDate').setCustomValidity("");
                 document.getElementById('registrationDeadlineDate').setCustomValidity("");
             }, 0);
         });
     }
-
-    console.log("create-event.js loaded and initialized.");
+    console.log("create-event.js updated version loaded and initialized.");
 });
