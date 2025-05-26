@@ -117,7 +117,7 @@ exports.getEventForEdit = functions.region("europe-west9") // Corrected: "europe
 
       sendResponse(res, 200, {id: eventDoc.id, ...eventData});
 
-    } catch (error) M
+    } catch (error) 
       console.error("Error getting event for edit:", error);
       sendResponse(res, 500, {error: "Internal Server Error."});
     }
