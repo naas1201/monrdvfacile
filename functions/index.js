@@ -17,7 +17,7 @@ const sendResponse = (response, statusCode, body) => {
 };
 
 // --- 1. Create Event Function ---
-exports.createEvent = functions.region("europe-west1") // Specify region, same as your Firestore
+exports.createEvent = functions.region("europe-west9") // Specify region, same as your Firestore
   .https.onRequest((req, res) => {
   cors(req, res, async () => { // Handle CORS
     if (req.method !== "POST") {
@@ -54,7 +54,7 @@ exports.createEvent = functions.region("europe-west1") // Specify region, same a
 });
 
 // --- 2. Get All Events Function ---
-exports.getEvents = functions.region("Paris").https.onRequest((req, res) => {
+exports.getEvents = functions.region("europe-west9"").https.onRequest((req, res) => {
   cors(req, res, async () => {
     if (req.method !== "GET") {
       return sendResponse(res, 405, {error: "Method Not Allowed"});
@@ -140,7 +140,7 @@ exports.getEventForEdit = functions.region("europe-west1").https.onRequest((req,
 
 
 // --- 4. Update Event Function ---
-exports.updateEvent = functions.region("europe-west1").https.onRequest((req, res) => {
+exports.updateEvent = functions.region("europe-west9").https.onRequest((req, res) => {
   cors(req, res, async () => {
     if (req.method !== "PUT") {
       return sendResponse(res, 405, {error: "Method Not Allowed"});
@@ -186,7 +186,7 @@ exports.updateEvent = functions.region("europe-west1").https.onRequest((req, res
 });
 
 // --- 5. Delete Event Function ---
-exports.deleteEvent = functions.region("europe-west1").https.onRequest((req, res) => {
+exports.deleteEvent = functions.region("europe-west9"").https.onRequest((req, res) => {
   cors(req, res, async () => {
     if (req.method !== "DELETE" && req.method !== "POST") { // Allow POST for body if DELETE with body is an issue
       return sendResponse(res, 405, {error: "Method Not Allowed"});
