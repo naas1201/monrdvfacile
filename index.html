@@ -30,7 +30,7 @@
       gtag('config', 'G-K2JVSXZXNN');
     </script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
         /* --- Inline CSS for index.html --- */
@@ -66,14 +66,23 @@
         .lang-link.active { font-weight: 700; color: #3498db; background-color: rgba(52, 152, 219, 0.1); }
         .lang-link:hover { background-color: rgba(52, 152, 219, 0.05); text-decoration: none; }
 
-        /* --- 5. Header & Footer Placeholders (from hf.js) --- */
-        /* Basic styles for #app-header and #app-footer should be in hf.js or its associated CSS if it had one.
-           For self-containment, if hf.js doesn't style them, add basic structure here.
-           Assuming hf.js provides its own styling for the elements it injects. */
+        /* --- 5. Header & Footer Placeholders (from hf.js ) --- */
         #app-header { background-color: #ffffff; color: #333; box-shadow: 0 2px 5px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 1000; }
+         /* Styles from hf.js might override or complement these for inner content */
+        .header-container { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; padding-bottom: 1rem; max-width: 1200px; margin: 0 auto; width: 90%;}
+        .logo a { font-size: 1.5rem; font-weight: bold; color: #333; text-decoration: none; } /* Adjusted for white header */
+        .main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
+        .main-nav li { margin-left: 20px; }
+        .main-nav a { color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; border-radius: 4px; transition: background-color 0.2s ease, color 0.2s ease; }
+        .main-nav a:hover, .main-nav a.active { background-color: #e9ecef; color: #005A9C; }
+        .main-nav .nav-text { margin-left: 5px; }
+        .mobile-nav-toggle { display: none; border: none; background: none; color: #333; font-size: 1.5rem; cursor: pointer; }
+
+
         #app-footer { background-color: #2c3e50; color: #ecf0f1; padding: 2.5rem 0; text-align: center; font-size: 0.9rem; }
         #app-footer a { color: #bdc3c7; }
         #app-footer a:hover { color: #ffffff; }
+        .footer-container { max-width: 1200px; margin: 0 auto; width: 90%; }
 
         /* --- 6. Hero Section & CTAs --- */
         .hero-section {
@@ -83,7 +92,7 @@
         .hero-section h1 {
             font-size: 2.8rem; color: #2c3e50; margin-bottom: 1rem;
             font-weight: 700;
-            background: -webkit-linear-gradient(45deg, #3498db, #8e44ad); /* Gradient text */
+            background: -webkit-linear-gradient(45deg, #3498db, #8e44ad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -92,7 +101,7 @@
         .btn {
             display: inline-block; font-weight: 600; text-align: center; vertical-align: middle;
             cursor: pointer; user-select: none; border: 1px solid transparent;
-            padding: 0.85rem 2rem; font-size: 1.05rem; line-height: 1.5; border-radius: 8px; /* Softer radius */
+            padding: 0.85rem 2rem; font-size: 1.05rem; line-height: 1.5; border-radius: 8px;
             transition: all 0.25s ease-in-out; letter-spacing: 0.5px;
         }
         .btn-primary-cta {
@@ -125,27 +134,28 @@
         }
         .filter-section .btn-filter {
             padding: 0.65rem 1.5rem; font-size: 0.95rem; background-color: #95a5a6; color: white;
-            flex-shrink: 0; /* Prevent button from shrinking too much */
+            flex-shrink: 0; border-radius: 6px; border: none;
         }
         .filter-section .btn-filter:hover { background-color: #7f8c8d; }
 
 
-        /* --- 8. Event Grid / "Carousel" --- */
+        /* --- 8. Event Grid --- */
         .event-grid-container { margin-top: 20px; }
         .event-grid-title { font-size: 1.7rem; color: #2c3e50; margin-bottom: 1.5rem; text-align: center; }
         #eventGrid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
         }
         .event-card {
             background-color: #ffffff; border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.07);
             display: flex; flex-direction: column;
-            overflow: hidden; /* Ensures content respects border-radius */
+            overflow: hidden;
             transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
-            min-height: 380px; /* Ensure same height */
-            position: relative; /* For absolute positioned elements like badges */
+            min-height: 380px;
+            position: relative;
+            cursor: pointer; /* Make entire card indicate clickability */
         }
         .event-card:hover {
             transform: translateY(-6px);
@@ -159,15 +169,15 @@
             font-size: 0.95rem; color: #555; margin-bottom: 1rem;
             flex-grow: 1;
             overflow: hidden; display: -webkit-box;
-            -webkit-line-clamp: 3; /* Limit to 3 lines */
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
-            max-height: calc(1.65 * 0.95rem * 3); /* line-height * font-size * lines */
+            max-height: calc(1.65 * 0.95rem * 3);
         }
         .event-card-footer {
             padding: 15px 20px; border-top: 1px solid #eef2f5;
-            margin-top: auto; /* Pushes footer to bottom */
+            margin-top: auto;
         }
-        .event-card-link {
+        .event-card-link { /* This class can still be used for styling the link area if needed, even if whole card is clickable */
             display: block; background-color: #3498db; color: #ffffff;
             padding: 10px 15px; border-radius: 6px; text-align: center;
             font-weight: 500; text-decoration: none;
@@ -177,24 +187,29 @@
         .event-card-link i { margin-left: 8px; }
 
         /* Event Badges */
-        .event-badges { display: flex; gap: 8px; margin-bottom: 10px; position: absolute; top: 15px; right: 15px; }
+        .event-badges { display: flex; flex-wrap: wrap; gap: 8px; position: absolute; top: 15px; right: 15px; }
         .badge {
             padding: 0.35em 0.7em; font-size: 0.75rem; font-weight: 600;
-            border-radius: 15px; /* Pill shape */
+            border-radius: 15px;
             text-transform: uppercase; letter-spacing: 0.5px;
+            color: #fff;
         }
-        .badge-new { color: #fff; background-color: #2ecc71; /* Emerald green */ }
-        .badge-paid { color: #fff; background-color: #e74c3c; /* Alizarin red */ }
-        .badge-popular { color: #fff; background-color: #f39c12; /* Orange */ }
-        .badge-special { color: #fff; background-color: #8e44ad; /* Wisteria purple */ }
+        .badge-new { background-color: #2ecc71; }
+        .badge-paid { background-color: #e74c3c; }
+        .badge-popular { background-color: #f39c12; }
+        .badge-special { background-color: #8e44ad; }
 
-        /* No Events Message */
-        #noEventsMessage {
+        /* No Events Message & Loading */
+        #eventGridStatus {
             text-align: center; padding: 40px 20px; background-color: #fff;
             border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             color: #7f8c8d; font-size: 1.1rem;
+            min-height: 150px; /* Ensure it takes some space */
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-        #noEventsMessage i { font-size: 2rem; display: block; margin-bottom: 1rem; color: #bdc3c7; }
+        #eventGridStatus i { font-size: 2rem; display: block; margin-bottom: 1rem; color: #bdc3c7; }
+        .fa-spinner { animation: fa-spin 1s infinite linear; } /* Add spin animation */
+        @keyframes fa-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 
         /* --- 9. Responsive --- */
@@ -213,9 +228,18 @@
             .filter-section { flex-direction: column; align-items: stretch; }
             .filter-section .form-group { width: 100%; }
             .filter-section .btn-filter { width: 100%; margin-top: 10px; }
-            .event-grid { grid-template-columns: 1fr; /* Stack cards */ }
-            .event-card { min-height: auto; /* Allow height to adjust */ }
+            .event-grid { grid-template-columns: 1fr; }
+            .event-card { min-height: auto; }
             .lang-toggle { position: static; text-align: center; margin-bottom: 1.5rem; }
+
+            /* Mobile Nav specific from hf.js CSS (if using that approach) */
+            .main-nav { display: none; flex-direction: column; position: absolute; top: 100%; /* Position below header if header is sticky */ left: 0; width: 100%; background-color: #fff; /* Match header */ box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 10px 0; border-top: 1px solid #eee; }
+            .main-nav.active { display: flex; }
+            .main-nav ul { flex-direction: column; width: 100%; }
+            .main-nav li { margin: 0; text-align: center; }
+            .main-nav li a { display: block; padding: 12px 15px; border-bottom: 1px solid #e9ecef; color: #333;}
+            .main-nav li:last-child a { border-bottom: none; }
+            .mobile-nav-toggle { display: block; } /* Show hamburger */
         }
         @media (max-width: 480px) {
             .hero-section h1 { font-size: 1.8rem; }
@@ -240,30 +264,29 @@
             <h1 data-fr="Organisez et Trouvez Vos Événements Facilement" data-en="Organize and Find Your Events Easily">Organisez et Trouvez Vos Événements Facilement</h1>
             <p class="subtitle" data-fr="MonRdvFacile est votre plateforme unique pour créer des événements mémorables et découvrir les rassemblements passionnants près de chez vous à Royan et ses environs." data-en="MyEasyMeeting is your one-stop platform to create memorable events and discover exciting gatherings near you in Royan and its surroundings.">MonRdvFacile est votre plateforme unique pour créer des événements mémorables et découvrir les rassemblements passionnants près de chez vous à Royan et ses environs.</p>
             <div class="cta-buttons">
-                <a href="create-event.html" class="btn btn-primary-cta" data-fr="Créer un Événement" data-en="Create an Event"><i class="fas fa-plus-circle"></i> Créer un Événement</a>
+                <a href="create-event.html" class="btn btn-primary-cta" data-fr="Créer un Événement" data-en="Create an Event"><i class="fas fa-plus-circle"></i> <span data-fr="Créer un Événement" data-en="Create an Event">Créer un Événement</span></a>
             </div>
-            <a href="edit-event.html" class="modify-event-link" data-fr="Modifier un événement existant" data-en="Edit an existing event"><i class="fas fa-edit"></i> Modifier un événement existant</a>
+            <a href="edit-event.html" class="modify-event-link" data-fr="Modifier un événement existant" data-en="Edit an existing event"><i class="fas fa-edit"></i> <span data-fr="Modifier un événement existant" data-en="Edit an existing event">Modifier un événement existant</span></a>
         </section>
 
         <section class="filter-section">
             <div class="form-group">
                 <label for="searchName" data-fr="Rechercher par nom :" data-en="Search by name:">Rechercher par nom :</label>
-                <input type="text" id="searchName" placeholder-fr="Nom de l'événement..." placeholder-en="Event name...">
+                <input type="text" id="searchName" placeholder-fr="Nom de l'événement..." placeholder-en="Event name..." data-fr-placeholder="Nom de l'événement..." data-en-placeholder="Event name...">
             </div>
             <div class="form-group">
                 <label for="searchDate" data-fr="Filtrer par date (à partir de) :" data-en="Filter by date (from):">Filtrer par date (à partir de) :</label>
                 <input type="date" id="searchDate">
             </div>
-            <button type="button" id="resetFiltersButton" class="btn btn-filter" data-fr="Réinitialiser" data-en="Reset"><i class="fas fa-undo"></i> <span data-fr="Réinitialiser" data-en="Reset">Réinitialiser</span></button>
+            <button type="button" id="resetFiltersButton" class="btn btn-filter"><i class="fas fa-undo"></i> <span data-fr="Réinitialiser" data-en="Reset">Réinitialiser</span></button>
         </section>
 
         <section class="event-grid-container">
             <h2 class="event-grid-title" data-fr="Événements à Venir" data-en="Upcoming Events">Événements à Venir</h2>
             <div id="eventGrid">
                 </div>
-            <div id="noEventsMessage" style="display: none;">
-                <i class="fas fa-calendar-times"></i>
-                <p data-fr="Aucun événement trouvé pour le moment ou correspondant à vos critères." data-en="No events found at the moment or matching your criteria.">Aucun événement trouvé pour le moment ou correspondant à vos critères.</p>
+            <div id="eventGridStatus" style="display: none;">
+                {/* Content set by JS: loading or no events */}
             </div>
         </section>
 
@@ -278,18 +301,34 @@
     document.addEventListener('DOMContentLoaded', function() {
         let currentLangIdx = 'fr';
         const translatableElementsIdx = [];
+        const WORKER_API_URL = 'https://monrdvfacile-api.qmpro.workers.dev/api/events';
 
         function queryTranslatableElementsIdx() {
             translatableElementsIdx.length = 0;
             document.querySelectorAll('[data-fr], [data-en], [placeholder-fr], [placeholder-en]').forEach(el => {
+                let frText = el.dataset.fr;
+                let enText = el.dataset.en;
+                let isButtonOrAnchorWithSpan = (el.tagName === 'BUTTON' || el.tagName === 'A') && el.querySelector('span');
+                
+                if (isButtonOrAnchorWithSpan) {
+                    const span = el.querySelector('span');
+                    frText = span.dataset.fr || frText || span.textContent; // Prioritize span's data-fr
+                    enText = span.dataset.en || enText || span.textContent; // Prioritize span's data-en
+                } else {
+                    frText = frText || el.textContent || el.value;
+                    enText = enText || el.textContent || el.value;
+                }
+
                 translatableElementsIdx.push({
                     element: el,
-                    frText: el.dataset.fr || el.textContent || el.value,
-                    enText: el.dataset.en || el.textContent || el.value,
+                    frText: frText,
+                    enText: enText,
                     frPlaceholder: el.getAttribute('placeholder-fr'),
                     enPlaceholder: el.getAttribute('placeholder-en'),
-                    isButtonValue: (el.tagName === 'INPUT' && (el.type === 'submit' || el.type === 'button')) || el.tagName === 'BUTTON',
-                    isPlaceholder: el.hasAttribute('placeholder-fr') || el.hasAttribute('placeholder-en')
+                    isButtonOrAnchorWithSpan: isButtonOrAnchorWithSpan,
+                    isInputButton: (el.tagName === 'INPUT' && (el.type === 'submit' || el.type === 'button')),
+                    isPlaceholder: el.hasAttribute('placeholder-fr') || el.hasAttribute('placeholder-en'),
+                    isTitle: el.tagName === 'TITLE'
                 });
             });
         }
@@ -298,28 +337,50 @@
             currentLangIdx = lang;
             document.documentElement.lang = lang;
             translatableElementsIdx.forEach(item => {
-                if (item.isPlaceholder) {
+                const text = lang === 'fr' ? item.frText : item.enText;
+                if (item.isTitle) {
+                    item.element.textContent = text;
+                } else if (item.isPlaceholder) {
                     item.element.placeholder = lang === 'fr' ? item.frPlaceholder : item.enPlaceholder;
-                } else if (item.isButtonValue && item.element.querySelector('span')) { // Handle buttons with text in span
+                } else if (item.isButtonOrAnchorWithSpan) {
                     const span = item.element.querySelector('span');
-                     if(span) span.textContent = lang === 'fr' ? item.frText : item.enText;
-                } else if (item.isButtonValue) {
-                     item.element.textContent = lang === 'fr' ? item.frText : item.enText; // For buttons without span
-                }
-                else {
-                    item.element.textContent = lang === 'fr' ? item.frText : item.enText;
+                    if(span) span.textContent = text;
+                } else if (item.isInputButton) {
+                    item.element.value = text;
+                } else {
+                    // For elements where text is mixed with icons, e.g. <a/button><i..></i> Text</>
+                    // It's safer to wrap translatable text in a span with data attributes
+                    // This will attempt to set textContent for simple P, H1-H6, etc.
+                    if (['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'LABEL', 'SMALL', 'A', 'BUTTON'].includes(item.element.tagName) && !item.element.querySelector('span')) {
+                         // Check if only one child node and it's a text node or if first child is icon
+                        if (item.element.childNodes.length === 1 && item.element.childNodes[0].nodeType === Node.TEXT_NODE) {
+                            item.element.childNodes[0].nodeValue = text;
+                        } else if (item.element.childNodes.length > 1 && item.element.querySelector('i') === item.element.firstChild) {
+                             // Text node after icon
+                            for (let i = 1; i < item.element.childNodes.length; i++) {
+                                if (item.element.childNodes[i].nodeType === Node.TEXT_NODE && item.element.childNodes[i].textContent.trim() !== '') {
+                                    item.element.childNodes[i].nodeValue = ` ${text}`; // Add space before text
+                                    break;
+                                }
+                            }
+                        } else {
+                            // Default set for other simple text elements
+                            item.element.textContent = text;
+                        }
+                    } else if (!item.isButtonOrAnchorWithSpan && !item.isInputButton){ // Fallback for elements without specific handling
+                         item.element.textContent = text;
+                    }
                 }
             });
             document.querySelectorAll('.lang-link').forEach(link => link.classList.remove('active'));
             const activeLink = document.getElementById(`lang-${lang}-idx`);
             if (activeLink) activeLink.classList.add('active');
-            try { localStorage.setItem('preferredLang', lang); } catch (e) { console.warn("localStorage unavailable for lang pref."); }
+            try { localStorage.setItem('preferredLang', lang); } catch (e) { /* ignore */ }
             
-            // Re-render events if language changes as some text might be in JS
-            loadAndDisplayEvents();
+            loadAndDisplayEvents(); // Re-render events as text inside cards might change
         }
 
-        window.inlineIndexChangeLang = function(lang) {
+        window.inlineIndexChangeLang = function(lang) { // Expose to global onclick
             if (lang !== currentLangIdx) {
                 updateTextForLanguageIdx(lang);
             }
@@ -331,160 +392,174 @@
                 const storedLang = localStorage.getItem('preferredLang');
                 if (storedLang && (storedLang === 'fr' || storedLang === 'en')) return storedLang;
             } catch (e) { /* ignore */ }
-            return 'fr';
+            return 'fr'; // Default
         }
 
         const eventGrid = document.getElementById('eventGrid');
-        const noEventsMessage = document.getElementById('noEventsMessage');
+        const eventGridStatus = document.getElementById('eventGridStatus'); // Changed ID
         const searchNameInput = document.getElementById('searchName');
         const searchDateInput = document.getElementById('searchDate');
         const resetFiltersButton = document.getElementById('resetFiltersButton');
 
+        function showStatusMessage(message, type = 'info', showIcon = true) {
+            eventGridStatus.innerHTML = ''; // Clear previous
+            if (showIcon) {
+                const icon = document.createElement('i');
+                icon.className = type === 'loading' ? 'fas fa-spinner fa-spin' : (type === 'error' ? 'fas fa-exclamation-triangle' : 'fas fa-calendar-times');
+                eventGridStatus.appendChild(icon);
+            }
+            const p = document.createElement('p');
+            p.textContent = message;
+            eventGridStatus.appendChild(p);
+            eventGridStatus.style.display = 'flex';
+        }
+
         function formatEventDate(dateStr, timeStr, lang) {
-            const date = new Date(`${dateStr}T${timeStr || '00:00:00'}`);
-            if (isNaN(date)) return dateStr; // fallback
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            if (!dateStr) return lang === 'fr' ? 'Date non spécifiée' : 'Date not specified';
+            const dateTimeStr = `${dateStr}T${timeStr || '00:00:00'}`;
+            const date = new Date(dateTimeStr);
+            if (isNaN(date.getTime())) { // Check if date is valid
+                 // Try to parse if only date string is present and might be in local format
+                const parts = dateStr.split('-');
+                if (parts.length === 3) {
+                    const localDate = new Date(parts[0], parts[1] - 1, parts[2]); // YYYY, MM-1, DD
+                     if (!isNaN(localDate.getTime())) {
+                        return localDate.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                     }
+                }
+                return dateStr; // fallback if still invalid
+            }
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            if (timeStr && timeStr !== '00:00:00' && timeStr !== '00:00') { // Only add time if it's significant
+                options.hour = '2-digit';
+                options.minute = '2-digit';
+            }
             return date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', options);
         }
         
-        function getBadgeHTML(badgeKey, lang) {
-            if (!badgeKey || badgeKey === "none") return "";
-            const badges = {
+        function getBadgeHTML(badgeKey, isPaid, lang) {
+            let html = '';
+            const badgesInfo = {
                 new: { fr: "Nouveau", en: "New", class: "badge-new" },
                 popular: { fr: "Populaire", en: "Popular", class: "badge-popular" },
-                special: { fr: "Spécial", en: "Special", class: "badge-special" },
-                paid: { fr: "Payant", en: "Paid", class: "badge-paid"} // Added for consistency if isPaidEvent is true
+                special: { fr: "Spécial", en: "Special", class: "badge-special" }
             };
-            const badgeInfo = badges[badgeKey];
-            if (!badgeInfo) return "";
-            return `<span class="badge ${badgeInfo.class}">${lang === 'fr' ? badgeInfo.fr : badgeInfo.en}</span>`;
-        }
 
+            if (badgeKey && badgeKey !== "none" && badgesInfo[badgeKey]) {
+                const badge = badgesInfo[badgeKey];
+                html += `<span class="badge ${badge.class}">${lang === 'fr' ? badge.fr : badge.en}</span>`;
+            }
+            if (isPaid === 1 || isPaid === true) { // D1 stores boolean as 0 or 1
+                html += `<span class="badge badge-paid">${lang === 'fr' ? 'Payant' : 'Paid'}</span>`;
+            }
+            return html ? `<div class="event-badges">${html}</div>` : '';
+        }
 
         function renderEventCard(eventData) {
             const card = document.createElement('div');
             card.classList.add('event-card');
+            card.setAttribute('role', 'link');
+            card.setAttribute('tabindex', '0'); // Make it focusable
 
-            let badgesHTML = getBadgeHTML(eventData.eventBadge, currentLangIdx);
-            if (eventData.isPaidEvent === 'on' || eventData.isPaidEvent === true) {
-                 badgesHTML += getBadgeHTML('paid', currentLangIdx);
-            }
-
-
-            const description = eventData.eventDescription || (currentLangIdx === 'fr' ? 'Pas de description.' : 'No description.');
+            const badgesHTML = getBadgeHTML(eventData.eventBadge, eventData.isPaidEvent, currentLangIdx);
+            const description = eventData.eventDescription || (currentLangIdx === 'fr' ? 'Pas de description disponible.' : 'No description available.');
             const title = eventData.eventName || (currentLangIdx === 'fr' ? 'Événement Sans Titre' : 'Untitled Event');
             
             const startDateFormatted = formatEventDate(eventData.eventStartDate, eventData.eventStartTime, currentLangIdx);
             const endDateFormatted = formatEventDate(eventData.eventEndDate, eventData.eventEndTime, currentLangIdx);
-            const dateDisplay = currentLangIdx === 'fr' ? `Du ${startDateFormatted} au ${endDateFormatted}` : `From ${startDateFormatted} to ${endDateFormatted}`;
+            
+            let dateDisplay;
+            if (eventData.eventStartDate === eventData.eventEndDate && (!eventData.eventStartTime || !eventData.eventEndTime || eventData.eventStartTime === eventData.eventEndTime) ) {
+                dateDisplay = startDateFormatted; // Single day event or same start/end time
+            } else if (eventData.eventStartDate === eventData.eventEndDate) {
+                 dateDisplay = `${formatEventDate(eventData.eventStartDate, null, currentLangIdx)} (${eventData.eventStartTime || ''} - ${eventData.eventEndTime || ''})`;
+            }
+            else {
+                 dateDisplay = currentLangIdx === 'fr' ? `Du ${startDateFormatted} au ${endDateFormatted}` : `From ${startDateFormatted} to ${endDateFormatted}`;
+            }
 
 
             card.innerHTML = `
-                ${badgesHTML ? `<div class="event-badges">${badgesHTML}</div>` : ''}
+                ${badgesHTML}
                 <div class="event-card-content">
                     <h3 class="event-card-title">${title}</h3>
                     <p class="event-card-date"><i class="fas fa-calendar-alt"></i> ${dateDisplay}</p>
                     <p class="event-card-description">${description}</p>
                 </div>
                 <div class="event-card-footer">
-                    <a href="event-detail-placeholder.html?id=${eventData.id}" class="event-card-link">
+                    <span class="event-card-link">
                         ${currentLangIdx === 'fr' ? 'Voir les détails' : 'View Details'} <i class="fas fa-arrow-right"></i>
-                    </a>
+                    </span>
                 </div>
             `;
-            // Make the whole card clickable, not just the link for better UX
-            card.addEventListener('click', () => {
-                window.location.href = `event-detail-placeholder.html?id=${eventData.id}`;
-            });
+            const detailUrl = `event-detail-placeholder.html?id=${eventData.id}`;
+            card.addEventListener('click', () => { window.location.href = detailUrl; });
+            card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { window.location.href = detailUrl;} });
             return card;
         }
 
-        function loadAndDisplayEvents() {
+        async function loadAndDisplayEvents() {
             eventGrid.innerHTML = ''; // Clear existing events
-            let allEvents = [];
+            showStatusMessage(currentLangIdx === 'fr' ? 'Chargement des événements...' : 'Loading events...', 'loading');
+            
+            const params = new URLSearchParams();
+            const nameVal = searchNameInput.value.trim();
+            const dateVal = searchDateInput.value;
+
+            if (nameVal) params.append('name', nameVal);
+            if (dateVal) params.append('date', dateVal);
+
+            const requestUrl = params.toString() ? `${WORKER_API_URL}?${params.toString()}` : WORKER_API_URL;
+
             try {
-                for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
-                    if (key.startsWith('event-')) {
-                        const eventData = JSON.parse(localStorage.getItem(key));
-                        if (eventData && eventData.id) { // Basic check
-                            allEvents.push(eventData);
-                        }
-                    }
+                const response = await fetch(requestUrl);
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: response.statusText }));
+                    throw new Error(`API error: ${response.status} - ${errorData.error || errorData.details || 'Unknown error'}`);
                 }
-            } catch (e) {
-                console.error("Error loading events from localStorage:", e);
-                noEventsMessage.textContent = currentLangIdx === 'fr' ? "Erreur lors du chargement des événements." : "Error loading events.";
-                noEventsMessage.style.display = 'block';
-                return;
-            }
+                const events = await response.json();
 
-            // Filter events
-            const searchTerm = searchNameInput.value.toLowerCase();
-            const searchDate = searchDateInput.value;
-
-            const filteredEvents = allEvents.filter(event => {
-                const eventNameMatch = event.eventName && event.eventName.toLowerCase().includes(searchTerm);
-                let eventDateMatch = true;
-                if (searchDate) {
-                    // Compare eventStartDate with searchDate. Event is valid if it starts on or after searchDate.
-                    eventDateMatch = event.eventStartDate && event.eventStartDate >= searchDate;
+                if (events && events.length > 0) {
+                    eventGridStatus.style.display = 'none';
+                    events.forEach(eventData => {
+                        // Ensure isPaidEvent is treated as boolean/number for getBadgeHTML
+                        eventData.isPaidEvent = (eventData.isPaidEvent === 1 || eventData.isPaidEvent === true);
+                        eventGrid.appendChild(renderEventCard(eventData));
+                    });
+                } else {
+                    showStatusMessage(currentLangIdx === 'fr' ? "Aucun événement trouvé correspondant à vos critères." : "No events found matching your criteria.", 'info');
                 }
-                return eventNameMatch && eventDateMatch;
-            });
-
-            // Sort events: closest to happen first. Past events can be shown last or filtered out.
-            // For now, all events are shown, sorted by start date.
-            filteredEvents.sort((a, b) => {
-                const dateA = new Date(`${a.eventStartDate}T${a.eventStartTime || '00:00'}`);
-                const dateB = new Date(`${b.eventStartDate}T${b.eventStartTime || '00:00'}`);
-                return dateA - dateB; // Ascending order
-            });
-
-            if (filteredEvents.length > 0) {
-                filteredEvents.forEach(eventData => {
-                    eventGrid.appendChild(renderEventCard(eventData));
-                });
-                noEventsMessage.style.display = 'none';
-            } else {
-                noEventsMessage.style.display = 'block';
-                const noEventsText = document.querySelector('#noEventsMessage p');
-                if (noEventsText) {
-                    noEventsText.textContent = currentLangIdx === 'fr' ? "Aucun événement trouvé pour le moment ou correspondant à vos critères." : "No events found at the moment or matching your criteria.";
-                }
+            } catch (error) {
+                console.error("Error fetching events:", error);
+                showStatusMessage(`${currentLangIdx === 'fr' ? "Erreur lors du chargement des événements" : "Error loading events"}: ${error.message}`, 'error');
             }
         }
 
-        // Event listeners for filters
-        searchNameInput.addEventListener('input', loadAndDisplayEvents);
+        searchNameInput.addEventListener('input', () => { // Debounce might be good here for frequent typing
+            loadAndDisplayEvents();
+        });
         searchDateInput.addEventListener('change', loadAndDisplayEvents);
         resetFiltersButton.addEventListener('click', () => {
             searchNameInput.value = '';
             searchDateInput.value = '';
+            // Also reset placeholder text if it was changed by JS
+            searchNameInput.placeholder = currentLangIdx === 'fr' ? "Nom de l'événement..." : "Event name...";
             loadAndDisplayEvents();
         });
 
-        // Initial setup
+        // --- Initial Page Setup ---
         queryTranslatableElementsIdx();
         const preferredLangIdx = detectLanguagePreferenceIdx();
-        updateTextForLanguageIdx(preferredLangIdx); // This will also call loadAndDisplayEvents
+        // updateTextForLanguageIdx will call loadAndDisplayEvents
+        updateTextForLanguageIdx(preferredLangIdx); 
 
-        // Ensure hf.js loaded header/footer are also translated
-        // This is a bit of a hack; ideally, hf.js would handle its own language updates
-        // or expose a function to be called.
+        // Ensure hf.js has time to load, then re-evaluate translations for header/footer
         setTimeout(() => {
-            if (typeof window.updateHeaderFooterLanguage === "function") {
-                 window.updateHeaderFooterLanguage(currentLangIdx);
-            } else if (typeof window.updateTextForLanguage === "function" && window.updateTextForLanguage !== updateTextForLanguageIdx) {
-                // If main.js's global function exists and is different
-                window.updateTextForLanguage(currentLangIdx);
-            }
-            // Re-query elements after hf.js might have added some
-            queryTranslatableElementsIdx();
-            updateTextForLanguageIdx(currentLangIdx); // Re-apply to ensure all elements are covered
-        }, 200); // Delay to allow hf.js to potentially load
+            queryTranslatableElementsIdx(); // Re-query after hf.js potentially modifies DOM
+            updateTextForLanguageIdx(currentLangIdx); // Re-apply current language
+        }, 300); // Adjust delay if needed
 
-        console.log("Revamped index.html inline JS loaded.");
+        console.log("Revamped index.html inline JS with API calls loaded.");
     });
     </script>
 </body>
