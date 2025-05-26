@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title data-fr="Créer un Événement - MonRdvFacile" data-en="Create Event - MyEasyMeeting">Créer un Événement - MonRdvFacile</title>
+    <meta name="description" content="Page de création d'événements pour MonRdvFacile. Configurez tous les détails de votre prochain rassemblement à Royan et alentours.">
+    <meta name="keywords" content="créer événement, organisation, planification, royan, 17000, mon rdv facile">
+    <meta name="author" content="MonRdvFacile">
+    <meta name="robots" content="noindex, nofollow"> <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.monrdvfacile.lpp.ovh/create-event.html">
+    <meta property="og:title" content="Créer un Nouvel Événement - MonRdvFacile">
+    <meta property="og:description" content="Utilisez notre formulaire simple pour créer et configurer votre événement.">
+    <meta property="og:locale" content="fr_FR">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="https://www.monrdvfacile.lpp.ovh/create-event.html">
+    <meta name="twitter:title" content="Création d'Événement Facile - MonRdvFacile">
+    <meta name="twitter:description" content="Configurez votre événement en quelques étapes.">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2JVSXZXNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-K2JVSXZXNN');
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/form-style.css"> </head>
+<body>
+
+    <div id="app-header">
+        </div>
+
+    <main class="container">
+        <div class="form-container">
+            <h1 class="main-title" data-fr="Créer un Nouvel Événement" data-en="Create a New Event">Créer un Nouvel Événement</h1>
+            <p class="lang-toggle">
+                <a href="#" onclick="changeLang('fr'); return false;" class="lang-link active" id="lang-fr">FR</a> |
+                <a href="#" onclick="changeLang('en'); return false;" class="lang-link" id="lang-en">EN</a>
+            </p>
+
+            <form id="createEventForm" action="#" method="POST">
+                <fieldset>
+                    <legend data-fr="Détails de l'Événement" data-en="Event Details">Détails de l'Événement</legend>
+
+                    <div class="form-group">
+                        <label for="eventName" data-fr="Nom de l'événement :" data-en="Event Name:">Nom de l'événement :</label>
+                        <input type="text" id="eventName" name="eventName" required maxlength="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eventDescription" data-fr="Description de l'événement :" data-en="Event Description:">Description de l'événement :</label>
+                        <textarea id="eventDescription" name="eventDescription" rows="4" maxlength="250" required></textarea>
+                        <small id="charCount" data-fr="250 caractères restants" data-en="250 characters remaining">250 caractères restants</small>
+                    </div>
+
+                    <div class="form-group-inline">
+                        <div class="form-group">
+                            <label for="eventStartDate" data-fr="Date de début :" data-en="Start Date:">Date de début :</label>
+                            <input type="date" id="eventStartDate" name="eventStartDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventStartTime" data-fr="Heure de début :" data-en="Start Time:">Heure de début :</label>
+                            <input type="time" id="eventStartTime" name="eventStartTime" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group-inline">
+                        <div class="form-group">
+                            <label for="eventEndDate" data-fr="Date de fin :" data-en="End Date:">Date de fin :</label>
+                            <input type="date" id="eventEndDate" name="eventEndDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventEndTime" data-fr="Heure de fin :" data-en="End Time:">Heure de fin :</label>
+                            <input type="time" id="eventEndTime" name="eventEndTime" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group-inline">
+                        <div class="form-group">
+                            <label for="registrationDeadlineDate" data-fr="Date limite d'inscription :" data-en="Registration Deadline Date:">Date limite d'inscription :</label>
+                            <input type="date" id="registrationDeadlineDate" name="registrationDeadlineDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registrationDeadlineTime" data-fr="Heure limite d'inscription :" data-en="Registration Deadline Time:">Heure limite d'inscription :</label>
+                            <input type="time" id="registrationDeadlineTime" name="registrationDeadlineTime" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend data-fr="Configuration de la Salle" data-en="Venue Setup">Configuration de la Salle</legend>
+                    <div class="form-group-inline">
+                        <div class="form-group">
+                            <label for="numTables" data-fr="Nombre de tables :" data-en="Number of Tables:">Nombre de tables :</label>
+                            <input type="number" id="numTables" name="numTables" min="1" value="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="chairsPerTable" data-fr="Chaises par table :" data-en="Chairs per Table:">Chaises par table :</label>
+                            <input type="number" id="chairsPerTable" name="chairsPerTable" min="1" max="50" value="4" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend data-fr="Options de Menu" data-en="Menu Options">Options de Menu</legend>
+                    <div class="form-group">
+                        <label for="numMenus" data-fr="Nombre de menus proposés (1-5) :" data-en="Number of Menu Options (1-5):">Nombre de menus proposés (1-5) :</label>
+                        <select id="numMenus" name="numMenus">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3" selected>3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div id="menuNameInputsContainer">
+                        </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend data-fr="Tarification et Accès Admin" data-en="Pricing & Admin Access">Tarification et Accès Admin</legend>
+                    <div class="form-group form-group-checkbox">
+                        <input type="checkbox" id="isPaidEvent" name="isPaidEvent">
+                        <label for="isPaidEvent" data-fr="Cet événement est-il payant ?" data-en="Is this a paid event?">Cet événement est-il payant ?</label>
+                    </div>
+                    <div class="form-group" id="eventPriceGroup" style="display: none;">
+                        <label for="eventPrice" data-fr="Prix de l'événement (€) :" data-en="Event Price (€):">Prix de l'événement (€) :</label>
+                        <input type="number" id="eventPrice" name="eventPrice" min="0" step="0.01" placeholder="Ex: 25.50">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPassword" data-fr="Mot de passe administrateur (pour modifier) :" data-en="Admin Password (to edit):">Mot de passe administrateur (pour modifier) :</label>
+                        <input type="password" id="adminPassword" name="adminPassword" required minlength="8">
+                        <small data-fr="Minimum 8 caractères." data-en="Minimum 8 characters.">Minimum 8 caractères.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmAdminPassword" data-fr="Confirmer le mot de passe admin :" data-en="Confirm Admin Password:">Confirmer le mot de passe admin :</label>
+                        <input type="password" id="confirmAdminPassword" name="confirmAdminPassword" required>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend data-fr="Badge de l'Événement (Optionnel)" data-en="Event Badge (Optional)">Badge de l'Événement (Optionnel)</legend>
+                    <div class="form-group">
+                        <label for="eventBadge" data-fr="Choisir un badge :" data-en="Choose a badge:">Choisir un badge :</label>
+                        <select id="eventBadge" name="eventBadge">
+                            <option value="none" data-fr="Aucun" data-en="None">Aucun</option>
+                            <option value="new" data-fr="Nouveau" data-en="New">Nouveau</option>
+                            <option value="popular" data-fr="Populaire" data-en="Popular">Populaire</option>
+                            <option value="special" data-fr="Spécial" data-en="Special">Spécial</option>
+                            </select>
+                    </div>
+                </fieldset>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" data-fr="Créer l'Événement" data-en="Create Event"><i class="fas fa-plus-circle"></i> Créer l'Événement</button>
+                    <button type="reset" class="btn btn-secondary" data-fr="Réinitialiser" data-en="Reset"><i class="fas fa-undo"></i> Réinitialiser</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <div id="app-footer">
+        </div>
+
+    <script src="src/hf.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/create-event.js"></script> </body>
+</html>
