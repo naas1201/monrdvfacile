@@ -54,7 +54,7 @@ exports.createEvent = functions.region("europe-west1") // Specify region, same a
 });
 
 // --- 2. Get All Events Function ---
-exports.getEvents = functions.region("europe-west1").https.onRequest((req, res) => {
+exports.getEvents = functions.region("Paris").https.onRequest((req, res) => {
   cors(req, res, async () => {
     if (req.method !== "GET") {
       return sendResponse(res, 405, {error: "Method Not Allowed"});
