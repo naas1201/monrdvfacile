@@ -1,11 +1,10 @@
-// --- MonRdvFacile - functions/index.js ---
+// --- MonRdvFacile - functions/index.js (Corrected for Paris region and syntax) ---
 
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const cors = require("cors")({origin: true}); // Initialize CORS middleware
 
 // Initialize Firebase Admin SDK.
-// This line should be at the top level, executed only once when the function instance starts.
 admin.initializeApp();
 
 // Get a reference to the Firestore database.
@@ -17,7 +16,7 @@ const sendResponse = (response, statusCode, body) => {
 };
 
 // --- 1. Create Event Function ---
-exports.createEvent = functions.region("europe-west9") // Specify region, same as your Firestore
+exports.createEvent = functions.region("europe-west9") // Paris
   .https.onRequest((req, res) => {
   cors(req, res, async () => { // Handle CORS
     if (req.method !== "POST") {
@@ -27,20 +26,15 @@ exports.createEvent = functions.region("europe-west9") // Specify region, same a
     try {
       const eventData = req.body;
 
-      // Basic Validation (add more as needed)
       if (!eventData.eventName || !eventData.eventStartDate || !eventData.adminPassword) {
         return sendResponse(res, 400, {error: "Missing required fields: eventName, eventStartDate, and adminPassword are required."});
       }
 
       // **SECURITY WARNING:** Storing plain text passwords is NOT secure for production.
       // In a real application, hash the adminPassword before storing it (e.g., using bcrypt).
-      // For this educational version, we'll store it as is, but this is a critical security point.
-      // Example: const hashedPassword = await bcrypt.hash(eventData.adminPassword, 10);
-      // eventData.adminPassword = hashedPassword;
-
       const newEvent = {
         ...eventData,
-        createdAt: admin.firestore.FieldValue.serverTimestamp(), // Add server-side timestamp
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
       };
 
       const docRef = await db.collection("events").add(newEvent);
@@ -54,7 +48,8 @@ exports.createEvent = functions.region("europe-west9") // Specify region, same a
 });
 
 // --- 2. Get All Events Function ---
-exports.getEvents = functions.region("europe-west9"").https.onRequest((req, res) => {
+exports.getEvents = functions.region("europe-west9") // Corrected: "europe-west9" and removed extra quote
+  .https.onRequest((req, res) => {
   cors(req, res, async () => {
     if (req.method !== "GET") {
       return sendResponse(res, 405, {error: "Method Not Allowed"});
@@ -62,20 +57,12 @@ exports.getEvents = functions.region("europe-west9"").https.onRequest((req, res)
 
     try {
       let query = db.collection("events");
-
-      // Basic Filtering (can be expanded)
       const { name, date } = req.query;
-      if (name) {
-        // Firestore does not support partial string matches directly like SQL's LIKE.
-        // For simple "starts with" you can use .where('eventName', '>=', name).where('eventName', '<=', name + '\uf8ff')
-        // For true full-text search, you'd typically integrate with a search service like Algolia or Typesense.
-        // For this example, we'll fetch all and filter in memory if name is present (not ideal for large datasets).
-      }
+
       if (date) {
         query = query.where("eventStartDate", ">=", date);
       }
 
-      // Sorting
       query = query.orderBy("eventStartDate", "asc").orderBy("eventStartTime", "asc");
 
       const snapshot = await query.get();
@@ -88,7 +75,6 @@ exports.getEvents = functions.region("europe-west9"").https.onRequest((req, res)
         events.push({id: doc.id, ...doc.data()});
       });
 
-      // In-memory filter for name (if partial match is needed and dataset is small)
       if (name) {
         events = events.filter(event => event.eventName && event.eventName.toLowerCase().includes(name.toLowerCase()));
       }
@@ -103,9 +89,10 @@ exports.getEvents = functions.region("europe-west9"").https.onRequest((req, res)
 });
 
 // --- 3. Get Single Event for Editing (Requires Auth) ---
-exports.getEventForEdit = functions.region("europe-west1").https.onRequest((req, res) => {
+exports.getEventForEdit = functions.region("europe-west9") // Corrected: "europe-west9"
+  .https.onRequest((req, res) => {
   cors(req, res, async () => {
-    if (req.method !== "POST") { // Using POST to send eventId and password in body
+    if (req.method !== "POST") {
       return sendResponse(res, 405, {error: "Method Not Allowed"});
     }
 
@@ -124,14 +111,13 @@ exports.getEventForEdit = functions.region("europe-west1").https.onRequest((req,
 
       const eventData = eventDoc.data();
 
-      // **SECURITY WARNING:** Comparing plain text passwords. Use hashed password comparison in production.
       if (eventData.adminPassword !== adminPassword) {
         return sendResponse(res, 401, {error: "Incorrect admin password."});
       }
 
       sendResponse(res, 200, {id: eventDoc.id, ...eventData});
 
-    } catch (error) {
+    } catch (error) M
       console.error("Error getting event for edit:", error);
       sendResponse(res, 500, {error: "Internal Server Error."});
     }
@@ -140,15 +126,16 @@ exports.getEventForEdit = functions.region("europe-west1").https.onRequest((req,
 
 
 // --- 4. Update Event Function ---
-exports.updateEvent = functions.region("europe-west9").https.onRequest((req, res) => {
+exports.updateEvent = functions.region("europe-west9") // Paris
+  .https.onRequest((req, res) => {
   cors(req, res, async () => {
     if (req.method !== "PUT") {
       return sendResponse(res, 405, {error: "Method Not Allowed"});
     }
 
     try {
-      const eventId = req.query.eventId; // Or get from req.body.eventId
-      const updatedData = req.body.eventData; // Assuming all data to update is in eventData
+      const eventId = req.query.eventId;
+      const updatedData = req.body.eventData;
       const adminPassword = req.body.adminPassword;
 
       if (!eventId || !updatedData || !adminPassword) {
@@ -162,15 +149,12 @@ exports.updateEvent = functions.region("europe-west9").https.onRequest((req, res
         return sendResponse(res, 404, {error: "Event not found."});
       }
 
-      // **SECURITY WARNING:** Authenticate before update
       if (eventDoc.data().adminPassword !== adminPassword) {
         return sendResponse(res, 401, {error: "Incorrect admin password for update."});
       }
 
-      // Remove adminPassword from updatedData if present, to prevent accidental change here
-      // Password changes should be a separate, dedicated function if needed.
       delete updatedData.adminPassword;
-      delete updatedData.id; // ID should not be changed
+      delete updatedData.id;
 
       await eventRef.update({
         ...updatedData,
@@ -186,15 +170,16 @@ exports.updateEvent = functions.region("europe-west9").https.onRequest((req, res
 });
 
 // --- 5. Delete Event Function ---
-exports.deleteEvent = functions.region("europe-west9"").https.onRequest((req, res) => {
+exports.deleteEvent = functions.region("europe-west9") // Corrected: "europe-west9" and removed extra quote
+  .https.onRequest((req, res) => {
   cors(req, res, async () => {
-    if (req.method !== "DELETE" && req.method !== "POST") { // Allow POST for body if DELETE with body is an issue
+    if (req.method !== "DELETE" && req.method !== "POST") {
       return sendResponse(res, 405, {error: "Method Not Allowed"});
     }
 
     try {
       const eventId = req.query.eventId || req.body.eventId;
-      const adminPassword = req.body.adminPassword; // Assuming password sent in body for DELETE too
+      const adminPassword = req.body.adminPassword;
 
       if (!eventId || !adminPassword) {
         return sendResponse(res, 400, {error: "Event ID and admin password are required."});
@@ -207,7 +192,6 @@ exports.deleteEvent = functions.region("europe-west9"").https.onRequest((req, re
         return sendResponse(res, 404, {error: "Event not found."});
       }
 
-      // **SECURITY WARNING:** Authenticate before delete
       if (eventDoc.data().adminPassword !== adminPassword) {
         return sendResponse(res, 401, {error: "Incorrect admin password for delete."});
       }
