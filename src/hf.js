@@ -1,12 +1,12 @@
-// --- MonRdvFacile - src/hf.js (WOW Factor Update) ---
+// --- MonRdvFacile - src/hf.js (WOW Factor Update - Comment Removed) ---
 // --- Dynamically loads header and footer HTML, their styles, and handles basic header JS ---
 
-(function() { // IIFE to avoid polluting global scope, though DOMContentLoaded ensures script runs after DOM is ready
+(function() { // IIFE to avoid polluting global scope
 
     // --- CSS Styles for Header and Footer ---
     const hfStyles = `
-        :root { /* Define common variables if not already defined by the page, or use hardcoded values */
-            --hf-primary-color: #007bff; /* Default if page doesn't set --primary-color */
+        :root {
+            --hf-primary-color: #007bff;
             --hf-primary-darker: #0056b3;
             --hf-white-color: #ffffff;
             --hf-text-color: #343a40;
@@ -15,11 +15,10 @@
             --hf-header-shadow: 0 3px 10px rgba(0,0,0,0.05);
             --hf-footer-bg: #2c3e50;
             --hf-footer-text-color: #bdc3c7;
-            --hf-footer-link-hover: #007bff; /* Use primary for hover in dark footer */
+            --hf-footer-link-hover: #007bff;
             --hf-border-radius-md: 8px;
         }
 
-        /* Header Styles */
         #app-header {
             background-color: var(--hf-header-bg);
             color: var(--hf-text-color);
@@ -27,21 +26,21 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            padding: 0; /* Remove default padding if any */
+            padding: 0;
         }
-        #app-header .header-container { /* Use class from injected HTML */
+        #app-header .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.8rem 0; /* Adjusted padding */
-            max-width: 1320px; /* Match index.html container */
+            padding: 0.8rem 0;
+            max-width: 1320px;
             margin: 0 auto;
             width: 90%;
         }
         #app-header .logo a {
             font-size: 1.75rem;
             font-weight: 700;
-            color: var(--hf-primary-color, #007bff); /* Use CSS var from page or fallback */
+            color: var(--hf-primary-color, #007bff);
             text-decoration: none;
             letter-spacing: -0.5px;
         }
@@ -53,7 +52,7 @@
             align-items: center;
         }
         #app-header .main-nav li {
-            margin-left: 20px; /* Adjust as needed */
+            margin-left: 20px;
         }
         #app-header .main-nav a {
             color: var(--hf-text-color, #343a40);
@@ -63,24 +62,22 @@
             padding: 10px 15px;
             border-radius: var(--hf-border-radius-md, 8px);
             transition: background-color 0.25s ease, color 0.25s ease;
-            display: flex; /* For icon alignment */
+            display: flex;
             align-items: center;
         }
         #app-header .main-nav a i {
             margin-right: 8px;
-            font-size: 1.1em; /* Slightly larger icons */
-            width: 20px; /* Ensure consistent icon spacing */
+            font-size: 1.1em;
+            width: 20px;
             text-align: center;
         }
         #app-header .main-nav a:hover,
-        #app-header .main-nav a.active-nav-link { /* Add class for active link indication */
+        #app-header .main-nav a.active-nav-link {
             background-color: var(--hf-primary-color, #007bff);
             color: var(--hf-white-color, #ffffff);
         }
-
-        /* Mobile Navigation Styles */
         #app-header .mobile-nav-toggle {
-            display: none; /* Hidden by default, shown by media query */
+            display: none;
             border: none;
             background: none;
             cursor: pointer;
@@ -90,36 +87,34 @@
             background: transparent;
             border: none;
             color: var(--hf-text-color, #343a40);
-            font-size: 1.8rem; /* Larger hamburger */
+            font-size: 1.8rem;
             padding: 0;
             line-height: 1;
         }
-
-        /* Footer Styles */
         #app-footer {
             background-color: var(--hf-footer-bg, #2c3e50);
             color: var(--hf-footer-text-color, #bdc3c7);
             padding: 3rem 0;
             text-align: center;
             font-size: 0.9rem;
-            margin-top: auto; /* Pushes footer to bottom if content is short */
+            margin-top: auto;
         }
-        #app-footer .footer-container { /* Use class from injected HTML */
+        #app-footer .footer-container {
             max-width: 1320px;
             margin: 0 auto;
             width: 90%;
         }
         #app-footer p {
             margin-bottom: 0.5rem;
-            color: var(--hf-footer-text-color, #bdc3c7); /* Ensure p tags inherit footer text color */
+            color: var(--hf-footer-text-color, #bdc3c7);
         }
         #app-footer a {
-            color: var(--hf-footer-text-color, #bdc3c7); /* Subtler link color in footer */
+            color: var(--hf-footer-text-color, #bdc3c7);
             text-decoration: none;
             transition: color 0.2s ease;
         }
         #app-footer a:hover {
-            color: var(--hf-footer-link-hover, #007bff); /* Brighter hover for links */
+            color: var(--hf-footer-link-hover, #007bff);
             text-decoration: underline;
         }
         #app-footer .footer-social-links {
@@ -133,17 +128,14 @@
         }
         #app-footer .footer-social-links a:hover {
             color: var(--hf-white-color, #ffffff);
-            text-decoration: none; /* No underline for social icons */
+            text-decoration: none;
         }
-
-
-        /* Responsive for Header/Footer (align with index.html's media queries) */
         @media (max-width: 768px) {
             #app-header .main-nav {
-                display: none; /* Hidden by default on mobile */
+                display: none;
                 flex-direction: column;
                 position: absolute;
-                top: 100%; /* Position below header */
+                top: 100%;
                 left: 0;
                 width: 100%;
                 background-color: var(--hf-header-bg, #ffffff);
@@ -151,7 +143,7 @@
                 padding: 10px 0;
                 border-top: 1px solid #eee;
             }
-            #app-header .main-nav.active { /* Class added by JS */
+            #app-header .main-nav.active {
                 display: flex;
             }
             #app-header .main-nav ul {
@@ -165,20 +157,19 @@
             }
             #app-header .main-nav a {
                 display: block;
-                padding: 15px 20px; /* Larger tap targets */
+                padding: 15px 20px;
                 border-bottom: 1px solid #f0f0f0;
-                border-radius: 0; /* Full width links */
+                border-radius: 0;
             }
             #app-header .main-nav li:last-child a {
                 border-bottom: none;
             }
             #app-header .mobile-nav-toggle {
-                display: block; /* Show hamburger */
+                display: block;
             }
         }
     `;
 
-    // Function to inject styles into the head
     function addStylesToHead() {
         const styleSheet = document.createElement("style");
         styleSheet.type = "text/css";
@@ -186,15 +177,10 @@
         document.head.appendChild(styleSheet);
     }
 
-    // Call this function as soon as hf.js runs
     addStylesToHead();
 
-
-    // --- Header HTML Content (with aria attributes and refined structure) ---
-    // Language attributes (data-fr, data-en) will be handled by each page's specific language update logic
-    // after this HTML is injected.
     const headerHTML = `
-        <div class="header-container"> {/* Changed from class="container header-container" to avoid conflict if page has own .container */}
+        <div class="header-container">
             <div class="logo">
                 <a href="index.html" title="Accueil MonRdvFacile">MonRdvFacile</a>
             </div>
@@ -212,15 +198,12 @@
             </div>
         </div>
     `;
-    // Note: The mobile version of the nav will use the same .main-nav element and toggle its display.
-    // The aria-controls on the button should ideally point to the ID of the nav ul if it had one.
 
-    // --- Footer HTML Content ---
     const currentYear = new Date().getFullYear();
     const footerHTML = `
-        <div class="footer-container"> {/* Changed from class="container footer-container" */}
+        <div class="footer-container">
             <div class="footer-social-links" aria-label="Social Media Links">
-                 <a href="#" aria-label="Facebook MonRdvFacile" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Facebook MonRdvFacile" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
                 <a href="#" aria-label="Twitter MonRdvFacile" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
                 <a href="#" aria-label="Instagram MonRdvFacile" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
             </div>
@@ -239,8 +222,6 @@
         </div>
     `;
 
-    // Inject HTML into placeholders
-    // This runs on DOMContentLoaded, so placeholders should exist
     const appHeader = document.getElementById('app-header');
     const appFooter = document.getElementById('app-footer');
 
@@ -256,12 +237,11 @@
         console.error("Footer placeholder with ID 'app-footer' not found.");
     }
 
-    // --- Mobile Menu Toggle Functionality (enhanced) ---
     const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mainNav = document.querySelector('#app-header .main-nav'); // Query within header
+    const mainNav = document.querySelector('#app-header .main-nav');
 
     if (mobileMenuButton && mainNav) {
-        mainNav.id = "main-navigation-mobile"; // Add ID for aria-controls
+        mainNav.id = "main-navigation-mobile";
         mobileMenuButton.addEventListener('click', () => {
             const isActive = mainNav.classList.toggle('active');
             mobileMenuButton.setAttribute('aria-expanded', isActive ? 'true' : 'false');
@@ -276,58 +256,88 @@
         });
     }
 
-    // Active Nav Link Highlighting (simple version based on URL)
-    // This should run after the header HTML is injected.
     function highlightActiveNavLink() {
-        const currentPath = window.location.pathname.split("/").pop(); // Gets the current HTML file name
+        const currentPath = window.location.pathname.split("/").pop() || "index.html"; // Default to index.html if path is just "/"
         if (!mainNav) return;
         const navLinks = mainNav.querySelectorAll('a');
         navLinks.forEach(link => {
             link.classList.remove('active-nav-link');
-            const linkPath = link.getAttribute('href').split("/").pop();
-            // Handle index.html being "/" or "index.html"
-            if (currentPath === linkPath || (currentPath === '' && linkPath === 'index.html')) {
+            const linkPath = link.getAttribute('href').split("/").pop() || "index.html";
+            if (currentPath === linkPath) {
                 link.classList.add('active-nav-link');
             }
         });
     }
-    highlightActiveNavLink();
+    
+    // Call highlight after HTML is injected and DOM is likely stable for these elements
+    if (appHeader) { // Ensure header was found before trying to highlight
+        highlightActiveNavLink();
+    }
 
 
-    // Attempt to trigger language update on the page
-    // The page's specific JS needs to have initialized its language system
-    // and exposed a function (e.g., window.updatePageLanguage)
-    // This relies on the page's script running before or its language function being available.
     function tryUpdatePageLanguage() {
-        let langToSet = 'fr'; // Default
+        let langToSet = 'fr';
         try {
             langToSet = localStorage.getItem('preferredLang') || document.documentElement.lang || 'fr';
         } catch (e) { /* localStorage not available */ }
 
-        // This is a common pattern you seem to use on pages.
-        // Each page script should register a function like this.
+        // Expose a flag that pages can check or use a more robust event system
+        window.hfHasLoaded = true; 
+        window.hfInitialLang = langToSet;
+
         if (typeof window.triggerPageLanguageUpdate === "function") {
             window.triggerPageLanguageUpdate(langToSet);
-        } else if (typeof window.inlineIndexChangeLang === "function" && window.location.pathname.endsWith('index.html')) {
-             window.inlineIndexChangeLang(langToSet); // For index page
-        } else if (typeof window.inlineChangeLang === "function") { // For create/edit pages (assuming this naming)
+        } else if (typeof window.inlineIndexChangeLang === "function" && (window.location.pathname.endsWith('index.html') || window.location.pathname === '/')) {
+             window.inlineIndexChangeLang(langToSet);
+        } else if (typeof window.inlineChangeLang === "function" && (window.location.pathname.includes('create-event.html') || window.location.pathname.includes('edit-event.html'))) {
              window.inlineChangeLang(langToSet);
-        } else if (typeof window.switchLanguageDisplay === "function") { // For event-display page
+        } else if (typeof window.switchLanguageDisplay === "function" && window.location.pathname.includes('event-display.html')) {
              window.switchLanguageDisplay(langToSet);
-        }
-        else {
-            // Fallback: if no global page function, hf.js can attempt to translate its OWN content.
-            // This is less ideal as it doesn't coordinate with the page's main content translation.
-            // console.warn("No global page language update function found. Header/footer might not be translated initially by page logic.");
-            // For now, we rely on the page's own DOMContentLoaded to query and translate.
         }
     }
 
-    // Give the main page a moment to potentially set up its language functions
-    // then try to update. This is a bit of a timing game.
-    // A more robust solution would be event-driven or explicit function calls from page to hf.js.
-    setTimeout(tryUpdatePageLanguage, 50); // Small delay
+    // Run on DOMContentLoaded to ensure placeholders exist
+    document.addEventListener('DOMContentLoaded', function() {
+        if (appHeader && !appHeader.innerHTML.trim()) { // Check if already populated by another instance
+            appHeader.innerHTML = headerHTML;
+            highlightActiveNavLink(); // Highlight after injecting
+        }
+        if (appFooter && !appFooter.innerHTML.trim()) {
+            appFooter.innerHTML = footerHTML;
+        }
+        
+        // Mobile menu setup again in case DOMContentLoaded runs after the IIFE's main block for some reason,
+        // or if elements were not found initially.
+        const mobileMenuButtonRecheck = document.getElementById('mobile-menu-button');
+        const mainNavRecheck = document.querySelector('#app-header .main-nav');
+        if (mobileMenuButtonRecheck && mainNavRecheck && !mainNavRecheck.id) { // Check if already initialized
+            mainNavRecheck.id = "main-navigation-mobile";
+             mobileMenuButtonRecheck.addEventListener('click', () => {
+                const isActive = mainNavRecheck.classList.toggle('active');
+                mobileMenuButtonRecheck.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+                const icon = mobileMenuButtonRecheck.querySelector('i');
+                if (isActive) { icon.classList.remove('fa-bars'); icon.classList.add('fa-times'); }
+                else { icon.classList.remove('fa-times'); icon.classList.add('fa-bars'); }
+            });
+        }
+        
+        tryUpdatePageLanguage();
+    });
+    
+    // Final check and language update attempt after a slight delay,
+    // ensuring page-specific scripts might have had a chance to define their language functions.
+    // This is a secondary measure. The primary should be the page calling back or hf.js exposing a method.
+    setTimeout(() => {
+        if (typeof window.triggerPageLanguageUpdate === "function") {
+            // If the page has a generic trigger, call it again to be sure.
+            // This assumes the page's function is idempotent or handles being called multiple times.
+            let lang = 'fr';
+            try { lang = localStorage.getItem('preferredLang') || document.documentElement.lang || 'fr'; } catch(e){}
+            window.triggerPageLanguageUpdate(lang);
+        }
+    }, 100);
 
-    console.log("hf.js (WOW Edition) loaded and executed.");
 
-})(); // End of IIFE
+    console.log("hf.js (WOW Edition, Comment Removed) loaded and executed.");
+
+})();
