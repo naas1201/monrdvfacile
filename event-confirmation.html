@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title data-fr="Confirmation de Création d'Événement - MonRdvFacile" data-en="Event Creation Confirmation - MyEasyMeeting">Confirmation de Création d'Événement</title>
+    <meta name="robots" content="noindex, nofollow"> <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2JVSXZXNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-K2JVSXZXNN');
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* --- Inline CSS for event-confirmation.html --- */
+        :root {
+            --primary-color-confirm: #005A9C;
+            --success-color-confirm: #28a745;
+            --info-color-confirm: #17a2b8;
+            --text-color-confirm: #343A40;
+            --text-light-confirm: #6c757d;
+            --bg-color-confirm: #F8F9FA;
+            --content-bg-confirm: #FFFFFF;
+            --border-color-confirm: #DEE2E6;
+            --border-radius-confirm: 8px;
+            --box-shadow-confirm: 0 5px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.7; background-color: var(--bg-color-confirm); color: var(--text-color-confirm);
+            display: flex; flex-direction: column; min-height: 100vh;
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+        }
+        .container { width: 90%; max-width: 800px; margin: 30px auto; padding: 20px 15px; }
+        main.container { flex-grow: 1; }
+
+        #app-header { /* Styles from hf.js */ }
+        #app-footer { margin-top: auto; /* Styles from hf.js */ }
+
+        .lang-toggle { text-align: right; margin-bottom: 1.5rem; font-size: 0.9rem; }
+        .lang-link { color: var(--text-light-confirm); text-decoration: none; padding: 0.3rem 0.5rem; border-radius: 4px; cursor:pointer; font-weight: 500; }
+        .lang-link.active { font-weight: bold; color: var(--primary-color-confirm); background-color: rgba(0, 90, 156, 0.1); }
+        .lang-link:hover { background-color: rgba(0, 90, 156, 0.07); }
+
+        .confirmation-container {
+            background-color: var(--content-bg-confirm);
+            padding: 30px 40px;
+            border-radius: var(--border-radius-confirm);
+            box-shadow: var(--box-shadow-confirm);
+            text-align: center;
+        }
+
+        .confirmation-icon {
+            font-size: 4rem;
+            color: var(--success-color-confirm);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .confirmation-title {
+            font-size: 2.2rem;
+            color: var(--primary-color-confirm);
+            margin-bottom: 15px;
+        }
+        .confirmation-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light-confirm);
+            margin-bottom: 30px;
+        }
+
+        .info-section {
+            text-align: left;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-left: 5px solid var(--primary-color-confirm);
+            border-radius: 0 var(--border-radius-confirm) var(--border-radius-confirm) 0;
+        }
+        .info-section h3 {
+            font-size: 1.5rem;
+            color: var(--primary-darker-form, #004170);
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .info-section h3 i {
+            margin-right: 10px;
+            color: var(--primary-color-confirm);
+        }
+        .info-section p, .info-section .link-display {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            word-break: break-all;
+        }
+        .info-section strong {
+            color: var(--text-color-confirm);
+            font-weight: 600;
+        }
+        .link-display {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1rem;
+            display: block;
+            margin-bottom:10px;
+        }
+        .copy-button {
+            background-color: var(--secondary-color-form, #17a2b8);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background-color 0.2s ease;
+            margin-left: 10px;
+        }
+        .copy-button:hover {
+            background-color: #117a8b;
+        }
+        .copy-button i { margin-right: 5px; }
+
+        .whatsapp-button {
+            background-color: #25D366;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+        .whatsapp-button:hover {
+            background-color: #1DA851;
+        }
+        .whatsapp-button i { margin-right: 8px; }
+
+        .important-note {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            padding: 15px;
+            border-radius: var(--border-radius-confirm);
+            margin-top: 20px;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            text-align: left;
+        }
+        .important-note strong { color: #664d03; }
+        .important-note p { margin-bottom: 0.5em;}
+
+        .action-links {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .action-links a.btn {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 50px; /* Pill shape */
+            text-decoration: none;
+            transition: all 0.2s ease;
+            min-width: 250px;
+        }
+        .btn-view-event {
+            background-color: var(--success-color-confirm);
+            color: white;
+        }
+        .btn-view-event:hover { background-color: #1e7e34; transform: translateY(-2px); }
+        .btn-create-another {
+            background-color: var(--primary-color-confirm);
+            color: white;
+        }
+        .btn-create-another:hover { background-color: var(--primary-darker-form, #004170); transform: translateY(-2px); }
+        .btn-contact {
+            background-color: var(--text-light-confirm);
+            color: white;
+        }
+        .btn-contact:hover { background-color: #5a6268; transform: translateY(-2px); }
+
+        #copyStatus {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 0.9em;
+            color: var(--success-color-confirm);
+            font-weight: bold;
+        }
+
+
+        @media (max-width: 768px) {
+            .confirmation-container { padding: 20px; }
+            .confirmation-title { font-size: 1.8rem; }
+            .confirmation-subtitle { font-size: 1.1rem; }
+            .info-section h3 { font-size: 1.3rem; }
+            .info-section p, .info-section .link-display { font-size: 1rem; }
+            .action-links a.btn { width: 100%; max-width: 350px;}
+        }
+         @media print { /* Styles for printing the confirmation */
+            body { background-color: #fff; color: #000; font-size: 12pt; }
+            #app-header, #app-footer, .lang-toggle, .action-links, .copy-button, .whatsapp-button, #copyStatusMessage, .print-button-itself {
+                display: none !important;
+            }
+            .confirmation-container {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                padding: 20px;
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+            }
+            .info-section { border-left: 3px solid #ccc; background-color: #f9f9f9; }
+            .link-display { background-color: #eee; color: #333; border: 1px solid #ddd; }
+            a { color: #005A9C !important; text-decoration: none !important; }
+            a[href]::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #555; } /* Show URLs when printing */
+            .important-note { background-color: #fff9e0; border: 1px solid #eedc94; color: #795c12;}
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="app-header">
+        </div>
+
+    <main class="container">
+        <div class="lang-toggle">
+            <a href="#" onclick="switchConfLang('fr'); return false;" class="lang-link active" id="lang-fr-conf">FR</a> |
+            <a href="#" onclick="switchConfLang('en'); return false;" class="lang-link" id="lang-en-conf">EN</a>
+        </div>
+
+        <div class="confirmation-container">
+            <i class="fas fa-check-circle confirmation-icon"></i>
+            <h1 class="confirmation-title" data-fr="Événement Créé avec Succès !" data-en="Event Created Successfully!">Événement Créé avec Succès !</h1>
+            <p class="confirmation-subtitle" data-fr="Votre événement est maintenant prêt. Voici les informations importantes :" data-en="Your event is now ready. Here is the important information:">Votre événement est maintenant prêt.</p>
+
+            <div class="info-section">
+                <h3><i class="fas fa-party-horn"></i> <span data-fr="Nom de l'Événement" data-en="Event Name">Nom de l'Événement</span></h3>
+                <p><strong id="confEventName"></strong></p>
+            </div>
+
+            <div class="info-section">
+                <h3><i class="fas fa-key"></i> <span data-fr="Votre Identifiant d'Événement (ID)" data-en="Your Event ID">Votre Identifiant d'Événement (ID)</span></h3>
+                <p data-fr="Cet ID unique identifie votre événement. Vous pourriez en avoir besoin si vous nous contactez." data-en="This unique ID identifies your event. You might need it if you contact us.">Cet ID unique identifie votre événement.</p>
+                <div class="link-display" id="confEventId"></div>
+            </div>
+
+            <div class="info-section">
+                <h3><i class="fas fa-share-alt"></i> <span data-fr="Lien de Partage (pour les participants)" data-en="Share Link (for attendees)">Lien de Partage</span></h3>
+                <p data-fr="Partagez ce lien avec les personnes que vous souhaitez inviter à votre événement :" data-en="Share this link with people you want to invite to your event:">Partagez ce lien avec les personnes que vous souhaitez inviter :</p>
+                <div class="link-display" id="confShareLinkDisplay"></div>
+                <button type="button" class="copy-button" id="copyShareLinkBtn"><i class="fas fa-copy"></i> <span data-fr="Copier le Lien" data-en="Copy Link">Copier</span></button>
+                <a href="#" id="whatsappShareEventBtn" class="whatsapp-button" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> <span data-fr="Partager sur WhatsApp" data-en="Share on WhatsApp">WhatsApp</span></a>
+                <span id="copyShareStatus" class="copy-status-text"></span>
+            </div>
+
+            <div class="info-section">
+                <h3><i class="fas fa-edit"></i> <span data-fr="Lien d'Administration (pour vous)" data-en="Admin Link (for you)">Lien d'Administration</span></h3>
+                <p data-fr="Utilisez ce lien pour modifier votre événement, voir les inscriptions, etc. Conservez-le précieusement :" data-en="Use this link to modify your event, view registrations, etc. Keep it safe:">Utilisez ce lien pour modifier votre événement :</p>
+                <div class="link-display" id="confEditLinkDisplay"></div>
+                <button type="button" class="copy-button" id="copyEditLinkBtn"><i class="fas fa-copy"></i> <span data-fr="Copier le Lien d'Admin" data-en="Copy Admin Link">Copier</span></button>
+                <span id="copyEditStatus" class="copy-status-text"></span>
+            </div>
+
+            <div class="important-note">
+                <p><strong><i class="fas fa-exclamation-triangle"></i> <span data-fr="Important :" data-en="Important:">Important :</span></strong></p>
+                <ul>
+                    <li data-fr="Pour modifier votre événement via le Lien d'Administration, vous aurez besoin du mot de passe que vous avez défini lors de la création. Ce mot de passe n'est PAS affiché ici et n'est PAS inclus dans le lien." data-en="To edit your event using the Admin Link, you will need the password you set during creation. This password is NOT displayed here and is NOT included in the link.">Pour modifier votre événement, vous aurez besoin de votre mot de passe.</li>
+                    <li data-fr="Ne partagez JAMAIS votre mot de passe administrateur." data-en="NEVER share your admin password.">Ne partagez JAMAIS votre mot de passe administrateur.</li>
+                    <li data-fr="Nous vous recommandons de sauvegarder cette page (Ctrl+S ou Cmd+S) ou de copier ces informations dans un endroit sûr." data-en="We recommend saving this page (Ctrl+S or Cmd+S) or copying this information to a safe place.">Sauvegardez cette page ou copiez ces informations.</li>
+                </ul>
+            </div>
+            
+            <div class="action-links">
+                <a href="#" id="viewEventPublicLink" class="btn btn-view-event" target="_blank"><i class="fas fa-eye"></i> <span data-fr="Voir la Page de l'Événement" data-en="View Event Page">Voir la Page de l'Événement</span></a>
+                <a href="create-event.html" class="btn btn-create-another"><i class="fas fa-plus-circle"></i> <span data-fr="Créer un Autre Événement" data-en="Create Another Event">Créer un Autre Événement</span></a>
+                <a href="https://contact.lpp.ovh" class="btn btn-contact" target="_blank" rel="noopener noreferrer"><i class="fas fa-envelope"></i> <span data-fr="Nous Contacter en Cas de Problème" data-en="Contact Us If You Have Issues">Nous Contacter</span></a>
+                <button type="button" onclick="window.print();" class="btn btn-secondary print-button-itself"><i class="fas fa-print"></i> <span data-fr="Imprimer cette Confirmation" data-en="Print this Confirmation">Imprimer cette Confirmation</span></button>
+            </div>
+        </div>
+    </main>
+
+    <div id="app-footer">
+        </div>
+
+    <script src="src/hf.js"></script>
+    <script>
+    // --- MonRdvFacile - Inline JS for event-confirmation.html ---
+    document.addEventListener('DOMContentLoaded', function() {
+        let currentLangConf = 'fr';
+        const translatableItemsConf = [];
+
+        // --- UI Elements ---
+        const uiConf = {
+            eventName: document.getElementById('confEventName'),
+            eventId: document.getElementById('confEventId'),
+            shareLinkDisplay: document.getElementById('confShareLinkDisplay'),
+            editLinkDisplay: document.getElementById('confEditLinkDisplay'),
+            copyShareLinkBtn: document.getElementById('copyShareLinkBtn'),
+            copyEditLinkBtn: document.getElementById('copyEditLinkBtn'),
+            copyShareStatus: document.getElementById('copyShareStatus'),
+            copyEditStatus: document.getElementById('copyEditStatus'),
+            whatsappShareEventBtn: document.getElementById('whatsappShareEventBtn'),
+            viewEventPublicLink: document.getElementById('viewEventPublicLink')
+        };
+
+        // --- Language & Translation ---
+        function queryTranslatableItemsConf() {
+            translatableItemsConf.length = 0;
+            document.querySelectorAll('[data-fr], [data-en]').forEach(el => {
+                translatableItemsConf.push({
+                    element: el,
+                    frText: el.dataset.fr,
+                    enText: el.dataset.en,
+                    isTitleTag: el.tagName === 'TITLE',
+                    isButtonSpan: (el.tagName === 'BUTTON' || el.tagName === 'A') && el.querySelector('span:not([id])')
+                });
+            });
+        }
+
+        function updateUIConfLanguage(lang) {
+            currentLangConf = lang;
+            document.documentElement.lang = lang;
+            translatableItemsConf.forEach(item => {
+                const text = lang === 'fr' ? item.frText : item.enText;
+                if (item.isTitleTag) { if (text) item.element.textContent = text; }
+                else if (item.isButtonSpan) { const span = item.element.querySelector('span:not([id])'); if (span && text) span.textContent = text; }
+                else { if (text && typeof item.element.textContent !== 'undefined') item.element.textContent = text; }
+            });
+            document.querySelectorAll('.lang-link').forEach(link => link.classList.remove('active'));
+            const activeLink = document.getElementById(`lang-${lang}-conf`);
+            if (activeLink) activeLink.classList.add('active');
+            try { localStorage.setItem('preferredLang', lang); } catch (e) {}
+        }
+        window.switchConfLang = function(lang) { if (lang !== currentLangConf) { queryTranslatableItemsConf(); updateUIConfLanguage(lang); } };
+        
+        function detectLanguagePreferenceConf() {
+            try { const storedLang = localStorage.getItem('preferredLang'); if (storedLang && (storedLang === 'fr' || storedLang === 'en')) return storedLang; } catch (e) {}
+            const browserLang = navigator.language || navigator.userLanguage; if (browserLang && browserLang.toLowerCase().startsWith('en')) return 'en'; return 'fr';
+        }
+
+        // --- Populate Data from URL ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventIdParam = urlParams.get('eventId');
+        const eventNameParam = decodeURIComponent(urlParams.get('eventName') || '');
+        const shareLinkParam = decodeURIComponent(urlParams.get('shareLink') || '');
+        const editLinkParam = decodeURIComponent(urlParams.get('editLink') || '');
+
+        if (uiConf.eventName) uiConf.eventName.textContent = eventNameParam || (currentLangConf === 'fr' ? 'Votre Événement' : 'Your Event');
+        if (uiConf.eventId) uiConf.eventId.textContent = eventIdParam || 'N/A';
+        if (uiConf.shareLinkDisplay) uiConf.shareLinkDisplay.textContent = shareLinkParam || 'N/A';
+        if (uiConf.editLinkDisplay) uiConf.editLinkDisplay.textContent = editLinkParam || 'N/A';
+        if (uiConf.viewEventPublicLink && shareLinkParam) uiConf.viewEventPublicLink.href = shareLinkParam;
+        else if (uiConf.viewEventPublicLink) uiConf.viewEventPublicLink.style.display = 'none';
+
+
+        // --- Copy to Clipboard Functionality ---
+        function setupCopyButton(button, textToCopy, statusElement, successMsgKey) {
+            if (button && textToCopy) {
+                button.addEventListener('click', function() {
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        if (statusElement) statusElement.textContent = getMessageConf(successMsgKey);
+                        setTimeout(() => { if (statusElement) statusElement.textContent = ''; }, 3000);
+                    }).catch(err => {
+                        if (statusElement) statusElement.textContent = getMessageConf('errorCopying');
+                        console.error('Failed to copy: ', err);
+                    });
+                });
+            }
+        }
+        
+        const messagesConf = { // For JS-driven text on this page
+            linkCopied: {fr: "Copié !", en: "Copied!"},
+            errorCopying: {fr: "Erreur de copie", en: "Copy error"}
+        };
+        function getMessageConf(key) {
+            return (messagesConf[key] ? messagesConf[key][currentLangConf] : key) || key;
+        }
+
+        setupCopyButton(uiConf.copyShareLinkBtn, shareLinkParam, uiConf.copyShareStatus, 'linkCopied');
+        setupCopyButton(uiConf.copyEditLinkBtn, editLinkParam, uiConf.copyEditStatus, 'linkCopied');
+
+        // --- WhatsApp Share ---
+        if (uiConf.whatsappShareEventBtn && eventNameParam && shareLinkParam) {
+            const whatsappText = encodeURIComponent(`${eventNameParam} - ${getMessageConf(currentLangConf === 'fr' ? 'joinMeAt' : 'joinMeAtEN', {eventName: eventNameParam})} ${shareLinkParam}`); // Add joinMeAt to messagesConf
+            uiConf.whatsappShareEventBtn.href = `https://api.whatsapp.com/send?text=${whatsappText}`;
+        } else if (uiConf.whatsappShareEventBtn) {
+            uiConf.whatsappShareEventBtn.style.display = 'none';
+        }
+         // Add to messagesConf:
+         // joinMeAt: {fr: "Rejoignez-moi à ", en: "Join me at "}
+
+
+        // --- Initial Page Setup ---
+        queryTranslatableItemsConf();
+        const initialLangConf = detectLanguagePreferenceConf();
+        updateUIConfLanguage(initialLangConf); // Apply language to static text
+
+        // hf.js integration
+        window.triggerPageLanguageUpdate = function(langFromHf) {
+            if (langFromHf !== currentLangConf) { queryTranslatableItemsConf(); updateUIConfLanguage(langFromHf); }
+            else { queryTranslatableItemsConf(); updateUIConfLanguage(currentLangConf); }
+        };
+        if (window.hfHasLoaded && window.hfInitialLang) { // If hf.js loaded first
+            triggerPageLanguageUpdate(window.hfInitialLang);
+        }
+
+
+        console.log("event-confirmation.html JS loaded.");
+    });
+    </script>
+</body>
+</html>
