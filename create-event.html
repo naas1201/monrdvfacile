@@ -369,7 +369,7 @@
 
     <script src="src/hf.js"></script>
     <script>
-    // --- MonRdvFacile - Inline JS for create-event.html (Enhanced & Optional Time) ---
+    // --- MonRdvFacile - Inline JS for create-event.html (v5 - Redirect on Success & Optional Time) ---
     document.addEventListener('DOMContentLoaded', function() {
         let currentLangCreate = 'fr';
         const translatableItems = [];
@@ -475,7 +475,7 @@
             venueName: 'venueNameError', eventLocationAddress: 'eventLocationAddressError', eventLocationGMapLink: 'eventLocationGMapLinkError', onlineMeetingLink: 'onlineMeetingLinkError',
             numTables: 'numTablesError', chairsPerTable: 'chairsPerTableError', maxRegistrationsPerUser: 'maxRegistrationsPerUserError',
             eventPrice: 'eventPriceError', adminPassword: 'adminPasswordError', confirmAdminPassword: 'confirmAdminPasswordError',
-            locationType: 'locationTypeError' // For the radio group itself if needed
+            locationType: 'locationTypeError'
         };
         const messages = {
             required: { fr: "Ce champ est obligatoire.", en: "This field is required." },
@@ -490,7 +490,7 @@
             deadlineTooCloseToEnd: { fr: "La date/heure limite d'inscription doit être avant la date/heure de fin.", en: "Registration deadline must be before the event end date/time."},
             genericFormError: { fr: "Veuillez corriger les erreurs en surbrillance.", en: "Please correct the highlighted errors." },
             eventCreatedSuccess: { fr: "Événement créé avec succès !", en: "Event created successfully!" },
-            eventCreatedDetails: { fr: "ID: <strong>{eventId}</strong><br>Lien de partage : <a href='{shareLink}' target='_blank' rel='noopener noreferrer'>{shareLink}</a><br>Lien d'édition : <a href='{editLink}' target='_blank' rel='noopener noreferrer'>{editLink}</a> (Conservez ce lien et votre mot de passe précieusement).<br>Redirection vers la page de l'événement dans {countdown} secondes...", en: "ID: <strong>{eventId}</strong><br>Share Link: <a href='{shareLink}' target='_blank' rel='noopener noreferrer'>{shareLink}</a><br>Edit Link: <a href='{editLink}' target='_blank' rel='noopener noreferrer'>{editLink}</a> (Keep this link and your password safe).<br>Redirecting to the event page in {countdown} seconds..." },
+            redirectingToConfirmation: { fr: "Événement créé ! Redirection vers la page de confirmation...", en: "Event created! Redirecting to confirmation page..."},
             creationError: { fr: "Erreur lors de la création.", en: "Error creating event." },
             charRemaining: { fr: "{count} caractères restants", en: "{count} characters remaining" },
             menuSectionTitleRequired: {fr: "Le titre de la section est requis.", en: "Section title is required."},
@@ -555,7 +555,7 @@
         if (ui.isRecurringEventCheckbox && ui.recurringRuleGroup) {
             ui.isRecurringEventCheckbox.addEventListener('change', function() {
                 ui.recurringRuleGroup.style.display = this.checked ? 'block' : 'none';
-                ui.recurringRuleInput.required = this.checked; // Set required based on checkbox
+                ui.recurringRuleInput.required = this.checked;
                 if (!this.checked) {ui.recurringRuleInput.value = ''; const el = document.getElementById(errorFieldMap.recurringRule); if(el) el.textContent = ''; ui.recurringRuleInput.classList.remove('form-error');}
             });
             ui.recurringRuleGroup.style.display = ui.isRecurringEventCheckbox.checked ? 'block' : 'none';
@@ -569,12 +569,12 @@
             ui.venueNameInput.required = !isOnline;
             // Address is conditionally required if GMap link isn't provided for offline
             ui.eventLocationAddressTextarea.required = !isOnline && !ui.eventLocationGMapLinkInput.value.trim();
-            if(isOnline) { // Clear offline errors if switching to online
+            if(isOnline) {
                 ['venueName', 'eventLocationAddress', 'eventLocationGMapLink'].forEach(id => {
                     const el = document.getElementById(errorFieldMap[id]); if(el) el.textContent = '';
                     document.getElementById(id)?.classList.remove('form-error');
                 });
-            } else { // Clear online errors
+            } else {
                  const el = document.getElementById(errorFieldMap.onlineMeetingLink); if(el) el.textContent = '';
                  ui.onlineMeetingLinkInput.classList.remove('form-error');
             }
@@ -615,8 +615,8 @@
                 const sectionIdSuffix = addBtn.dataset.sectionIdSuffix;
                 const itemsContainer = document.getElementById(`menuItemsContainer_${sectionIdSuffix}`);
                 const itemCount = itemsContainer.querySelectorAll('.menu-item-group').length;
-                if (itemCount < 5) { // Max 5 items per section
-                    const itemGroupIdSuffix = `${sectionIdSuffix}i${itemCount}`; // Ensure unique name/id
+                if (itemCount < 5) {
+                    const itemGroupIdSuffix = `${sectionIdSuffix}i${itemCount}`;
                     const itemGroup = document.createElement('div');
                     itemGroup.className = 'menu-item-group';
                     itemGroup.innerHTML = `
@@ -642,22 +642,22 @@
             // Event Name, Description
             if (!ui.eventNameInput.value.trim()) { displayFieldError('eventName', 'required'); isValid = false; }
             if (!ui.eventDescriptionTextarea.value.trim()) { displayFieldError('eventDescription', 'required'); isValid = false; }
-            // Dates & Times (Dates are required, times are now optional)
+            // Dates (Times are optional)
             [ui.eventStartDateInput, ui.eventEndDateInput, ui.registrationDeadlineDateInput].forEach(input => {
                 if (!input.value) { displayFieldError(input.id, 'required'); isValid = false; }
             });
             // Date logic validation
-            if (ui.eventStartDateInput.value && ui.eventEndDateInput.value) { // Only if both dates are set
-                const startDTString = ui.eventStartDateInput.value + "T" + (ui.eventStartTimeInput.value || "00:00");
-                const endDTString = ui.eventEndDateInput.value + "T" + (ui.eventEndTimeInput.value || "23:59"); // Assume end of day if no end time
-                const startDT = new Date(startDTString);
-                const endDT = new Date(endDTString);
+            if (ui.eventStartDateInput.value && ui.eventEndDateInput.value) {
+                const startDateTimeValue = ui.eventStartDateInput.value + "T" + (ui.eventStartTimeInput.value || "00:00:00"); // Default time if empty
+                const endDateTimeValue = ui.eventEndDateInput.value + "T" + (ui.eventEndTimeInput.value || "23:59:59"); // Default time if empty
+                const startDT = new Date(startDateTimeValue);
+                const endDT = new Date(endDateTimeValue);
 
                 if (endDT <= startDT) { displayFieldError('eventEndDate', 'endDateBeforeStart'); isValid = false; }
 
                 if (ui.registrationDeadlineDateInput.value) {
-                    const deadlineDTString = ui.registrationDeadlineDateInput.value + "T" + (ui.registrationDeadlineTimeInput.value || "23:59");
-                    const deadlineDT = new Date(deadlineDTString);
+                    const deadlineDateTimeValue = ui.registrationDeadlineDateInput.value + "T" + (ui.registrationDeadlineTimeInput.value || "23:59:59");
+                    const deadlineDT = new Date(deadlineDateTimeValue);
                     if (deadlineDT >= startDT) { displayFieldError('registrationDeadlineDate', 'deadlineAfterStart'); isValid = false; }
                     if (deadlineDT >= endDT) { displayFieldError('registrationDeadlineDate', 'deadlineTooCloseToEnd'); isValid = false; }
                 }
@@ -692,20 +692,17 @@
             document.querySelectorAll('.menu-section').forEach((sectionDiv) => {
                 const titleInput = sectionDiv.querySelector('.menu-section-title');
                 if (!titleInput.value.trim()) {
-                    titleInput.classList.add('form-error'); // Use class for consistent error indication
-                    // displayFieldError(titleInput.id, 'menuSectionTitleRequired'); // Dynamic ID needs different handling for error map
+                    titleInput.classList.add('form-error');
+                    // For dynamic IDs, we can't use errorFieldMap directly. A general message or inline error near title is better.
+                    // For now, just visual indication.
                     isValid = false;
                 } else { titleInput.classList.remove('form-error'); }
 
-                let itemsPresent = false;
                 sectionDiv.querySelectorAll('.menu-item-name').forEach((itemInput) => {
-                    itemsPresent = true;
                     if (!itemInput.value.trim()) {
                         itemInput.classList.add('form-error'); isValid = false;
                     } else { itemInput.classList.remove('form-error'); }
                 });
-                 // If a section has a title but no items, it might be an error or just an empty section.
-                // For now, we only require item names if items are attempted.
             });
             
             // Pricing & Admin
@@ -740,12 +737,12 @@
                 finalPayload.eventDescription = formData.get('eventDescription');
                 // Date & Time
                 finalPayload.eventStartDate = formData.get('eventStartDate');
-                finalPayload.eventStartTime = formData.get('eventStartTime') || null; // Send null if empty
+                finalPayload.eventStartTime = formData.get('eventStartTime') || null;
                 finalPayload.eventEndDate = formData.get('eventEndDate');
-                finalPayload.eventEndTime = formData.get('eventEndTime') || null; // Send null if empty
+                finalPayload.eventEndTime = formData.get('eventEndTime') || null;
                 finalPayload.registrationDeadlineDate = formData.get('registrationDeadlineDate');
-                finalPayload.registrationDeadlineTime = formData.get('registrationDeadlineTime') || null; // Send null if empty
-                finalPayload.isRecurringEvent = formData.has('isRecurringEvent');
+                finalPayload.registrationDeadlineTime = formData.get('registrationDeadlineTime') || null;
+                finalPayload.isRecurringEvent = formData.has('isRecurringEvent'); // Not a DB field, for worker logic
                 finalPayload.recurringRule = finalPayload.isRecurringEvent ? (formData.get('recurringRule') || null) : null;
                 // Location
                 finalPayload.locationType = formData.get('locationType');
@@ -778,7 +775,7 @@
                             });
                         }
                     });
-                    if (sectionTitle) { // Add section even if it has no items, but has a title
+                    if (sectionTitle) {
                         finalPayload.menuStructure.push({ title: sectionTitle, items: items });
                     }
                 });
@@ -803,15 +800,21 @@
                     if (response.ok && result.success && result.eventId) {
                         const eventId = result.eventId;
                         const shareLink = `${window.location.origin}/event-display.html?id=${eventId}`;
-                        const editLink = `${window.location.origin}/edit-event.html?id=${eventId}`; // Keep edit link simple for now
-                        let countdown = 5;
-                        displayFormMessage(getMessage('eventCreatedDetails', currentLangCreate, { eventId, shareLink, editLink, countdown }), 'success', true);
-                        const cdInterval = setInterval(() => {
-                            countdown--;
-                            if(countdown <=0) { clearInterval(cdInterval); window.location.href = shareLink;}
-                            else {displayFormMessage(getMessage('eventCreatedDetails', currentLangCreate, { eventId, shareLink, editLink, countdown }), 'success', true);}
-                        }, 1000);
-                        ui.createEventForm.reset();
+                        const editLink = `${window.location.origin}/edit-event.html?id=${eventId}`;
+                        
+                        // Prepare URL for the confirmation page
+                        const confirmationPageUrl = new URL(`${window.location.origin}/event-confirmation.html`);
+                        confirmationPageUrl.searchParams.append('eventId', eventId);
+                        confirmationPageUrl.searchParams.append('eventName', encodeURIComponent(finalPayload.eventName));
+                        confirmationPageUrl.searchParams.append('shareLink', encodeURIComponent(shareLink));
+                        confirmationPageUrl.searchParams.append('editLink', encodeURIComponent(editLink));
+
+                        ui.createEventForm.style.display = 'none'; // Hide the form
+                        displayFormMessage(getMessage('redirectingToConfirmation', currentLangCreate), 'info'); // Show redirect message
+
+                        // Redirect to the new confirmation page
+                        window.location.href = confirmationPageUrl.toString();
+
                     } else {
                         displayFormMessage(`${getMessage('creationError', currentLangCreate)}: ${result.error || result.message || response.statusText}`, 'error');
                     }
@@ -819,8 +822,12 @@
                     console.error("Submit error:", error);
                     displayFormMessage(`${getMessage('creationError', currentLangCreate)}: ${error.message}`, 'error');
                 } finally {
-                    submitButton.disabled = false;
-                    submitButton.innerHTML = originalButtonHTML;
+                    // Re-enable button only if not redirecting or if redirect fails.
+                    // Since we are redirecting, this might not be strictly necessary unless an error occurs before redirect.
+                    if (! (response && response.ok && result && result.success && result.eventId) ) {
+                         submitButton.disabled = false;
+                         submitButton.innerHTML = originalButtonHTML;
+                    }
                 }
             });
         }
@@ -870,7 +877,7 @@
             triggerPageLanguageUpdate(window.hfInitialLang);
         }
 
-        console.log("create-event.html JS (v4 - Optional Time & Enhanced Features) loaded.");
+        console.log("create-event.html JS (v5 - Redirect & Optional Time) loaded.");
     });
     </script>
 </body>
