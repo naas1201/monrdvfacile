@@ -149,7 +149,7 @@
         .location-type-specific { display: none; padding-top:15px; border-top: 1px dashed #e0e0e0; margin-top:15px;}
         .location-type-specific.active { display: block; }
 
-        @media (max-width: 768px) { /* ... (Keep existing responsive styles, ensure they work with new structure) ... */ }
+        @media (max-width: 768px) { /* ... (Keep existing responsive styles) ... */ }
         @media (max-width: 480px) { /* ... (Keep existing responsive styles) ... */ }
     </style>
 </head>
@@ -567,17 +567,9 @@
             ui.offlineLocationDetailsDiv.classList.toggle('active', !isOnline);
             ui.onlineMeetingLinkInput.required = isOnline;
             ui.venueNameInput.required = !isOnline;
-            // Address is conditionally required if GMap link isn't provided for offline
             ui.eventLocationAddressTextarea.required = !isOnline && !ui.eventLocationGMapLinkInput.value.trim();
-            if(isOnline) {
-                ['venueName', 'eventLocationAddress', 'eventLocationGMapLink'].forEach(id => {
-                    const el = document.getElementById(errorFieldMap[id]); if(el) el.textContent = '';
-                    document.getElementById(id)?.classList.remove('form-error');
-                });
-            } else {
-                 const el = document.getElementById(errorFieldMap.onlineMeetingLink); if(el) el.textContent = '';
-                 ui.onlineMeetingLinkInput.classList.remove('form-error');
-            }
+             if(isOnline) { ['venueName', 'eventLocationAddress', 'eventLocationGMapLink'].forEach(id => { const el = document.getElementById(errorFieldMap[id]); if(el) el.textContent = ''; document.getElementById(id)?.classList.remove('form-error'); }); }
+             else { const el = document.getElementById(errorFieldMap.onlineMeetingLink); if(el) el.textContent = ''; ui.onlineMeetingLinkInput.classList.remove('form-error');}
         }
         if (ui.locationTypeOfflineRadio && ui.locationTypeOnlineRadio) {
             [ui.locationTypeOfflineRadio, ui.locationTypeOnlineRadio].forEach(radio => radio.addEventListener('change', handleLocationTypeChange));
@@ -639,25 +631,23 @@
         function validateForm(showGeneralMsg = true) {
             let isValid = true;
             clearFieldErrors();
-            // Event Name, Description
             if (!ui.eventNameInput.value.trim()) { displayFieldError('eventName', 'required'); isValid = false; }
             if (!ui.eventDescriptionTextarea.value.trim()) { displayFieldError('eventDescription', 'required'); isValid = false; }
-            // Dates (Times are optional)
+            
             [ui.eventStartDateInput, ui.eventEndDateInput, ui.registrationDeadlineDateInput].forEach(input => {
                 if (!input.value) { displayFieldError(input.id, 'required'); isValid = false; }
             });
-            // Date logic validation
             if (ui.eventStartDateInput.value && ui.eventEndDateInput.value) {
-                const startDateTimeValue = ui.eventStartDateInput.value + "T" + (ui.eventStartTimeInput.value || "00:00:00"); // Default time if empty
-                const endDateTimeValue = ui.eventEndDateInput.value + "T" + (ui.eventEndTimeInput.value || "23:59:59"); // Default time if empty
-                const startDT = new Date(startDateTimeValue);
-                const endDT = new Date(endDateTimeValue);
+                const startDTString = ui.eventStartDateInput.value + "T" + (ui.eventStartTimeInput.value || "00:00:00");
+                const endDTString = ui.eventEndDateInput.value + "T" + (ui.eventEndTimeInput.value || "23:59:59");
+                const startDT = new Date(startDTString);
+                const endDT = new Date(endDTString);
 
                 if (endDT <= startDT) { displayFieldError('eventEndDate', 'endDateBeforeStart'); isValid = false; }
 
                 if (ui.registrationDeadlineDateInput.value) {
-                    const deadlineDateTimeValue = ui.registrationDeadlineDateInput.value + "T" + (ui.registrationDeadlineTimeInput.value || "23:59:59");
-                    const deadlineDT = new Date(deadlineDateTimeValue);
+                    const deadlineDTString = ui.registrationDeadlineDateInput.value + "T" + (ui.registrationDeadlineTimeInput.value || "23:59:59");
+                    const deadlineDT = new Date(deadlineDTString);
                     if (deadlineDT >= startDT) { displayFieldError('registrationDeadlineDate', 'deadlineAfterStart'); isValid = false; }
                     if (deadlineDT >= endDT) { displayFieldError('registrationDeadlineDate', 'deadlineTooCloseToEnd'); isValid = false; }
                 }
@@ -666,7 +656,6 @@
                 displayFieldError('recurringRule', 'required'); isValid = false;
             }
 
-            // Location Validation
             if (ui.locationTypeOfflineRadio.checked) {
                 if (!ui.venueNameInput.value.trim()) { displayFieldError('venueName', 'venueNameRequired'); isValid = false; }
                 if (!ui.eventLocationAddressTextarea.value.trim() && !ui.eventLocationGMapLinkInput.value.trim()) {
@@ -682,19 +671,15 @@
                 }
             }
 
-            // Venue & Participation
             if (isNaN(parseInt(ui.numTablesInput.value)) || parseInt(ui.numTablesInput.value) < 0) { displayFieldError('numTables', 'numberMin', {min:0}); isValid = false; }
             if (isNaN(parseInt(ui.chairsPerTableInput.value)) || parseInt(ui.chairsPerTableInput.value) < 0) { displayFieldError('chairsPerTable', 'numberMin', {min:0}); isValid = false; }
             if (parseInt(ui.chairsPerTableInput.value) > 50) { displayFieldError('chairsPerTable', 'numberMax', {max:50}); isValid = false; }
             if (isNaN(parseInt(ui.maxRegistrationsPerUserInput.value)) || parseInt(ui.maxRegistrationsPerUserInput.value) < 0) { displayFieldError('maxRegistrationsPerUser', 'numberMin', {min:0}); isValid = false; }
 
-            // Menu Structure Validation
             document.querySelectorAll('.menu-section').forEach((sectionDiv) => {
                 const titleInput = sectionDiv.querySelector('.menu-section-title');
                 if (!titleInput.value.trim()) {
                     titleInput.classList.add('form-error');
-                    // For dynamic IDs, we can't use errorFieldMap directly. A general message or inline error near title is better.
-                    // For now, just visual indication.
                     isValid = false;
                 } else { titleInput.classList.remove('form-error'); }
 
@@ -705,7 +690,6 @@
                 });
             });
             
-            // Pricing & Admin
             if (ui.isPaidEventCheckbox.checked) {
                 if (!ui.eventPriceInput.value) { displayFieldError('eventPrice', 'required'); isValid = false; }
                 else if (parseFloat(ui.eventPriceInput.value) < 0) { displayFieldError('eventPrice', 'numberMin', {min:0}); isValid = false; }
@@ -731,20 +715,17 @@
 
                 const formData = new FormData(this);
                 const finalPayload = {};
-                // General Info
                 finalPayload.eventName = formData.get('eventName');
                 finalPayload.organizerName = formData.get('organizerName') || null;
                 finalPayload.eventDescription = formData.get('eventDescription');
-                // Date & Time
                 finalPayload.eventStartDate = formData.get('eventStartDate');
                 finalPayload.eventStartTime = formData.get('eventStartTime') || null;
                 finalPayload.eventEndDate = formData.get('eventEndDate');
                 finalPayload.eventEndTime = formData.get('eventEndTime') || null;
                 finalPayload.registrationDeadlineDate = formData.get('registrationDeadlineDate');
                 finalPayload.registrationDeadlineTime = formData.get('registrationDeadlineTime') || null;
-                finalPayload.isRecurringEvent = formData.has('isRecurringEvent'); // Not a DB field, for worker logic
+                finalPayload.isRecurringEvent = formData.has('isRecurringEvent');
                 finalPayload.recurringRule = finalPayload.isRecurringEvent ? (formData.get('recurringRule') || null) : null;
-                // Location
                 finalPayload.locationType = formData.get('locationType');
                 if (finalPayload.locationType === 'offline') {
                     finalPayload.venueName = formData.get('venueName') || null;
@@ -753,13 +734,11 @@
                 } else {
                     finalPayload.onlineMeetingLink = formData.get('onlineMeetingLink') || null;
                 }
-                // Venue & Participation
                 finalPayload.numTables = parseInt(formData.get('numTables') || 0);
                 finalPayload.chairsPerTable = parseInt(formData.get('chairsPerTable') || 0);
                 finalPayload.allowSeatSelection = formData.has('allowSeatSelection');
                 finalPayload.maxRegistrationsPerUser = parseInt(formData.get('maxRegistrationsPerUser') || 0);
                 finalPayload.enableWaitlist = formData.has('enableWaitlist');
-                // Menu Structure
                 finalPayload.menuStructure = [];
                 document.querySelectorAll('.menu-section').forEach((sectionDiv) => {
                     const titleInput = sectionDiv.querySelector('.menu-section-title');
@@ -779,7 +758,6 @@
                         finalPayload.menuStructure.push({ title: sectionTitle, items: items });
                     }
                 });
-                // Pricing, Access, Appearance
                 finalPayload.isPaidEvent = formData.has('isPaidEvent');
                 finalPayload.eventPrice = finalPayload.isPaidEvent ? parseFloat(formData.get('eventPrice') || 0) : null;
                 finalPayload.eventBadge = formData.get('eventBadge');
@@ -789,30 +767,32 @@
                 const originalButtonHTML = submitButton.innerHTML;
                 submitButton.disabled = true;
                 submitButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${getMessage('creatingEvent', currentLangCreate)}`;
+                
+                let response; // Declare response and result outside try to be accessible in finally
+                let result;
+                let isSuccessAndRedirecting = false;
 
                 try {
-                    const response = await fetch(WORKER_URL, {
+                    response = await fetch(WORKER_URL, { // Assign to outer response
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(finalPayload)
                     });
-                    const result = await response.json();
+                    result = await response.json(); // Assign to outer result
                     if (response.ok && result.success && result.eventId) {
                         const eventId = result.eventId;
                         const shareLink = `${window.location.origin}/event-display.html?id=${eventId}`;
                         const editLink = `${window.location.origin}/edit-event.html?id=${eventId}`;
                         
-                        // Prepare URL for the confirmation page
                         const confirmationPageUrl = new URL(`${window.location.origin}/event-confirmation.html`);
                         confirmationPageUrl.searchParams.append('eventId', eventId);
                         confirmationPageUrl.searchParams.append('eventName', encodeURIComponent(finalPayload.eventName));
                         confirmationPageUrl.searchParams.append('shareLink', encodeURIComponent(shareLink));
                         confirmationPageUrl.searchParams.append('editLink', encodeURIComponent(editLink));
 
-                        ui.createEventForm.style.display = 'none'; // Hide the form
-                        displayFormMessage(getMessage('redirectingToConfirmation', currentLangCreate), 'info'); // Show redirect message
-
-                        // Redirect to the new confirmation page
+                        ui.createEventForm.style.display = 'none';
+                        displayFormMessage(getMessage('redirectingToConfirmation', currentLangCreate), 'info');
+                        isSuccessAndRedirecting = true;
                         window.location.href = confirmationPageUrl.toString();
 
                     } else {
@@ -822,9 +802,7 @@
                     console.error("Submit error:", error);
                     displayFormMessage(`${getMessage('creationError', currentLangCreate)}: ${error.message}`, 'error');
                 } finally {
-                    // Re-enable button only if not redirecting or if redirect fails.
-                    // Since we are redirecting, this might not be strictly necessary unless an error occurs before redirect.
-                    if (! (response && response.ok && result && result.success && result.eventId) ) {
+                    if (!isSuccessAndRedirecting) { // Only re-enable if not successful redirect
                          submitButton.disabled = false;
                          submitButton.innerHTML = originalButtonHTML;
                     }
