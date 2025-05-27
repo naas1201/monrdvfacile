@@ -1,0 +1,35 @@
+# General rules for all crawlers
+User-agent: *
+Allow: /
+Disallow: /screenshots/
+
+# Specific rules for Google's AI crawlers
+User-agent: Google-Extended
+Allow: /
+Disallow: /screenshots/
+
+# Specific rules for OpenAI's crawlers
+User-agent: GPTBot
+Allow: /
+Disallow: /screenshots/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /screenshots/
+
+# Specific rules for Anthropic's AI crawlers
+User-agent: ClaudeBot
+Allow: /
+Disallow: /screenshots/
+
+# Specific rules for Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+Disallow: /screenshots/
+
+# You can add more AI crawlers as they become known
+# User-agent: OtherAICrawlerBot
+# Allow: /
+# Disallow: /screenshots/
+
+Sitemap: https://monrdvfacile.lpp.ovh/sitemap.xml
