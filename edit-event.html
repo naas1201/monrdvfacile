@@ -420,6 +420,33 @@
             deleteEventButton: document.getElementById('deleteEventButton'),
             cancelEditButton: document.getElementById('cancelEditButton')
         };
+        
+        // DEFINE errorFieldMapEdit HERE
+        const errorFieldMapEdit = {
+            authEventId: 'authEventIdError',
+            authAdminPassword: 'authAdminPasswordError',
+            eventName: 'eventNameEditError',
+            organizerName: 'organizerNameEditError',
+            eventDescription: 'eventDescriptionEditError',
+            eventStartDate: 'eventStartDateEditError',
+            eventStartTime: 'eventStartTimeEditError',
+            eventEndDate: 'eventEndDateEditError',
+            eventEndTime: 'eventEndTimeEditError',
+            registrationDeadlineDate: 'registrationDeadlineDateEditError',
+            registrationDeadlineTime: 'registrationDeadlineTimeEditError',
+            recurringRule: 'recurringRuleEditError',
+            locationType: 'locationTypeEditError',
+            venueName: 'venueNameEditError',
+            eventLocationAddress: 'eventLocationAddressEditError',
+            eventLocationGMapLink: 'eventLocationGMapLinkEditError',
+            onlineMeetingLink: 'onlineMeetingLinkEditError',
+            numTables: 'numTablesEditError',
+            chairsPerTable: 'chairsPerTableEditError',
+            maxRegistrationsPerUser: 'maxRegistrationsPerUserEditError',
+            eventPrice: 'eventPriceEditError'
+            // Dynamic menu item errors will be handled by class or general message
+        };
+
 
         // --- Language & Translation ---
         function queryTranslatableItemsEdit() {
@@ -516,31 +543,41 @@
             uiEdit.messageDivInline.innerHTML = ''; uiEdit.messageDivInline.style.display = 'none'; uiEdit.messageDivInline.className = 'form-message';
         }
         function clearFieldErrorsEdit() {
-            for (const fieldIdKey in errorFieldMap) { // Use fieldIdKey from errorFieldMap
-                const errorElId = errorFieldMap[fieldIdKey] + 'Edit'; // Construct error element ID
+            for (const baseFieldId in errorFieldMapEdit) { // Iterate over keys of errorFieldMapEdit
+                const errorElId = errorFieldMapEdit[baseFieldId]; // Get the error element's ID
                 const errorEl = document.getElementById(errorElId);
                 if (errorEl) errorEl.textContent = '';
                 
-                const inputEl = document.getElementById(fieldIdKey + 'Edit'); // Construct input element ID
-                if (inputEl) {inputEl.classList.remove('form-error'); inputEl.removeAttribute('aria-invalid');}
-            }
-            uiEdit.menuBuilderContainerEdit.querySelectorAll('.menu-section-title, .menu-item-name').forEach(el => {
-                el.classList.remove('form-error'); el.removeAttribute('aria-invalid');
-                const errorSmall = el.closest('.form-group')?.querySelector('.form-error-text') || el.nextElementSibling;
-                if (errorSmall && errorSmall.classList.contains('form-error-text')) {
-                    errorSmall.textContent = '';
+                // Determine actual input ID (auth fields don't have 'Edit' suffix in their ID)
+                const inputElId = (baseFieldId === 'authEventId' || baseFieldId === 'authAdminPassword') ? baseFieldId : baseFieldId + 'Edit';
+                const inputEl = document.getElementById(inputElId);
+                if (inputEl) {
+                    inputEl.classList.remove('form-error');
+                    inputEl.removeAttribute('aria-invalid');
                 }
+            }
+            // Clear errors for dynamically generated menu inputs
+            uiEdit.menuBuilderContainerEdit.querySelectorAll('.menu-section-title, .menu-item-name').forEach(el => {
+                el.classList.remove('form-error');
+                el.removeAttribute('aria-invalid');
+                const dynamicErrorElId = el.id + 'Error'; // e.g., menuSectionTitle_s1EditError
+                const dynamicErrorEl = document.getElementById(dynamicErrorElId);
+                if(dynamicErrorEl) dynamicErrorEl.textContent = '';
             });
         }
-        function displayFieldErrorEdit(fieldId, messageKey, replacements = {}) {
-            // fieldId here is the base name, e.g., 'eventName'
-            const errorElId = errorFieldMap[fieldId] ? errorFieldMap[fieldId] + 'Edit' : fieldId + 'Error';
-            const inputEl = document.getElementById(fieldId + 'Edit') || document.getElementById(fieldId); // Try with and without 'Edit'
-
+        function displayFieldErrorEdit(baseFieldId, messageKey, replacements = {}) {
+            const errorElId = errorFieldMapEdit[baseFieldId]; 
+            const inputElId = (baseFieldId === 'authEventId' || baseFieldId === 'authAdminPassword') ? baseFieldId : baseFieldId + 'Edit';
+            
+            const inputEl = document.getElementById(inputElId);
             if (inputEl) { inputEl.classList.add('form-error'); inputEl.setAttribute('aria-invalid', 'true');}
+            
             const errorEl = document.getElementById(errorElId);
-            if (errorEl) { errorEl.textContent = getMessageEdit(messageKey, replacements); }
-            else { console.warn("Error element not found for field:", fieldId, "Expected ID:", errorElId); }
+            if (errorEl) { 
+                errorEl.textContent = getMessageEdit(messageKey, replacements); 
+            } else { 
+                console.warn(`Error element ID '${errorElId}' for base field '${baseFieldId}' not found.`);
+            }
         }
 
 
@@ -557,7 +594,7 @@
             uiEdit.isRecurringEventCheckboxEdit.addEventListener('change', function() {
                 uiEdit.recurringRuleGroupEdit.style.display = this.checked ? 'block' : 'none';
                 uiEdit.recurringRuleInputEdit.required = this.checked;
-                if (!this.checked) {uiEdit.recurringRuleInputEdit.value = ''; displayFieldErrorEdit('recurringRuleEdit','');}
+                if (!this.checked) {uiEdit.recurringRuleInputEdit.value = ''; displayFieldErrorEdit('recurringRule','');}
             });
         }
 
@@ -568,8 +605,8 @@
             uiEdit.onlineMeetingLinkInputEdit.required = isOnline;
             uiEdit.venueNameEdit.required = !isOnline;
             uiEdit.eventLocationAddressTextareaEdit.required = !isOnline && !uiEdit.eventLocationGMapLinkInputEdit.value.trim();
-             if(isOnline) { ['venueName', 'eventLocationAddress', 'eventLocationGMapLink'].forEach(id => { const el = document.getElementById(errorFieldMap[id] + 'Edit'); if(el) el.textContent = ''; document.getElementById(id + 'Edit')?.classList.remove('form-error'); }); }
-             else { const el = document.getElementById(errorFieldMap.onlineMeetingLink + 'Edit'); if(el) el.textContent = ''; uiEdit.onlineMeetingLinkInputEdit.classList.remove('form-error');}
+             if(isOnline) { ['venueName', 'eventLocationAddress', 'eventLocationGMapLink'].forEach(id => { const el = document.getElementById(errorFieldMapEdit[id]); if(el) el.textContent = ''; document.getElementById(id + 'Edit')?.classList.remove('form-error'); }); }
+             else { const el = document.getElementById(errorFieldMapEdit.onlineMeetingLink); if(el) el.textContent = ''; uiEdit.onlineMeetingLinkInputEdit.classList.remove('form-error');}
         }
         if (uiEdit.locationTypeOfflineRadioEdit && uiEdit.locationTypeOnlineRadioEdit) {
             [uiEdit.locationTypeOfflineRadioEdit, uiEdit.locationTypeOnlineRadioEdit].forEach(radio => radio.addEventListener('change', handleLocationTypeChangeEdit));
@@ -644,7 +681,7 @@
             uiEdit.isPaidEventCheckboxEdit.addEventListener('change', function() {
                 uiEdit.eventPriceGroupEdit.style.display = this.checked ? 'block' : 'none';
                 uiEdit.eventPriceInputEdit.required = this.checked;
-                if (!this.checked) {uiEdit.eventPriceInputEdit.value = ''; displayFieldErrorEdit('eventPriceEdit','');}
+                if (!this.checked) {uiEdit.eventPriceInputEdit.value = ''; displayFieldErrorEdit('eventPrice','');} // fieldId is 'eventPrice'
             });
         }
 
@@ -699,7 +736,7 @@
             let isValid = true;
             clearFieldErrorsEdit();
             if (!uiEdit.eventNameEdit.value.trim()) { displayFieldErrorEdit('eventName', 'required'); isValid = false; }
-            if (!uiEdit.eventDescriptionTextareaEdit.value.trim()) { displayFieldErrorEdit('eventDescriptionEdit', 'required'); isValid = false; }
+            if (!uiEdit.eventDescriptionTextareaEdit.value.trim()) { displayFieldErrorEdit('eventDescription', 'required'); isValid = false; }
             
             [uiEdit.eventStartDateEdit, uiEdit.eventEndDateEdit, uiEdit.registrationDeadlineDateEdit].forEach(input => {
                 if (!input.value) { displayFieldErrorEdit(input.id.replace('Edit',''), 'required'); isValid = false; }
@@ -805,7 +842,7 @@
             eventDataToUpdate.eventEndTime = formData.get('eventEndTime') || null;
             eventDataToUpdate.registrationDeadlineDate = formData.get('registrationDeadlineDate');
             eventDataToUpdate.registrationDeadlineTime = formData.get('registrationDeadlineTime') || null;
-            eventDataToUpdate.isRecurringEvent = formData.has('isRecurringEventEdit'); // Not a direct DB field
+            eventDataToUpdate.isRecurringEvent = formData.has('isRecurringEventEdit'); 
             eventDataToUpdate.recurringRule = eventDataToUpdate.isRecurringEvent ? (formData.get('recurringRule') || null) : null;
             eventDataToUpdate.locationType = formData.get('locationType');
             if (eventDataToUpdate.locationType === 'offline') {
@@ -899,14 +936,14 @@
             uiEdit.menuStatsContainerEl.innerHTML = '';
             if (eventDetails.menuStructure && Array.isArray(eventDetails.menuStructure) && eventDetails.menuStructure.length > 0 && registrations && registrations.length > 0) {
                 let totalMenuChoicesMade = 0; const menuChoiceCounts = {};
-                eventDetails.menuStructure.forEach(section => { section.items.forEach(item => menuChoiceCounts[item.name] = 0);}); // Initialize all possible menu items
+                eventDetails.menuStructure.forEach(section => { section.items.forEach(item => menuChoiceCounts[item.name] = 0);});
                 registrations.forEach(reg => { if (reg.menuChoice && menuChoiceCounts.hasOwnProperty(reg.menuChoice)) { menuChoiceCounts[reg.menuChoice]++; totalMenuChoicesMade++; }});
                 
                 let menuStatsHTML = '';
                 for (const menuName in menuChoiceCounts) {
-                    if (menuChoiceCounts.hasOwnProperty(menuName)) { // Check if it's an actual menu item from the structure
+                    if (menuChoiceCounts.hasOwnProperty(menuName)) {
                         const count = menuChoiceCounts[menuName];
-                        if (count > 0) { // Only display if chosen at least once
+                        if (count > 0) {
                             const percentage = totalMenuChoicesMade > 0 ? Math.round((count / totalMenuChoicesMade) * 100) : 0;
                             menuStatsHTML += `<p>${menuName}: <strong class="stat-value" style="font-size:1.2rem;">${count}</strong> (${percentage}%)</p>`;
                         }
@@ -962,7 +999,7 @@
                 row.insertCell().textContent = item.waitlistDate ? new Date(item.waitlistDate).toLocaleDateString(currentLangEdit === 'fr' ? 'fr-FR' : 'en-US', {day:'2-digit', month:'short', year:'numeric'}) : 'N/A';
             });
         }
-        function exportAttendeesToCSV(registrations, eventName) { /* ... (Keep existing) ... */
+        function exportAttendeesToCSV(registrations, eventName) {
             if (!registrations || registrations.length === 0) { alert(getMessageEdit('noDataToExport')); return; }
             const headers = [getMessageEdit('attendeeName'), getMessageEdit('attendeeEmail'), "Phone", getMessageEdit('attendeeMenu'), "Registration Date", getMessageEdit('attendeePaid')];
             let csvContent = "data:text/csv;charset=utf-8," + headers.join(",") + "\n";
