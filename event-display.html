@@ -5,9 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title data-fr="Détails de l'Événement - MonRdvFacile" data-en="Event Details - MyEasyMeeting">Détails de l'Événement</title>
-    <meta name="description" data-fr="Consultez les détails de l'événement et inscrivez-vous." data-en="View event details and register.">
-    <meta name="keywords" content="événement, inscription, royan, 17000, mon rdv facile">
-    <meta name="robots" content="index, follow"> <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2JVSXZXNN"></script>
+    <meta id="metaDescription" name="description" content="" data-fr-base="Consultez les détails pour {eventName} et inscrivez-vous." data-en-base="View details for {eventName} and register.">
+    <meta name="keywords" content="événement, inscription, royan, 17000, charente-maritime, mon rdv facile">
+    <meta name="robots" content="index, follow">
+    <link id="canonicalLink" rel="canonical" href="">
+
+    <meta id="ogType" property="og:type" content="article"> <meta id="ogUrl" property="og:url" content="">
+    <meta id="ogTitle" property="og:title" content="">
+    <meta id="ogDescription" property="og:description" content="">
+    <meta property="og:site_name" content="MonRdvFacile">
+    <meta id="ogLocale" property="og:locale" content="fr_FR">
+
+    <meta id="twitterCard" name="twitter:card" content="summary">
+    <meta id="twitterUrl" name="twitter:url" content="">
+    <meta id="twitterTitle" name="twitter:title" content="">
+    <meta id="twitterDescription" name="twitter:description" content="">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2JVSXZXNN"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -18,144 +31,144 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        /* --- Inline CSS for event-display.html (Adapted from your existing styles) --- */
+        /* --- Inline CSS for event-display.html (Production Polish) --- */
+        :root {
+            --primary-color-display: #005A9C; /* Main theme blue */
+            --primary-darker-display: #004170;
+            --secondary-color-display: #17a2b8; /* Teal for accents */
+            --success-color-display: #28a745; /* Green for success */
+            --danger-color-display: #dc3545;  /* Red for errors */
+            --text-color-display: #333333;
+            --text-light-display: #555555;
+            --bg-color-display: #F8F9FA;
+            --content-bg-display: #FFFFFF;
+            --border-color-display: #CED4DA;
+            --border-radius-display: 8px;
+            --box-shadow-display: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-            line-height: 1.6; background-color: #F8F9FA; color: #333333;
+            line-height: 1.65; background-color: var(--bg-color-display); color: var(--text-color-display);
             display: flex; flex-direction: column; min-height: 100vh;
             -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
         }
-        h1, h2, h3, h4 { font-weight: 600; color: #003366; margin-bottom: 0.75rem; line-height: 1.3; }
-        h1.event-title-main { font-size: 2.5rem; color: #004170; text-align: center; margin-top: 1rem; margin-bottom: 0.5rem;}
-        h2 { font-size: 1.75rem; }
-        h3 { font-size: 1.5rem; margin-top: 1.5rem; border-bottom: 1px solid #DEE2E6; padding-bottom: 0.5rem;}
-        p { margin-bottom: 1rem; font-size: 1.1rem; /* Slightly larger for seniors */ }
-        a { color: #005A9C; text-decoration: none; }
-        a:hover, a:focus { color: #003366; text-decoration: underline; }
+        h1, h2, h3, h4 { font-weight: 600; color: var(--primary-darker-display); margin-bottom: 0.85rem; line-height: 1.3; }
+        h1.event-title-main { font-size: 2.6rem; color: var(--primary-color-display); text-align: center; margin-top: 1.2rem; margin-bottom: 0.6rem; word-break: break-word;}
+        h2 { font-size: 1.8rem; }
+        h3 { font-size: 1.6rem; margin-top: 1.8rem; border-bottom: 2px solid var(--primary-color-display); padding-bottom: 0.6rem; color: var(--primary-color-display);}
+        p { margin-bottom: 1.1rem; font-size: 1.1rem; color: var(--text-light-display); }
+        a { color: var(--primary-color-display); text-decoration: none; }
+        a:hover, a:focus { color: var(--primary-darker-display); text-decoration: underline; }
 
-        .container { width: 90%; max-width: 900px; /* Good readable width */ margin-left: auto; margin-right: auto; padding: 20px 15px; }
+        .container { width: 90%; max-width: 960px; margin-left: auto; margin-right: auto; padding: 25px 15px; }
         main.container { flex-grow: 1; }
 
-        #app-header { background-color: #005A9C; color: #FFFFFF; padding:0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
-        /* ... (your existing header styles from create-event.html) ... */
-        .header-container { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; padding-bottom: 1rem; max-width: 1200px; margin: 0 auto; width: 90%;}
-        .logo a { font-size: 1.5rem; font-weight: bold; color: #FFFFFF; text-decoration: none; }
-        .main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
-        .main-nav li { margin-left: 20px; }
-        .main-nav a { color: #FFFFFF; text-decoration: none; font-size: 1rem; padding: 5px 10px; border-radius: 4px; transition: background-color 0.2s ease; }
-        .main-nav a:hover, .main-nav a.active { background-color: #004170; }
-        .main-nav .nav-text { margin-left: 5px; }
-        .mobile-nav-toggle { display: none; border: none; background: none; color: #FFFFFF; font-size: 1.5rem; cursor: pointer; }
-
-
-        #app-footer { background-color: #333333; color: #E0E0E0; padding: 2rem 0; text-align: center; font-size: 0.9rem; margin-top: auto; }
-        /* ... (your existing footer styles from create-event.html) ... */
-        .footer-container { max-width: 1200px; margin: 0 auto; width: 90%; }
-
+        /* Header/Footer placeholders will be styled by hf.js or its injected styles */
+        #app-header {}
+        #app-footer { margin-top: auto; }
 
         .lang-toggle { text-align: right; margin-bottom: 1rem; font-size: 0.9rem; }
-        .lang-link { color: #555555; text-decoration: none; padding: 0.2rem 0.4rem; border-radius: 3px; cursor:pointer; }
-        .lang-link.active { font-weight: bold; color: #005A9C; background-color: #e9ecef; }
-        .lang-link:hover { background-color: #dee2e6; text-decoration: none; }
+        .lang-link { color: var(--text-light-display); text-decoration: none; padding: 0.3rem 0.5rem; border-radius: 4px; cursor:pointer; font-weight: 500; }
+        .lang-link.active { font-weight: bold; color: var(--primary-color-display); background-color: rgba(0, 90, 156, 0.1); }
+        .lang-link:hover { background-color: rgba(0, 90, 156, 0.07); text-decoration: none; }
 
-        .content-section { background-color: #FFFFFF; padding: 25px 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); margin-top: 20px; margin-bottom: 30px; }
+        .content-section { background-color: var(--content-bg-display); padding: 30px; border-radius: var(--border-radius-display); box-shadow: var(--box-shadow-display); margin-top: 25px; margin-bottom: 35px; }
         
-        .event-meta p { margin-bottom: 0.5rem; font-size: 1.1rem; color: #333; }
-        .event-meta strong { color: #003366; }
-        .event-description-text { font-size: 1.15rem; margin-top: 10px; margin-bottom: 20px; white-space: pre-wrap; /* Preserve line breaks from input */ }
+        .event-meta p { margin-bottom: 0.7rem; font-size: 1.15rem; color: var(--text-color-display); }
+        .event-meta p i { margin-right: 10px; color: var(--primary-color-display); width:20px; text-align:center;}
+        .event-meta strong { color: var(--primary-darker-display); }
+        .event-description-text { font-size: 1.2rem; margin-top: 15px; margin-bottom: 25px; white-space: pre-wrap; line-height: 1.7; }
 
-        .badge-display { display: inline-block; padding: 0.4em 0.8em; font-size: 1rem; font-weight: bold; line-height: 1; color: #fff; text-align: center; white-space: nowrap; vertical-align: middle; border-radius: 0.3rem; margin-left: 10px; }
-        .badge-new { background-color: #17a2b8; } /* Teal */
-        .badge-popular { background-color: #dc3545; } /* Red */
+        .badge-display-wrapper { text-align: center; margin-bottom: 1.5rem;}
+        .badge-display { display: inline-block; padding: 0.5em 1em; font-size: 1rem; font-weight: 600; line-height: 1; color: #fff; text-align: center; white-space: nowrap; vertical-align: middle; border-radius: 50px; /* Pill shape */ margin: 0 5px; }
+        .badge-new { background-color: var(--secondary-color-display); }
+        .badge-popular { background-color: var(--danger-color-display); }
         .badge-special { background-color: #fd7e14; } /* Orange */
         .badge-promo { background-color: #6f42c1; } /* Purple */
-        .badge-soon { background-color: #ffc107; color:#212529; } /* Yellow */
+        .badge-soon { background-color: #ffc107; color:#212529 !important; } /* Yellow with dark text */
         .badge-none { display:none; }
 
-
-        /* Visual Table Layout */
-        #eventTableLayout { margin-top: 20px; padding: 15px; border: 1px dashed #CED4DA; border-radius: 6px; background-color: #f8f9fa; }
-        #eventTableLayout h4 { margin-top:0; font-size: 1.2rem; color: #004170;}
-        .tables-display-container { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+        #eventTableLayout { margin-top: 25px; padding: 20px; border: 1px solid #e0e0e0; border-radius: var(--border-radius-display); background-color: #fdfdfd; }
+        #eventTableLayout h4 { margin-top:0; font-size: 1.3rem; color: var(--primary-darker-display); text-align:center; margin-bottom:15px;}
+        .tables-display-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
         .display-table-box {
-            border: 1px solid #005A9C; border-radius: 4px; padding: 10px;
-            background-color: #e9f2fa; text-align: center; min-width: 120px;
+            border: 1px solid var(--primary-color-display); border-radius: var(--border-radius-display); padding: 12px 15px;
+            background-color: #edf6ff; text-align: center; min-width: 130px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-        .display-table-box strong { color: #003366; }
-        .display-table-chairs { font-size: 0.9em; color: #333; }
+        .display-table-box strong { color: var(--primary-darker-display); font-size:1.1rem; }
+        .display-table-chairs { font-size: 0.95em; color: var(--text-light-display); }
 
-        /* Registration Form Styles */
-        .registration-form legend { font-size: 1.25rem; font-weight: 600; color: #004170; padding: 0 10px; margin-left: 5px; }
-        .form-group { margin-bottom: 1.5rem; /* Increased margin for seniors */ }
-        label { display: block; font-weight: 500; color: #343A40; margin-bottom: 0.6rem; font-size: 1.1rem; /* Larger labels */ }
+        .registration-form legend { font-size: 1.3rem; font-weight: 600; color: var(--primary-darker-display); padding: 0 10px; margin-left: 5px; }
+        .form-group { margin-bottom: 1.8rem; }
+        label { display: block; font-weight: 500; color: var(--text-color-display); margin-bottom: 0.7rem; font-size: 1.15rem; }
         input[type="text"], input[type="email"], input[type="tel"], select {
-            width: 100%; padding: 0.85rem 1.1rem; /* Larger padding */ font-size: 1.05rem; /* Larger font in input */
-            line-height: 1.5; color: #495057; background-color: #FFFFFF;
-            border: 1px solid #CED4DA; border-radius: 5px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            width: 100%; padding: 0.9rem 1.2rem; font-size: 1.1rem; 
+            line-height: 1.5; color: #495057; background-color: var(--content-bg-display);
+            border: 1px solid var(--border-color-display); border-radius: var(--border-radius-display); box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
-        input:focus, select:focus { border-color: #005A9C; outline: 0; box-shadow: 0 0 0 0.2rem rgba(0, 90, 156, 0.25); }
-        .form-error-text { display: block; margin-top: 0.35rem; font-size: 0.9rem; color: #dc3545; }
-        .mandatory-star { color: #dc3545; font-weight: bold; margin-left: 2px; }
+        input:focus, select:focus { border-color: var(--primary-color-display); outline: 0; box-shadow: 0 0 0 0.25rem rgba(0, 90, 156, 0.2); }
+        .form-error-text { display: block; margin-top: 0.4rem; font-size: 0.9rem; color: var(--danger-color-display); font-weight:500; }
+        .mandatory-star { color: var(--danger-color-display); font-weight: bold; margin-left: 3px; }
 
-        .paid-options-group { margin-top:1rem; padding: 15px; background-color: #e9f2fa; border: 1px solid #bad6f1; border-radius: 5px;}
-        .paid-options-group legend { font-size: 1.1rem; color: #004170; }
-        .paid-options-group .form-group-radio { display: flex; align-items: center; margin-bottom: 0.5rem; }
-        .paid-options-group input[type="radio"] { width: auto; margin-right: 10px; transform: scale(1.4); accent-color: #005A9C;}
-        .paid-options-group label { margin-bottom: 0; font-weight: normal; font-size: 1.05rem; }
+        .paid-options-group { margin-top:1.2rem; padding: 20px; background-color: #edf6ff; border: 1px solid #b8d4f1; border-radius: var(--border-radius-display);}
+        .paid-options-group legend { font-size: 1.2rem; color: var(--primary-darker-display); }
+        .paid-options-group .form-group-radio { display: flex; align-items: center; margin-bottom: 0.7rem; }
+        .paid-options-group input[type="radio"] { width: auto; margin-right: 12px; transform: scale(1.5); accent-color: var(--primary-color-display); cursor:pointer;}
+        .paid-options-group label { margin-bottom: 0; font-weight: normal; font-size: 1.1rem; cursor:pointer;}
 
-        .form-actions { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #E9ECEF; text-align: center;}
+        .form-actions { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid #e9ecef; text-align: center;}
         .btn-submit-registration {
-            background-color: #28a745; border-color: #28a745; color: white;
-            padding: 0.8rem 1.8rem; font-size: 1.2rem; /* Larger button */
-            transition: background-color 0.15s ease-in-out;
+            background-color: var(--success-color-display); border:none; color: white;
+            padding: 0.9rem 2rem; font-size: 1.25rem; border-radius: 50px; /* Pill shape */
+            transition: background-color 0.2s ease, transform 0.2s ease; font-weight: 600;
         }
-        .btn-submit-registration:hover { background-color: #218838; border-color: #1e7e34; }
-        .btn-submit-registration i { margin-right: 0.6rem; }
+        .btn-submit-registration:hover { background-color: #218838; transform: translateY(-2px); }
+        .btn-submit-registration:disabled { background-color: #aaa; cursor: not-allowed; }
+        .btn-submit-registration i { margin-right: 0.8rem; }
 
-        /* Confirmation Message */
-        #registrationConfirmationMessage { padding: 20px; background-color: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; margin-top:20px; text-align:center; display:none; }
-        #registrationConfirmationMessage h3 { color: #155724; }
-        #confirmationDetails p { margin-bottom: 0.5rem; font-size: 1.1rem; }
-        .print-button { margin-top:15px; padding:10px 15px; background-color:#007bff; color:white; border:none; border-radius:4px; cursor:pointer; font-size: 1rem;}
-        .print-button:hover { background-color: #0056b3; }
+        #registrationConfirmationMessage { padding: 25px; background-color: #e6ffed; border: 1px solid #a3e9b8; border-radius: var(--border-radius-display); margin-top:25px; text-align:center; display:none; }
+        #registrationConfirmationMessage h3 { color: #0f5132; font-size:1.8rem; margin-bottom:15px;}
+        #confirmationDetails p { margin-bottom: 0.6rem; font-size: 1.15rem; color: var(--text-color-display) }
+        #confirmationDetails strong {color: var(--primary-darker-display); }
+        .print-button { margin-top:20px; padding:12px 20px; background-color:var(--primary-color-display); color:white; border:none; border-radius:50px; cursor:pointer; font-size: 1.05rem; font-weight:500;}
+        .print-button:hover { background-color: var(--primary-darker-display); }
 
-        /* Share Section */
-        .share-section { margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; }
-        .share-section h3 { font-size:1.4rem; }
+        .share-section { margin-top: 35px; padding-top: 25px; border-top: 1px solid #e9ecef; text-align: center; }
+        .share-section h3 { font-size:1.5rem; color: var(--primary-darker-display); margin-bottom:15px; }
         .share-button {
-            display: inline-block; margin: 8px; padding: 12px 20px; border-radius: 5px;
-            color: white; text-decoration: none; font-size: 1.1rem; transition: background-color 0.2s ease;
+            display: inline-flex; align-items:center; justify-content:center; gap: 8px;
+            margin: 10px; padding: 12px 25px; border-radius: 50px; /* Pill shape */
+            text-decoration: none; font-size: 1.1rem; transition: background-color 0.2s ease, transform 0.2s ease; font-weight:500;
         }
-        .share-button i { margin-right: 8px; }
-        .copy-link-btn { background-color: #007bff; } /* Blue */
-        .whatsapp-btn { background-color: #25D366; } /* WhatsApp Green */
-        .copy-link-btn:hover { background-color: #0056b3; }
-        .whatsapp-btn:hover { background-color: #1DA851; }
-        #copyStatusMessage { font-size:0.9em; margin-top:5px; color: #007bff; }
+        .copy-link-btn { background-color: var(--primary-color-display); color:white; }
+        .whatsapp-btn { background-color: #25D366; color:white; }
+        .copy-link-btn:hover { background-color: var(--primary-darker-display); transform: translateY(-2px); }
+        .whatsapp-btn:hover { background-color: #1DA851; transform: translateY(-2px); }
+        #copyStatusMessage { font-size:0.9em; margin-top:8px; color: var(--primary-color-display); height: 1.2em; /* Reserve space */ }
 
-        /* General Message Area */
-        .general-message { padding: 15px 20px; margin-bottom: 20px; border-radius: 5px; border: 1px solid transparent; font-size: 1rem; display: none; text-align:center;}
+        .general-message { padding: 20px; margin-bottom: 25px; border-radius: var(--border-radius-display); border: 1px solid transparent; font-size: 1.1rem; display: none; text-align:center; font-weight:500;}
         .general-message-error { color: #721C24; background-color: #F8D7DA; border-color: #F5C6CB; }
+        .general-message-success { color: #155724; background-color: #D4EDDA; border-color: #C3E6CB; }
         .general-message-loading { color: #0C5460; background-color: #D1ECF1; border-color: #BEE5EB; }
+        .general-message i { margin-right: 8px;}
 
-         /* Responsive adjustments */
         @media (max-width: 768px) {
-            h1.event-title-main { font-size: 2rem; }
+            h1.event-title-main { font-size: 2.1rem; }
+            h2 {font-size:1.6rem;} h3 {font-size:1.4rem;}
             .content-section { padding: 20px 15px; }
-            .main-nav { /* ... (your existing mobile nav styles) ... */ }
-            .mobile-nav-toggle { display: block; }
+            .mobile-nav-toggle { display: block; } /* Ensure this is consistent with hf.js styles */
         }
         @media (max-width: 480px) {
-            h1.event-title-main { font-size: 1.7rem; }
-            p, label, input, select { font-size: 1rem; } /* Adjust base font for inputs on small screens */
-            input[type="text"], input[type="email"], input[type="tel"], select { padding: 0.7rem 0.9rem; }
-            .btn-submit-registration { padding: 0.7rem 1.5rem; font-size: 1.1rem; }
-            .share-button { padding: 10px 15px; font-size: 1rem; }
+            h1.event-title-main { font-size: 1.8rem; }
+            p, label, input, select { font-size: 1rem; }
+            input[type="text"], input[type="email"], input[type="tel"], select { padding: 0.8rem 1rem; }
+            .btn-submit-registration { padding: 0.8rem 1.6rem; font-size: 1.15rem; }
+            .share-button { padding: 10px 20px; font-size: 1rem; }
         }
-
     </style>
 </head>
 <body>
@@ -165,195 +178,226 @@
 
     <main class="container">
         <div class="lang-toggle">
-            <a href="#" onclick="switchLanguageDisplay('fr'); return false;" class="lang-link active" id="lang-fr-display">FR</a> |
-            <a href="#" onclick="switchLanguageDisplay('en'); return false;" class="lang-link" id="lang-en-display">EN</a>
+            <a href="#" onclick="switchLanguageDisplay('fr'); return false;" class="lang-link active" id="lang-fr-display" aria-label="Passer en Français">FR</a> |
+            <a href="#" onclick="switchLanguageDisplay('en'); return false;" class="lang-link" id="lang-en-display" aria-label="Switch to English">EN</a>
         </div>
 
-        <div id="generalMessageArea" class="general-message"></div>
+        <div id="generalMessageArea" class="general-message" role="alert"></div>
 
-        <div id="eventContent" style="display:none;"> <h1 id="eventTitle" class="event-title-main"></h1>
-            <div id="eventBadgeDisplay" class="badge-display" style="text-align:center; margin-bottom:1rem; display:block;"></div>
+        <article id="eventContent" style="display:none;"> <header>
+                <h1 id="eventTitle" class="event-title-main"></h1>
+                <div id="eventBadgeDisplayWrapper" class="badge-display-wrapper">
+                    <span id="eventBadgeDisplay" class="badge-display"></span>
+                </div>
+            </header>
 
-
-            <section class="content-section event-meta">
-                <h2 data-fr="Informations sur l'Événement" data-en="Event Information">Informations sur l'Événement</h2>
-                <p><strong><i class="fas fa-calendar-alt"></i> <span data-fr="Date de début :" data-en="Start Date:">Date de début :</span></strong> <span id="eventStartDate"></span></p>
-                <p><strong><i class="fas fa-calendar-alt"></i> <span data-fr="Date de fin :" data-en="End Date:">Date de fin :</span></strong> <span id="eventEndDate"></span></p>
-                <p><strong><i class="fas fa-stopwatch"></i> <span data-fr="Heure de début :" data-en="Start Time:">Heure de début :</span></strong> <span id="eventStartTime"></span></p>
-                <p><strong><i class="fas fa-stopwatch"></i> <span data-fr="Heure de fin :" data-en="End Time:">Heure de fin :</span></strong> <span id="eventEndTime"></span></p>
-                <p><strong><i class="fas fa-calendar-times"></i> <span data-fr="Date limite d'inscription :" data-en="Registration Deadline:">Date limite d'inscription :</span></strong> <span id="eventDeadline"></span></p>
-                <p id="eventPriceDisplay" style="display:none;"><strong><i class="fas fa-euro-sign"></i> <span data-fr="Prix :" data-en="Price:">Prix :</span></strong> <span id="eventPrice"></span></p>
-                <h3 data-fr="Description" data-en="Description" style="margin-top:1.5rem;">Description</h3>
+            <section class="content-section event-meta" aria-labelledby="eventInfoHeading">
+                <h2 id="eventInfoHeading" data-fr="Informations sur l'Événement" data-en="Event Information">Informations sur l'Événement</h2>
+                <p><i class="fas fa-calendar-alt" aria-hidden="true"></i><strong><span data-fr="Date de début :" data-en="Start Date:">Date de début :</span></strong> <time id="eventStartDate"></time></p>
+                <p><i class="fas fa-calendar-check" aria-hidden="true"></i><strong><span data-fr="Date de fin :" data-en="End Date:">Date de fin :</span></strong> <time id="eventEndDate"></time></p>
+                <p><i class="fas fa-stopwatch" aria-hidden="true"></i><strong><span data-fr="Heure de début :" data-en="Start Time:">Heure de début :</span></strong> <time id="eventStartTime"></time></p>
+                <p><i class="fas fa-stopwatch" aria-hidden="true"></i><strong><span data-fr="Heure de fin :" data-en="End Time:">Heure de fin :</span></strong> <time id="eventEndTime"></time></p>
+                <p><i class="fas fa-user-clock" aria-hidden="true"></i><strong><span data-fr="Date limite d'inscription :" data-en="Registration Deadline:">Date limite d'inscription :</span></strong> <time id="eventDeadline"></time></p>
+                <p id="eventPriceDisplay" style="display:none;"><i class="fas fa-euro-sign" aria-hidden="true"></i><strong><span data-fr="Prix :" data-en="Price:">Prix :</span></strong> <span id="eventPrice"></span></p>
+                
+                <h3 data-fr="Description" data-en="Description" style="margin-top:1.8rem;">Description</h3>
                 <p id="eventDescription" class="event-description-text"></p>
             </section>
 
-            <section id="eventTableLayout" class="content-section">
-                <h4 data-fr="Disposition des Tables" data-en="Table Layout">Disposition des Tables</h4>
+            <section id="eventTableLayout" class="content-section" aria-labelledby="tableLayoutHeading">
+                <h4 id="tableLayoutHeading" data-fr="Aménagement Prévu" data-en="Planned Layout">Aménagement Prévu</h4>
                 <div id="tablesDisplayContainer" class="tables-display-container">
                     </div>
-                 <p id="totalCapacityInfo" style="text-align:center; margin-top:10px; font-size:1rem;"></p>
+                <p id="totalCapacityInfo" style="text-align:center; margin-top:15px; font-size:1.05rem; font-weight:500;"></p>
             </section>
 
-            <section class="content-section registration-form">
-                <h2 data-fr="Inscrivez-vous !" data-en="Register Now!">Inscrivez-vous !</h2>
+            <section class="content-section registration-form" aria-labelledby="registrationFormHeading">
+                <h2 id="registrationFormHeading" data-fr="Inscrivez-vous Maintenant !" data-en="Register Now!">Inscrivez-vous Maintenant !</h2>
                 <form id="registrationForm" novalidate>
                     <fieldset>
                         <legend data-fr="Vos Coordonnées" data-en="Your Details">Vos Coordonnées</legend>
                         <div class="form-group">
-                            <label for="userName"><span data-fr="Nom complet" data-en="Full Name">Nom complet</span> <span class="mandatory-star">*</span></label>
-                            <input type="text" id="userName" name="userName" required maxlength="100">
-                            <small class="form-error-text" id="userNameError"></small>
+                            <label for="userName"><span data-fr="Nom complet" data-en="Full Name">Nom complet</span> <span class="mandatory-star" aria-hidden="true">*</span></label>
+                            <input type="text" id="userName" name="userName" required maxlength="100" autocomplete="name" aria-describedby="userNameError">
+                            <small class="form-error-text" id="userNameError" role="alert"></small>
                         </div>
                         <div class="form-group">
-                            <label for="userEmail"><span data-fr="Adresse e-mail" data-en="Email Address">Adresse e-mail</span> <span class="mandatory-star">*</span></label>
-                            <input type="email" id="userEmail" name="userEmail" required maxlength="100">
-                            <small class="form-error-text" id="userEmailError"></small>
+                            <label for="userEmail"><span data-fr="Adresse e-mail" data-en="Email Address">Adresse e-mail</span> <span class="mandatory-star" aria-hidden="true">*</span></label>
+                            <input type="email" id="userEmail" name="userEmail" required maxlength="100" autocomplete="email" inputmode="email" aria-describedby="userEmailError">
+                            <small class="form-error-text" id="userEmailError" role="alert"></small>
                         </div>
                         <div class="form-group">
-                            <label for="userPhone"><span data-fr="Numéro de téléphone" data-en="Phone Number">Numéro de téléphone</span> <span class="mandatory-star">*</span></label>
-                            <input type="tel" id="userPhone" name="userPhone" required maxlength="20">
-                            <small class="form-error-text" id="userPhoneError"></small>
+                            <label for="userPhone"><span data-fr="Numéro de téléphone" data-en="Phone Number">Numéro de téléphone</span> <span class="mandatory-star" aria-hidden="true">*</span></label>
+                            <input type="tel" id="userPhone" name="userPhone" required maxlength="20" autocomplete="tel" inputmode="tel" aria-describedby="userPhoneError">
+                            <small class="form-error-text" id="userPhoneError" role="alert"></small>
                         </div>
                     </fieldset>
 
                     <fieldset id="menuSelectionGroup" style="display:none;">
                         <legend data-fr="Choix du Menu" data-en="Menu Choice">Choix du Menu</legend>
                         <div class="form-group">
-                            <label for="menuChoice"><span data-fr="Sélectionnez votre menu" data-en="Select your menu">Sélectionnez votre menu</span> <span class="mandatory-star">*</span></label>
-                            <select id="menuChoice" name="menuChoice">
+                            <label for="menuChoice"><span data-fr="Sélectionnez votre menu" data-en="Select your menu">Sélectionnez votre menu</span> <span class="mandatory-star" aria-hidden="true">*</span></label>
+                            <select id="menuChoice" name="menuChoice" aria-describedby="menuChoiceError">
                                 </select>
-                            <small class="form-error-text" id="menuChoiceError"></small>
+                            <small class="form-error-text" id="menuChoiceError" role="alert"></small>
                         </div>
                     </fieldset>
 
                     <fieldset id="paymentOptionsGroup" class="paid-options-group" style="display:none;">
                         <legend data-fr="Confirmation de Paiement" data-en="Payment Confirmation">Confirmation de Paiement</legend>
-                        <div class="form-group">
-                            <p id="paymentInstructions" style="font-size:1rem; margin-bottom:10px;"></p>
-                            <label><span data-fr="Avez-vous déjà réglé votre participation ?" data-en="Have you already paid for your participation?">Avez-vous déjà réglé votre participation ?</span> <span class="mandatory-star">*</span></label>
+                        <div class="form-group" role="radiogroup" aria-labelledby="paymentQuestionLabel">
+                            <p id="paymentInstructions" style="font-size:1rem; margin-bottom:15px;"></p>
+                            <span id="paymentQuestionLabel" class="form-label-like"><span data-fr="Avez-vous déjà réglé votre participation ?" data-en="Have you already paid for your participation?">Avez-vous déjà réglé votre participation ?</span> <span class="mandatory-star" aria-hidden="true">*</span></span>
                             <div class="form-group-radio">
-                                <input type="radio" id="paidYes" name="paidStatus" value="yes" required>
+                                <input type="radio" id="paidYes" name="paidStatus" value="yes" required aria-describedby="paidStatusError">
                                 <label for="paidYes" data-fr="Oui" data-en="Yes">Oui</label>
                             </div>
                             <div class="form-group-radio">
                                 <input type="radio" id="paidNo" name="paidStatus" value="no">
                                 <label for="paidNo" data-fr="Non, je réglerai sur place/plus tard" data-en="No, I will pay on site/later">Non</label>
                             </div>
-                             <small class="form-error-text" id="paidStatusError"></small>
+                             <small class="form-error-text" id="paidStatusError" role="alert"></small>
                         </div>
                     </fieldset>
 
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-submit-registration"><i class="fas fa-check-circle"></i> <span data-fr="S'inscrire à l'événement" data-en="Register for Event">S'inscrire à l'événement</span></button>
+                        <button type="submit" class="btn btn-submit-registration" id="submitRegistrationBtn"><i class="fas fa-calendar-check"></i> <span data-fr="S'inscrire à l'événement" data-en="Register for Event">S'inscrire</span></button>
                     </div>
                 </form>
             </section>
 
-            <div id="registrationConfirmationMessage">
-                <h3 data-fr="Inscription Réussie !" data-en="Registration Successful!">Inscription Réussie !</h3>
+            <div id="registrationConfirmationMessage" role="alert">
+                <h3 data-fr="Inscription Confirmée !" data-en="Registration Confirmed!">Inscription Confirmée !</h3>
                 <div id="confirmationDetails"></div>
-                <button onclick="window.print()" class="print-button"><i class="fas fa-print"></i> <span data-fr="Imprimer la confirmation" data-en="Print Confirmation">Imprimer</span></button>
-                </div>
+                <button type="button" onclick="window.print()" class="print-button"><i class="fas fa-print"></i> <span data-fr="Imprimer la confirmation" data-en="Print Confirmation">Imprimer</span></button>
+            </div>
 
-            <section class="share-section">
-                <h3 data-fr="Partagez cet Événement !" data-en="Share this Event!">Partagez cet Événement !</h3>
-                <button id="copyLinkButton" class="share-button copy-link-btn"><i class="fas fa-copy"></i> <span data-fr="Copier le lien" data-en="Copy Link">Copier le lien</span></button>
-                <a id="whatsappShareLink" href="#" class="share-button whatsapp-btn" target="_blank"><i class="fab fa-whatsapp"></i> <span data-fr="Partager sur WhatsApp" data-en="Share on WhatsApp">WhatsApp</span></a>
-                <p id="copyStatusMessage"></p>
+            <section class="share-section" aria-labelledby="shareHeading">
+                <h3 id="shareHeading" data-fr="Partagez cet Événement !" data-en="Share this Event!">Partagez cet Événement !</h3>
+                <button type="button" id="copyLinkButton" class="share-button copy-link-btn"><i class="fas fa-copy"></i> <span data-fr="Copier le Lien" data-en="Copy Link">Copier le Lien</span></button>
+                <a id="whatsappShareLink" href="#" class="share-button whatsapp-btn" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> <span data-fr="Partager sur WhatsApp" data-en="Share on WhatsApp">WhatsApp</span></a>
+                <p id="copyStatusMessage" aria-live="polite"></p>
             </section>
-        </div> </main>
+        </article> </main>
 
     <div id="app-footer">
         </div>
 
     <script src="src/hf.js"></script>
     <script>
-    // --- MonRdvFacile - Inline JS for event-display.html ---
+    // --- MonRdvFacile - Inline JS for event-display.html (Production Ready) ---
     document.addEventListener('DOMContentLoaded', function() {
-        const WORKER_EVENT_URL = 'https://monrdvfacile-api.qmpro.workers.dev/api/events'; // For fetching event details
-        const WORKER_REGISTER_URL = 'https://monrdvfacile-api.qmpro.workers.dev/api/register'; // For submitting registration
+        const WORKER_EVENT_URL = 'https://monrdvfacile-api.qmpro.workers.dev/api/events';
+        const WORKER_REGISTER_URL = 'https://monrdvfacile-api.qmpro.workers.dev/api/register';
 
         let currentLangDisplay = 'fr';
-        let currentEventData = null; // To store loaded event details
+        let currentEventData = null;
 
-        // UI Elements
-        const generalMessageArea = document.getElementById('generalMessageArea');
-        const eventContentDiv = document.getElementById('eventContent');
-        const eventTitleEl = document.getElementById('eventTitle');
-        const eventBadgeDisplayEl = document.getElementById('eventBadgeDisplay');
-        const eventStartDateEl = document.getElementById('eventStartDate');
-        const eventEndDateEl = document.getElementById('eventEndDate');
-        const eventStartTimeEl = document.getElementById('eventStartTime');
-        const eventEndTimeEl = document.getElementById('eventEndTime');
-        const eventDeadlineEl = document.getElementById('eventDeadline');
-        const eventPriceDisplayEl = document.getElementById('eventPriceDisplay');
-        const eventPriceEl = document.getElementById('eventPrice');
-        const eventDescriptionEl = document.getElementById('eventDescription');
-        const tablesDisplayContainerEl = document.getElementById('tablesDisplayContainer');
-        const totalCapacityInfoEl = document.getElementById('totalCapacityInfo');
+        // --- UI Elements Cache ---
+        const ui = {
+            generalMessageArea: document.getElementById('generalMessageArea'),
+            eventContentDiv: document.getElementById('eventContent'),
+            eventTitleEl: document.getElementById('eventTitle'),
+            eventBadgeDisplayWrapper: document.getElementById('eventBadgeDisplayWrapper'),
+            eventBadgeDisplayEl: document.getElementById('eventBadgeDisplay'),
+            eventStartDateEl: document.getElementById('eventStartDate'),
+            eventEndDateEl: document.getElementById('eventEndDate'),
+            eventStartTimeEl: document.getElementById('eventStartTime'),
+            eventEndTimeEl: document.getElementById('eventEndTime'),
+            eventDeadlineEl: document.getElementById('eventDeadline'),
+            eventPriceDisplayEl: document.getElementById('eventPriceDisplay'),
+            eventPriceEl: document.getElementById('eventPrice'),
+            eventDescriptionEl: document.getElementById('eventDescription'),
+            tablesDisplayContainerEl: document.getElementById('tablesDisplayContainer'),
+            totalCapacityInfoEl: document.getElementById('totalCapacityInfo'),
+            registrationForm: document.getElementById('registrationForm'),
+            menuSelectionGroup: document.getElementById('menuSelectionGroup'),
+            menuChoiceSelect: document.getElementById('menuChoice'),
+            paymentOptionsGroup: document.getElementById('paymentOptionsGroup'),
+            paymentInstructionsEl: document.getElementById('paymentInstructions'),
+            registrationConfirmationMessageEl: document.getElementById('registrationConfirmationMessage'),
+            confirmationDetailsEl: document.getElementById('confirmationDetails'),
+            copyLinkButton: document.getElementById('copyLinkButton'),
+            whatsappShareLink: document.getElementById('whatsappShareLink'),
+            copyStatusMessageEl: document.getElementById('copyStatusMessage'),
+            // Meta tags
+            metaDescriptionTag: document.getElementById('metaDescription'),
+            canonicalLinkTag: document.getElementById('canonicalLink'),
+            ogTypeTag: document.getElementById('ogType'),
+            ogUrlTag: document.getElementById('ogUrl'),
+            ogTitleTag: document.getElementById('ogTitle'),
+            ogDescriptionTag: document.getElementById('ogDescription'),
+            ogLocaleTag: document.getElementById('ogLocale'),
+            twitterCardTag: document.getElementById('twitterCard'),
+            twitterUrlTag: document.getElementById('twitterUrl'),
+            twitterTitleTag: document.getElementById('twitterTitle'),
+            twitterDescriptionTag: document.getElementById('twitterDescription'),
+        };
 
-        const registrationForm = document.getElementById('registrationForm');
-        const menuSelectionGroup = document.getElementById('menuSelectionGroup');
-        const menuChoiceSelect = document.getElementById('menuChoice');
-        const paymentOptionsGroup = document.getElementById('paymentOptionsGroup');
-        const paymentInstructionsEl = document.getElementById('paymentInstructions');
-        
-        const registrationConfirmationMessageEl = document.getElementById('registrationConfirmationMessage');
-        const confirmationDetailsEl = document.getElementById('confirmationDetails');
-
-        const copyLinkButton = document.getElementById('copyLinkButton');
-        const whatsappShareLink = document.getElementById('whatsappShareLink');
-        const copyStatusMessageEl = document.getElementById('copyStatusMessage');
-
-        const errorFieldMapDisplay = { // For registration form
+        const errorFieldMapDisplay = {
             userName: 'userNameError', userEmail: 'userEmailError', userPhone: 'userPhoneError',
             menuChoice: 'menuChoiceError', paidStatus: 'paidStatusError'
         };
         
-        // --- Language Switching Logic ---
+        // --- Language & Translation ---
         const translatableItemsDisplay = [];
-        function queryTranslatableItemsDisplay() { /* ... (similar to create/edit page) ... */
+        function queryTranslatableItemsDisplay() {
             translatableItemsDisplay.length = 0;
-            document.querySelectorAll('[data-fr], [data-en], [data-fr-placeholder], [data-en-placeholder]').forEach(el => {
-                // Simplified version for brevity, ensure it covers all cases as in create-event
-                 const item = {element: el, frText: el.dataset.fr, enText: el.dataset.en};
-                 if(!item.frText && el.textContent) item.frText = el.textContent.trim();
-                 if(!item.enText && el.textContent) item.enText = el.textContent.trim();
-                 translatableItemsDisplay.push(item);
+            document.querySelectorAll('[data-fr], [data-en], [data-fr-base], [data-en-base], [data-fr-placeholder], [data-en-placeholder]').forEach(el => {
+                translatableItemsDisplay.push({
+                    element: el,
+                    frText: el.dataset.fr, enText: el.dataset.en,
+                    frBase: el.dataset.frBase, enBase: el.dataset.enBase, // For meta tags with dynamic parts
+                    frPlaceholder: el.dataset.frPlaceholder, enPlaceholder: el.dataset.enPlaceholder,
+                    isTitleTag: el.tagName === 'TITLE',
+                    isMetaContent: el.tagName === 'META' && el.hasAttribute('content'),
+                    isInputPlaceholder: el.tagName === 'INPUT' && (el.dataset.frPlaceholder || el.dataset.enPlaceholder),
+                    isButtonSpan: (el.tagName === 'BUTTON' || el.tagName === 'A') && el.querySelector('span:not([id])') // Target specific spans
+                });
             });
         }
 
         function updateUIDisplayLanguage(lang) {
             currentLangDisplay = lang;
             document.documentElement.lang = lang;
+            ui.ogLocaleTag.content = lang === 'fr' ? 'fr_FR' : 'en_US';
+
             translatableItemsDisplay.forEach(item => {
-                const text = lang === 'fr' ? item.frText : item.enText;
-                // More robust text setting needed (handle spans inside buttons, placeholders etc.)
-                if (item.element.querySelector('span') && (item.element.tagName === 'BUTTON' || item.element.tagName === 'A')) {
-                     item.element.querySelector('span').textContent = text;
-                } else if (item.element.tagName === 'TITLE' || item.element.tagName === 'H1' || item.element.tagName === 'H2' || item.element.tagName === 'H3' || item.element.tagName === 'P' || item.element.tagName === 'LABEL' || item.element.tagName === 'STRONG' || item.element.tagName === 'SMALL') {
-                    if(text) item.element.textContent = text;
-                } else if (item.element.tagName === 'INPUT' && (item.element.type === 'submit' || item.element.type === 'button')) {
-                    if(text) item.element.value = text;
+                let text = lang === 'fr' ? item.frText : item.enText;
+                let baseText = lang === 'fr' ? item.frBase : item.enBase; // For dynamic meta
+                const placeholderText = lang === 'fr' ? item.frPlaceholder : item.enPlaceholder;
+
+                if (item.isTitleTag) { if (text) item.element.textContent = text; }
+                else if (item.isMetaContent && baseText && currentEventData) { // Dynamic meta tags
+                     item.element.setAttribute('content', baseText.replace('{eventName}', currentEventData.eventName));
+                } else if (item.isMetaContent && text) { // Static meta tags with data-fr/en
+                     item.element.setAttribute('content', text);
                 }
-                // Add more conditions for placeholders, etc.
+                else if (item.isInputPlaceholder) { if (placeholderText) item.element.placeholder = placeholderText; }
+                else if (item.isButtonSpan) { const span = item.element.querySelector('span:not([id])'); if (span && text) span.textContent = text; }
+                else { if (text && typeof item.element.textContent !== 'undefined') item.element.textContent = text; }
             });
+
             document.querySelectorAll('.lang-link').forEach(link => link.classList.remove('active'));
             const activeLink = document.getElementById(`lang-${lang}-display`);
             if (activeLink) activeLink.classList.add('active');
-            try { localStorage.setItem('preferredLang', lang); } catch (e) { console.warn("localStorage unavailable for lang pref."); }
+            try { localStorage.setItem('preferredLang', lang); } catch (e) { console.warn("localStorage not available."); }
             
-            // If event data loaded, re-render parts with new language
             if (currentEventData) {
-                populateEventDetails(currentEventData); // This will use new currentLangDisplay
-                // If form had errors, re-validate to update error messages
-                 validateRegistrationForm(false);
+                populateEventDetails(currentEventData); // Re-populate with correct lang formats
+                updateMetaTags(currentEventData); // Ensure meta tags are also updated after lang change
+                validateRegistrationForm(false); // Update error messages language if form was invalid
             }
         }
-        window.switchLanguageDisplay = function(lang) { if (lang !== currentLangDisplay) { updateUIDisplayLanguage(lang); } };
-        // --- End Language ---
+        
+        function detectLanguagePreferenceDisplay() {
+            try { const storedLang = localStorage.getItem('preferredLang'); if (storedLang && (storedLang === 'fr' || storedLang === 'en')) return storedLang; } catch (e) {}
+            const browserLang = navigator.language || navigator.userLanguage; if (browserLang && browserLang.toLowerCase().startsWith('en')) return 'en'; return 'fr';
+        }
+        window.switchLanguageDisplay = function(lang) { if (lang !== currentLangDisplay) { queryTranslatableItemsDisplay(); updateUIDisplayLanguage(lang); } };
 
-         const messagesDisplay = {
+        // --- Text & Message Helpers ---
+        const messagesDisplay = { /* ... (Keep your existing messagesDisplay object here, ensure all keys used are present) ... */
             loading: { fr: "Chargement des détails de l'événement...", en: "Loading event details..." },
             eventNotFound: { fr: "Événement non trouvé ou ID incorrect.", en: "Event not found or incorrect ID." },
             apiError: { fr: "Une erreur est survenue. Veuillez réessayer plus tard.", en: "An error occurred. Please try again later." },
@@ -367,165 +411,166 @@
             paymentOptionRequired: { fr: "Veuillez indiquer votre statut de paiement.", en: "Please indicate your payment status." },
             linkCopied: { fr: "Lien copié dans le presse-papiers !", en: "Link copied to clipboard!" },
             errorCopying: { fr: "Erreur lors de la copie du lien.", en: "Error copying link." },
-            totalCapacityText: { fr: "Capacité totale : {capacity} places ({tables} tables de {chairs} chaises).", en: "Total capacity: {capacity} seats ({tables} tables of {chairs} chairs)." },
+            totalCapacityText: { fr: "Capacité: {capacity} places ({tables} tables × {chairs} chaises/table).", en: "Capacity: {capacity} seats ({tables} tables × {chairs} chairs/table)." },
+            tableLabel: {fr: "Table", en: "Table"},
+            chairsLabel: {fr: "chaises", en: "chairs"},
             paymentInstructionText: {fr: "Cet événement est payant. Coût : {price}.", en: "This is a paid event. Cost: {price}."},
             selectMenuDefault: {fr: "-- Choisissez un menu --", en: "-- Select a menu --"},
-            // Confirmation details
-            confirmName: {fr: "Nom :", en: "Name:"},
-            confirmEmail: {fr: "Email :", en: "Email:"},
-            confirmPhone: {fr: "Téléphone :", en: "Phone:"},
-            confirmMenu: {fr: "Menu choisi :", en: "Menu Choice:"},
+            confirmName: {fr: "Nom :", en: "Name:"}, confirmEmail: {fr: "Email :", en: "Email:"},
+            confirmPhone: {fr: "Téléphone :", en: "Phone:"}, confirmMenu: {fr: "Menu choisi :", en: "Menu Choice:"},
             confirmPaidStatus: {fr: "Statut du paiement :", en: "Payment Status:"},
             paidStatusYes: {fr: "J'ai déjà payé", en: "I have already paid"},
             paidStatusNo: {fr: "Je paierai sur place/plus tard", en: "I will pay on site/later"},
+            pageTitleSuffixFR: "Détails de l'Événement - MonRdvFacile",
+            pageTitleSuffixEN: "Event Details - MyEasyMeeting",
         };
-
-        function getMessageDisplay(key, replacements = {}) {
+        function getMessageDisplay(key, replacements = {}) { /* ... (Keep your getMessageDisplay) ... */
              let messageSet = messagesDisplay[key];
+             if (!messageSet && typeof key === 'string') return key; // Fallback if key not found
              if (!messageSet) return `Missing Display translation: ${key}`;
-             let message = messageSet[currentLangDisplay] || messageSet['fr'];
+             let message = messageSet[currentLangDisplay] || messageSet['fr'] || key;
              for (const placeholder in replacements) { message = message.replace(`{${placeholder}}`, replacements[placeholder]); }
              return message;
         }
-
-        function showGeneralMessage(messageKey, type = 'error', replacements = {}) {
-            generalMessageArea.textContent = getMessageDisplay(messageKey, replacements);
-            generalMessageArea.className = `general-message general-message-${type}`;
-            generalMessageArea.style.display = 'block';
+        function showGeneralMessage(messageKey, type = 'error', replacements = {}) { /* ... (Keep) ... */
+            ui.generalMessageArea.innerHTML = `<i class="fas ${type === 'loading' ? 'fa-spinner fa-spin' : (type === 'error' ? 'fa-exclamation-triangle' : 'fa-info-circle')}"></i> ${getMessageDisplay(messageKey, replacements)}`;
+            ui.generalMessageArea.className = `general-message general-message-${type}`;
+            ui.generalMessageArea.style.display = 'block'; ui.generalMessageArea.setAttribute('role', type === 'error' ? 'alert' : 'status');
         }
-        function hideGeneralMessage() { generalMessageArea.style.display = 'none'; }
-
-        function displayFieldError(fieldId, messageKey, replacements = {}) {
-            const errorElId = errorFieldMapDisplay[fieldId];
-            if (errorElId) {
-                const errorEl = document.getElementById(errorElId);
-                if (errorEl) { errorEl.textContent = getMessageDisplay(messageKey, replacements); }
-            }
+        function hideGeneralMessage() { ui.generalMessageArea.style.display = 'none'; }
+        function displayFieldError(fieldId, messageKey, replacements = {}) { /* ... (Keep) ... */
+             const errorElId = errorFieldMapDisplay[fieldId]; if (errorElId) { const errorEl = document.getElementById(errorElId); if (errorEl) errorEl.textContent = getMessageDisplay(messageKey, replacements); }
         }
-        function clearAllFieldErrors() {
-            for (const fieldId in errorFieldMapDisplay) {
-                const errorEl = document.getElementById(errorFieldMapDisplay[fieldId]);
-                if (errorEl) errorEl.textContent = '';
-            }
+        function clearAllFieldErrors() { /* ... (Keep) ... */
+             for (const fieldId in errorFieldMapDisplay) { const errorEl = document.getElementById(errorFieldMapDisplay[fieldId]); if (errorEl) errorEl.textContent = ''; }
         }
 
+        // --- Date Formatting ---
+        function formatDate(dateStr, lang, options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) {
+            if (!dateStr) return '';
+            return new Date(dateStr).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US', options);
+        }
+        function formatDateTime(dateStr, timeStr, lang) {
+            if (!dateStr || !timeStr) return '';
+            return new Date(`${dateStr}T${timeStr}`).toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-US', { dateStyle: 'full', timeStyle: 'short' });
+        }
 
+        // --- Meta Tag Update Function ---
+        function updateMetaTags(data) {
+            const pageUrl = window.location.href;
+            const title = `${data.eventName} - MonRdvFacile`;
+            const description = data.eventDescription.substring(0, 155); // Keep it concise
+
+            document.title = title;
+            if(ui.metaDescriptionTag) ui.metaDescriptionTag.content = description;
+            if(ui.canonicalLinkTag) ui.canonicalLinkTag.href = pageUrl;
+
+            if(ui.ogTitleTag) ui.ogTitleTag.content = title;
+            if(ui.ogDescriptionTag) ui.ogDescriptionTag.content = description;
+            if(ui.ogUrlTag) ui.ogUrlTag.content = pageUrl;
+
+            if(ui.twitterTitleTag) ui.twitterTitleTag.content = title;
+            if(ui.twitterDescriptionTag) ui.twitterDescriptionTag.content = description;
+            if(ui.twitterUrlTag) ui.twitterUrlTag.content = pageUrl;
+        }
+
+
+        // --- Event Data Population & Rendering ---
         function populateEventDetails(data) {
-            currentEventData = data; // Store for later use (e.g. form submission)
+            currentEventData = data;
+            updateMetaTags(data); // Update meta tags with event specific data
 
-            // Update page title and meta tags
-            document.title = `${data.eventName} - ${getMessageDisplay(currentLangDisplay === 'fr' ? 'pageTitleSuffixFR' : 'pageTitleSuffixEN', { eventName: data.eventName })}`; // Assuming you add these keys to messagesDisplay
-            // TODO: Update meta description, OG tags etc. using data.eventName, data.eventDescription
-
-            eventTitleEl.textContent = data.eventName;
-            if(data.eventBadge && data.eventBadge !== 'none') {
-                eventBadgeDisplayEl.textContent = data.eventBadge.charAt(0).toUpperCase() + data.eventBadge.slice(1); // Simple text badge
-                eventBadgeDisplayEl.className = `badge-display badge-${data.eventBadge}`; // CSS will style it
-                eventBadgeDisplayEl.style.display = 'inline-block';
+            ui.eventTitleEl.textContent = data.eventName;
+            if (data.eventBadge && data.eventBadge !== 'none') {
+                ui.eventBadgeDisplayEl.textContent = getMessageDisplay(data.eventBadge) || data.eventBadge.charAt(0).toUpperCase() + data.eventBadge.slice(1);
+                ui.eventBadgeDisplayEl.className = `badge-display badge-${data.eventBadge}`;
+                ui.eventBadgeDisplayWrapper.style.display = 'block';
             } else {
-                eventBadgeDisplayEl.style.display = 'none';
+                ui.eventBadgeDisplayWrapper.style.display = 'none';
             }
 
-            eventStartDateEl.textContent = new Date(data.eventStartDate).toLocaleDateString(currentLangDisplay === 'fr' ? 'fr-FR' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-            eventEndDateEl.textContent = new Date(data.eventEndDate).toLocaleDateString(currentLangDisplay === 'fr' ? 'fr-FR' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-            eventStartTimeEl.textContent = data.eventStartTime;
-            eventEndTimeEl.textContent = data.eventEndTime;
-            eventDeadlineEl.textContent = new Date(data.registrationDeadlineDate + 'T' + data.registrationDeadlineTime).toLocaleString(currentLangDisplay === 'fr' ? 'fr-FR' : 'en-US', { dateStyle: 'full', timeStyle: 'short' });
-            eventDescriptionEl.textContent = data.eventDescription;
+            ui.eventStartDateEl.textContent = formatDate(data.eventStartDate, currentLangDisplay);
+            ui.eventEndDateEl.textContent = formatDate(data.eventEndDate, currentLangDisplay);
+            ui.eventStartTimeEl.textContent = data.eventStartTime;
+            ui.eventEndTimeEl.textContent = data.eventEndTime;
+            ui.eventDeadlineEl.textContent = formatDateTime(data.registrationDeadlineDate, data.registrationDeadlineTime, currentLangDisplay);
+            ui.eventDescriptionEl.textContent = data.eventDescription;
 
             if (data.isPaidEvent) {
-                eventPriceEl.textContent = `${parseFloat(data.eventPrice).toFixed(2)} €`;
-                eventPriceDisplayEl.style.display = 'block';
-                paymentOptionsGroup.style.display = 'block';
-                paymentInstructionsEl.textContent = getMessageDisplay('paymentInstructionText', {price: `${parseFloat(data.eventPrice).toFixed(2)} €`});
-                // Ensure radio buttons for payment are required
+                ui.eventPriceEl.textContent = `${parseFloat(data.eventPrice).toFixed(2)} €`;
+                ui.eventPriceDisplayEl.style.display = 'block';
+                ui.paymentOptionsGroup.style.display = 'block';
+                ui.paymentInstructionsEl.textContent = getMessageDisplay('paymentInstructionText', {price: `${parseFloat(data.eventPrice).toFixed(2)} €`});
                 document.querySelectorAll('input[name="paidStatus"]').forEach(rb => rb.required = true);
             } else {
-                eventPriceDisplayEl.style.display = 'none';
-                paymentOptionsGroup.style.display = 'none';
-                 document.querySelectorAll('input[name="paidStatus"]').forEach(rb => rb.required = false);
+                ui.eventPriceDisplayEl.style.display = 'none';
+                ui.paymentOptionsGroup.style.display = 'none';
+                document.querySelectorAll('input[name="paidStatus"]').forEach(rb => rb.required = false);
             }
 
-            // Populate Menu Choices
-            menuChoiceSelect.innerHTML = ''; // Clear existing
+            ui.menuChoiceSelect.innerHTML = '';
             if (data.numMenus > 0 && data.menuNames && data.menuNames.length > 0) {
-                menuSelectionGroup.style.display = 'block';
-                menuChoiceSelect.required = true;
+                ui.menuSelectionGroup.style.display = 'block';
+                ui.menuChoiceSelect.required = true;
                 const defaultOption = document.createElement('option');
-                defaultOption.value = "";
-                defaultOption.textContent = getMessageDisplay('selectMenuDefault');
-                menuChoiceSelect.appendChild(defaultOption);
-                data.menuNames.forEach((menuName, index) => {
-                    const option = document.createElement('option');
-                    option.value = menuName; // Or an ID if menus are more complex
-                    option.textContent = menuName;
-                    menuChoiceSelect.appendChild(option);
+                defaultOption.value = ""; defaultOption.textContent = getMessageDisplay('selectMenuDefault');
+                defaultOption.disabled = true; defaultOption.selected = true; // Make it a non-selectable placeholder
+                ui.menuChoiceSelect.appendChild(defaultOption);
+                data.menuNames.forEach(menuName => {
+                    const option = document.createElement('option'); option.value = menuName; option.textContent = menuName;
+                    ui.menuChoiceSelect.appendChild(option);
                 });
             } else {
-                menuSelectionGroup.style.display = 'none';
-                menuChoiceSelect.required = false;
+                ui.menuSelectionGroup.style.display = 'none';
+                ui.menuChoiceSelect.required = false;
             }
             
-            // Visual Table Layout
             renderVisualTableLayout(data.numTables, data.chairsPerTable);
 
-            // Setup Share Links
             const pageUrl = window.location.href;
-            copyLinkButton.onclick = function() { /* ... copy logic ... */ 
+            ui.copyLinkButton.onclick = () => { /* ... (Keep your existing copy logic) ... */
                 navigator.clipboard.writeText(pageUrl).then(() => {
-                    copyStatusMessageEl.textContent = getMessageDisplay('linkCopied');
-                    setTimeout(() => { copyStatusMessageEl.textContent = ''; }, 3000);
+                    ui.copyStatusMessageEl.textContent = getMessageDisplay('linkCopied');
+                    setTimeout(() => { ui.copyStatusMessageEl.textContent = ''; }, 3000);
                 }).catch(err => {
-                    copyStatusMessageEl.textContent = getMessageDisplay('errorCopying');
-                    console.error('Failed to copy link: ', err);
+                    ui.copyStatusMessageEl.textContent = getMessageDisplay('errorCopying'); console.error('Copy failed:', err);
                 });
             };
-            whatsappShareLink.href = `whatsapp://send?text=${encodeURIComponent(data.eventName + " - " + pageUrl)}`;
+            ui.whatsappShareLink.href = `whatsapp://send?text=${encodeURIComponent(data.eventName + " - " + pageUrl)}`;
 
-            eventContentDiv.style.display = 'block'; // Show content now
+            ui.eventContentDiv.style.display = 'block';
             hideGeneralMessage();
         }
 
-        function renderVisualTableLayout(numTables, chairsPerTable) {
-            tablesDisplayContainerEl.innerHTML = '';
+        function renderVisualTableLayout(numTables, chairsPerTable) { /* ... (Keep your renderVisualTableLayout) ... */
+            ui.tablesDisplayContainerEl.innerHTML = '';
             if (numTables > 0 && chairsPerTable > 0) {
+                document.getElementById('eventTableLayout').style.display = 'block';
                 for (let i = 0; i < numTables; i++) {
-                    const tableBox = document.createElement('div');
-                    tableBox.className = 'display-table-box';
-                    tableBox.innerHTML = `<strong>${getMessageDisplay('tableLabel', {num: i+1})} ${i + 1}</strong><br><span class="display-table-chairs">${chairsPerTable} ${getMessageDisplay('chairsLabel', {count: chairsPerTable})}</span>`;
-                    tablesDisplayContainerEl.appendChild(tableBox);
+                    const tableBox = document.createElement('div'); tableBox.className = 'display-table-box';
+                    tableBox.innerHTML = `<strong>${getMessageDisplay('tableLabel')} ${i + 1}</strong><br><span class="display-table-chairs">${chairsPerTable} ${getMessageDisplay('chairsLabel')}</span>`;
+                    ui.tablesDisplayContainerEl.appendChild(tableBox);
                 }
-                totalCapacityInfoEl.textContent = getMessageDisplay('totalCapacityText', { capacity: numTables * chairsPerTable, tables: numTables, chairs: chairsPerTable });
+                ui.totalCapacityInfoEl.textContent = getMessageDisplay('totalCapacityText', { capacity: numTables * chairsPerTable, tables: numTables, chairs: chairsPerTable });
             } else {
                 document.getElementById('eventTableLayout').style.display = 'none';
             }
         }
         
-        async function fetchEventDetails(eventId) {
+        async function fetchEventDetails(eventId) { /* ... (Keep your fetchEventDetails) ... */
             showGeneralMessage('loading', 'loading');
             try {
                 const response = await fetch(`${WORKER_EVENT_URL}/${eventId}`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                if (!response.ok) { throw new Error(`HTTP ${response.status}: ${response.statusText}`); }
                 const data = await response.json();
-                if (data && data.success && data.event) { // Assuming worker returns { success: true, event: {...} }
-                    populateEventDetails(data.event);
-                } else {
-                    showGeneralMessage('eventNotFound', 'error');
-                     eventContentDiv.style.display = 'none';
-                }
-            } catch (error) {
-                console.error("Fetch event error:", error);
-                showGeneralMessage('apiError', 'error');
-                 eventContentDiv.style.display = 'none';
-            }
+                if (data && data.success && data.event) { populateEventDetails(data.event); }
+                else { showGeneralMessage('eventNotFound', 'error'); ui.eventContentDiv.style.display = 'none'; }
+            } catch (error) { console.error("Fetch error:", error); showGeneralMessage('apiError', 'error'); ui.eventContentDiv.style.display = 'none'; }
         }
 
-        function validateRegistrationForm(showGeneralMsg = true) {
-            let isValid = true;
-            clearAllFieldErrors();
-
+        // --- Form Validation & Submission ---
+        function validateRegistrationForm(showGeneralMsg = true) { /* ... (Keep your validation logic) ... */
+            let isValid = true; clearAllFieldErrors();
             const userName = document.getElementById('userName').value.trim();
             const userEmail = document.getElementById('userEmail').value.trim();
             const userPhone = document.getElementById('userPhone').value.trim();
@@ -534,105 +579,97 @@
             if (!userEmail) { displayFieldError('userEmail', 'required'); isValid = false; }
             else if (!/^\S+@\S+\.\S+$/.test(userEmail)) { displayFieldError('userEmail', 'emailInvalid'); isValid = false; }
             if (!userPhone) { displayFieldError('userPhone', 'required'); isValid = false; }
-            // Add more specific phone validation if needed
-
-            if (currentEventData.numMenus > 0) {
-                if (!menuChoiceSelect.value) { displayFieldError('menuChoice', 'required'); isValid = false; }
+            
+            if (currentEventData.numMenus > 0 && ui.menuChoiceSelect.required) {
+                if (!ui.menuChoiceSelect.value) { displayFieldError('menuChoice', 'required'); isValid = false; }
             }
-
             if (currentEventData.isPaidEvent) {
                 const paidStatusSelected = document.querySelector('input[name="paidStatus"]:checked');
                 if (!paidStatusSelected) { displayFieldError('paidStatus', 'paymentOptionRequired'); isValid = false; }
             }
-            
             if(!isValid && showGeneralMsg) showGeneralMessage('formErrors', 'error');
             return isValid;
         }
 
-        registrationForm.addEventListener('submit', async function(event) {
-            event.preventDefault();
-            hideGeneralMessage();
-
-            if (!validateRegistrationForm()) {
-                return;
-            }
+        ui.registrationForm.addEventListener('submit', async function(event) { /* ... (Keep your submission logic, ensure submitButton disabling/enabling is correct) ... */
+            event.preventDefault(); hideGeneralMessage();
+            if (!currentEventData || !validateRegistrationForm()) return;
 
             const formData = new FormData(this);
-            const registrationData = {
-                eventId: currentEventData.id,
-                eventName: currentEventData.eventName // Good to send for backend logging/confirmation emails
-            };
-            formData.forEach((value, key) => {
-                registrationData[key] = value;
-            });
+            const registrationData = { eventId: currentEventData.id, eventName: currentEventData.eventName };
+            formData.forEach((value, key) => { registrationData[key] = value; });
 
-            const submitButton = this.querySelector('button[type="submit"]');
+            const submitButton = document.getElementById('submitRegistrationBtn');
             const originalButtonHTML = submitButton.innerHTML;
             submitButton.disabled = true;
             submitButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${(currentLangDisplay === 'fr' ? 'Envoi...' : 'Submitting...')}`;
 
             try {
                 const response = await fetch(WORKER_REGISTER_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(registrationData)
+                    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(registrationData)
                 });
                 const result = await response.json();
-
                 if (response.ok && result.success) {
-                    showGeneralMessage('registrationSuccess', 'success');
-                    registrationForm.style.display = 'none'; // Hide form
-                    // Display confirmation details
-                    confirmationDetailsEl.innerHTML = `
+                    showGeneralMessage(result.message.includes("waitlist") ? "addedToWaitlist" : "registrationSuccess", 'success', {message: result.message}); // Adapt if your worker returns specific message keys
+                    ui.registrationForm.style.display = 'none';
+                    ui.confirmationDetailsEl.innerHTML = `
                         <p><strong>${getMessageDisplay('confirmName')}</strong> ${registrationData.userName}</p>
                         <p><strong>${getMessageDisplay('confirmEmail')}</strong> ${registrationData.userEmail}</p>
                         <p><strong>${getMessageDisplay('confirmPhone')}</strong> ${registrationData.userPhone}</p>
                         ${currentEventData.numMenus > 0 ? `<p><strong>${getMessageDisplay('confirmMenu')}</strong> ${registrationData.menuChoice}</p>` : ''}
                         ${currentEventData.isPaidEvent ? `<p><strong>${getMessageDisplay('confirmPaidStatus')}</strong> ${registrationData.paidStatus === 'yes' ? getMessageDisplay('paidStatusYes') : getMessageDisplay('paidStatusNo')}</p>` : ''}
+                        ${result.message.includes("waitlist") ? `<p style="font-weight:bold;">${result.message}</p>`: ''}
                     `;
-                    registrationConfirmationMessageEl.style.display = 'block';
-
+                    ui.registrationConfirmationMessageEl.style.display = 'block';
                 } else {
-                    showGeneralMessage('registrationError', 'error', { error: result.error || 'Unknown error' });
+                    showGeneralMessage('registrationError', 'error', { error: result.error || result.message || 'Unknown error' });
                 }
-            } catch (error) {
-                console.error("Registration submission error:", error);
-                showGeneralMessage('apiError', 'error');
-            } finally {
-                submitButton.disabled = false;
-                submitButton.innerHTML = originalButtonHTML;
-            }
+            } catch (error) { console.error("Submit error:", error); showGeneralMessage('apiError', 'error');
+            } finally { submitButton.disabled = false; submitButton.innerHTML = originalButtonHTML; }
         });
 
+        // --- Initial Page Load & hf.js Coordination ---
+        function initializePage() {
+            queryTranslatableItemsDisplay();
+            const preferredLang = detectLanguagePreferenceDisplay();
+            updateUIDisplayLanguage(preferredLang); // This will set currentLangDisplay
 
-        // --- Initial Page Load ---
-        const urlParams = new URLSearchParams(window.location.search);
-        const eventId = urlParams.get('id');
+            const urlParams = new URLSearchParams(window.location.search);
+            const eventId = urlParams.get('id');
+            if (eventId) {
+                fetchEventDetails(eventId);
+            } else {
+                showGeneralMessage('eventNotFound', 'error');
+                ui.eventContentDiv.style.display = 'none';
+            }
 
-        queryTranslatableItemsDisplay(); // Initial scan for elements
-        const preferredLang = detectLanguagePreferenceEdit(); // Same logic for lang detection
-        updateUIDisplayLanguage(preferredLang);
-
-        if (eventId) {
-            fetchEventDetails(eventId);
-        } else {
-            showGeneralMessage('eventNotFound', 'error');
-            eventContentDiv.style.display = 'none';
+            // This function will be called by hf.js after it loads, if it's defined
+            window.triggerPageLanguageUpdate = function(langFromHf) {
+                console.log("hf.js triggered language update with:", langFromHf, "Current display lang:", currentLangDisplay);
+                if (langFromHf !== currentLangDisplay) { // Only update if different
+                    queryTranslatableItemsDisplay(); // Re-query as hf.js might have added elements
+                    updateUIDisplayLanguage(langFromHf);
+                } else { // If same language, still ensure header/footer are processed by queryTranslatableItems
+                    queryTranslatableItemsDisplay();
+                    updateUIDisplayLanguage(currentLangDisplay); // Re-apply to potentially new header/footer elements
+                }
+            };
         }
         
-        // hf.js loading
-        if (typeof createHeader === "function" && typeof createFooter === "function") {
-            createHeader('app-header', currentLangDisplay); createFooter('app-footer', currentLangDisplay);
-        } else if (typeof loadHf === "function") { loadHf(currentLangDisplay);
-        } else { /* fallback for hf.js */ 
-            const headerDiv = document.getElementById('app-header'); const footerDiv = document.getElementById('app-footer');
-            if(headerDiv && !headerDiv.innerHTML.trim()) headerDiv.innerHTML = `<div class="header-container"><div class="logo"><a href="index.html">MonRdvFacile</a></div><nav class="main-nav"><ul><li><a href="index.html">Accueil</a></li></ul></nav><button class="mobile-nav-toggle"><i class="fas fa-bars"></i></button></div>`;
-            if(footerDiv && !footerDiv.innerHTML.trim()) footerDiv.innerHTML = `<div class="footer-container"><p>&copy; ${new Date().getFullYear()} MonRdvFacile</p></div>`;
-        }
-        // Re-query and update language after hf.js might have added elements
-        setTimeout(() => { queryTranslatableItemsDisplay(); updateUIDisplayLanguage(currentLangDisplay); }, 200);
+        initializePage(); // Call the main initialization function
 
-        console.log("event-display.html JS loaded.");
+        // Fallback for hf.js if it doesn't call triggerPageLanguageUpdate
+        // This is less ideal but provides some safety.
+        setTimeout(() => {
+            if (!window.hfHasTriggeredLanguageUpdate) { // Assuming hf.js could set this flag
+                 console.log("Fallback: Re-querying and applying language for hf.js content.");
+                 queryTranslatableItemsDisplay();
+                 updateUIDisplayLanguage(currentLangDisplay);
+            }
+        }, 300);
+
+
+        console.log("event-display.html (Production Ready) JS loaded.");
     });
     </script>
 </body>
