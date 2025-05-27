@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title data-fr="Détails de l'Événement - MonRdvFacile" data-en="Event Details - MyEasyMeeting">Détails de l'Événement</title>
+    <meta name="description" data-fr="Consultez les détails de l'événement et inscrivez-vous." data-en="View event details and register.">
+    <meta name="keywords" content="événement, inscription, royan, 17000, mon rdv facile">
+    <meta name="robots" content="index, follow"> <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2JVSXZXNN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-K2JVSXZXNN');
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* --- Inline CSS for event-display.html (Adapted from your existing styles) --- */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6; background-color: #F8F9FA; color: #333333;
+            display: flex; flex-direction: column; min-height: 100vh;
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+        }
+        h1, h2, h3, h4 { font-weight: 600; color: #003366; margin-bottom: 0.75rem; line-height: 1.3; }
+        h1.event-title-main { font-size: 2.5rem; color: #004170; text-align: center; margin-top: 1rem; margin-bottom: 0.5rem;}
+        h2 { font-size: 1.75rem; }
+        h3 { font-size: 1.5rem; margin-top: 1.5rem; border-bottom: 1px solid #DEE2E6; padding-bottom: 0.5rem;}
+        p { margin-bottom: 1rem; font-size: 1.1rem; /* Slightly larger for seniors */ }
+        a { color: #005A9C; text-decoration: none; }
+        a:hover, a:focus { color: #003366; text-decoration: underline; }
+
+        .container { width: 90%; max-width: 900px; /* Good readable width */ margin-left: auto; margin-right: auto; padding: 20px 15px; }
+        main.container { flex-grow: 1; }
+
+        #app-header { background-color: #005A9C; color: #FFFFFF; padding:0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        /* ... (your existing header styles from create-event.html) ... */
+        .header-container { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; padding-bottom: 1rem; max-width: 1200px; margin: 0 auto; width: 90%;}
+        .logo a { font-size: 1.5rem; font-weight: bold; color: #FFFFFF; text-decoration: none; }
+        .main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
+        .main-nav li { margin-left: 20px; }
+        .main-nav a { color: #FFFFFF; text-decoration: none; font-size: 1rem; padding: 5px 10px; border-radius: 4px; transition: background-color 0.2s ease; }
+        .main-nav a:hover, .main-nav a.active { background-color: #004170; }
+        .main-nav .nav-text { margin-left: 5px; }
+        .mobile-nav-toggle { display: none; border: none; background: none; color: #FFFFFF; font-size: 1.5rem; cursor: pointer; }
+
+
+        #app-footer { background-color: #333333; color: #E0E0E0; padding: 2rem 0; text-align: center; font-size: 0.9rem; margin-top: auto; }
+        /* ... (your existing footer styles from create-event.html) ... */
+        .footer-container { max-width: 1200px; margin: 0 auto; width: 90%; }
+
+
+        .lang-toggle { text-align: right; margin-bottom: 1rem; font-size: 0.9rem; }
+        .lang-link { color: #555555; text-decoration: none; padding: 0.2rem 0.4rem; border-radius: 3px; cursor:pointer; }
+        .lang-link.active { font-weight: bold; color: #005A9C; background-color: #e9ecef; }
+        .lang-link:hover { background-color: #dee2e6; text-decoration: none; }
+
+        .content-section { background-color: #FFFFFF; padding: 25px 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); margin-top: 20px; margin-bottom: 30px; }
+        
+        .event-meta p { margin-bottom: 0.5rem; font-size: 1.1rem; color: #333; }
+        .event-meta strong { color: #003366; }
+        .event-description-text { font-size: 1.15rem; margin-top: 10px; margin-bottom: 20px; white-space: pre-wrap; /* Preserve line breaks from input */ }
+
+        .badge-display { display: inline-block; padding: 0.4em 0.8em; font-size: 1rem; font-weight: bold; line-height: 1; color: #fff; text-align: center; white-space: nowrap; vertical-align: middle; border-radius: 0.3rem; margin-left: 10px; }
+        .badge-new { background-color: #17a2b8; } /* Teal */
+        .badge-popular { background-color: #dc3545; } /* Red */
+        .badge-special { background-color: #fd7e14; } /* Orange */
+        .badge-promo { background-color: #6f42c1; } /* Purple */
+        .badge-soon { background-color: #ffc107; color:#212529; } /* Yellow */
+        .badge-none { display:none; }
+
+
+        /* Visual Table Layout */
+        #eventTableLayout { margin-top: 20px; padding: 15px; border: 1px dashed #CED4DA; border-radius: 6px; background-color: #f8f9fa; }
+        #eventTableLayout h4 { margin-top:0; font-size: 1.2rem; color: #004170;}
+        .tables-display-container { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+        .display-table-box {
+            border: 1px solid #005A9C; border-radius: 4px; padding: 10px;
+            background-color: #e9f2fa; text-align: center; min-width: 120px;
+        }
+        .display-table-box strong { color: #003366; }
+        .display-table-chairs { font-size: 0.9em; color: #333; }
+
+        /* Registration Form Styles */
+        .registration-form legend { font-size: 1.25rem; font-weight: 600; color: #004170; padding: 0 10px; margin-left: 5px; }
+        .form-group { margin-bottom: 1.5rem; /* Increased margin for seniors */ }
+        label { display: block; font-weight: 500; color: #343A40; margin-bottom: 0.6rem; font-size: 1.1rem; /* Larger labels */ }
+        input[type="text"], input[type="email"], input[type="tel"], select {
+            width: 100%; padding: 0.85rem 1.1rem; /* Larger padding */ font-size: 1.05rem; /* Larger font in input */
+            line-height: 1.5; color: #495057; background-color: #FFFFFF;
+            border: 1px solid #CED4DA; border-radius: 5px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        input:focus, select:focus { border-color: #005A9C; outline: 0; box-shadow: 0 0 0 0.2rem rgba(0, 90, 156, 0.25); }
+        .form-error-text { display: block; margin-top: 0.35rem; font-size: 0.9rem; color: #dc3545; }
+        .mandatory-star { color: #dc3545; font-weight: bold; margin-left: 2px; }
+
+        .paid-options-group { margin-top:1rem; padding: 15px; background-color: #e9f2fa; border: 1px solid #bad6f1; border-radius: 5px;}
+        .paid-options-group legend { font-size: 1.1rem; color: #004170; }
+        .paid-options-group .form-group-radio { display: flex; align-items: center; margin-bottom: 0.5rem; }
+        .paid-options-group input[type="radio"] { width: auto; margin-right: 10px; transform: scale(1.4); accent-color: #005A9C;}
+        .paid-options-group label { margin-bottom: 0; font-weight: normal; font-size: 1.05rem; }
+
+        .form-actions { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #E9ECEF; text-align: center;}
+        .btn-submit-registration {
+            background-color: #28a745; border-color: #28a745; color: white;
+            padding: 0.8rem 1.8rem; font-size: 1.2rem; /* Larger button */
+            transition: background-color 0.15s ease-in-out;
+        }
+        .btn-submit-registration:hover { background-color: #218838; border-color: #1e7e34; }
+        .btn-submit-registration i { margin-right: 0.6rem; }
+
+        /* Confirmation Message */
+        #registrationConfirmationMessage { padding: 20px; background-color: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; margin-top:20px; text-align:center; display:none; }
+        #registrationConfirmationMessage h3 { color: #155724; }
+        #confirmationDetails p { margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .print-button { margin-top:15px; padding:10px 15px; background-color:#007bff; color:white; border:none; border-radius:4px; cursor:pointer; font-size: 1rem;}
+        .print-button:hover { background-color: #0056b3; }
+
+        /* Share Section */
+        .share-section { margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; }
+        .share-section h3 { font-size:1.4rem; }
+        .share-button {
+            display: inline-block; margin: 8px; padding: 12px 20px; border-radius: 5px;
+            color: white; text-decoration: none; font-size: 1.1rem; transition: background-color 0.2s ease;
+        }
+        .share-button i { margin-right: 8px; }
+        .copy-link-btn { background-color: #007bff; } /* Blue */
+        .whatsapp-btn { background-color: #25D366; } /* WhatsApp Green */
+        .copy-link-btn:hover { background-color: #0056b3; }
+        .whatsapp-btn:hover { background-color: #1DA851; }
+        #copyStatusMessage { font-size:0.9em; margin-top:5px; color: #007bff; }
+
+        /* General Message Area */
+        .general-message { padding: 15px 20px; margin-bottom: 20px; border-radius: 5px; border: 1px solid transparent; font-size: 1rem; display: none; text-align:center;}
+        .general-message-error { color: #721C24; background-color: #F8D7DA; border-color: #F5C6CB; }
+        .general-message-loading { color: #0C5460; background-color: #D1ECF1; border-color: #BEE5EB; }
+
+         /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1.event-title-main { font-size: 2rem; }
+            .content-section { padding: 20px 15px; }
+            .main-nav { /* ... (your existing mobile nav styles) ... */ }
+            .mobile-nav-toggle { display: block; }
+        }
+        @media (max-width: 480px) {
+            h1.event-title-main { font-size: 1.7rem; }
+            p, label, input, select { font-size: 1rem; } /* Adjust base font for inputs on small screens */
+            input[type="text"], input[type="email"], input[type="tel"], select { padding: 0.7rem 0.9rem; }
+            .btn-submit-registration { padding: 0.7rem 1.5rem; font-size: 1.1rem; }
+            .share-button { padding: 10px 15px; font-size: 1rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="app-header">
+        </div>
+
+    <main class="container">
+        <div class="lang-toggle">
+            <a href="#" onclick="switchLanguageDisplay('fr'); return false;" class="lang-link active" id="lang-fr-display">FR</a> |
+            <a href="#" onclick="switchLanguageDisplay('en'); return false;" class="lang-link" id="lang-en-display">EN</a>
+        </div>
+
+        <div id="generalMessageArea" class="general-message"></div>
+
+        <div id="eventContent" style="display:none;"> <h1 id="eventTitle" class="event-title-main"></h1>
+            <div id="eventBadgeDisplay" class="badge-display" style="text-align:center; margin-bottom:1rem; display:block;"></div>
+
+
+            <section class="content-section event-meta">
+                <h2 data-fr="Informations sur l'Événement" data-en="Event Information">Informations sur l'Événement</h2>
+                <p><strong><i class="fas fa-calendar-alt"></i> <span data-fr="Date de début :" data-en="Start Date:">Date de début :</span></strong> <span id="eventStartDate"></span></p>
+                <p><strong><i class="fas fa-calendar-alt"></i> <span data-fr="Date de fin :" data-en="End Date:">Date de fin :</span></strong> <span id="eventEndDate"></span></p>
+                <p><strong><i class="fas fa-stopwatch"></i> <span data-fr="Heure de début :" data-en="Start Time:">Heure de début :</span></strong> <span id="eventStartTime"></span></p>
+                <p><strong><i class="fas fa-stopwatch"></i> <span data-fr="Heure de fin :" data-en="End Time:">Heure de fin :</span></strong> <span id="eventEndTime"></span></p>
+                <p><strong><i class="fas fa-calendar-times"></i> <span data-fr="Date limite d'inscription :" data-en="Registration Deadline:">Date limite d'inscription :</span></strong> <span id="eventDeadline"></span></p>
+                <p id="eventPriceDisplay" style="display:none;"><strong><i class="fas fa-euro-sign"></i> <span data-fr="Prix :" data-en="Price:">Prix :</span></strong> <span id="eventPrice"></span></p>
+                <h3 data-fr="Description" data-en="Description" style="margin-top:1.5rem;">Description</h3>
+                <p id="eventDescription" class="event-description-text"></p>
+            </section>
+
+            <section id="eventTableLayout" class="content-section">
+                <h4 data-fr="Disposition des Tables" data-en="Table Layout">Disposition des Tables</h4>
+                <div id="tablesDisplayContainer" class="tables-display-container">
+                    </div>
+                 <p id="totalCapacityInfo" style="text-align:center; margin-top:10px; font-size:1rem;"></p>
+            </section>
+
+            <section class="content-section registration-form">
+                <h2 data-fr="Inscrivez-vous !" data-en="Register Now!">Inscrivez-vous !</h2>
+                <form id="registrationForm" novalidate>
+                    <fieldset>
+                        <legend data-fr="Vos Coordonnées" data-en="Your Details">Vos Coordonnées</legend>
+                        <div class="form-group">
+                            <label for="userName"><span data-fr="Nom complet" data-en="Full Name">Nom complet</span> <span class="mandatory-star">*</span></label>
+                            <input type="text" id="userName" name="userName" required maxlength="100">
+                            <small class="form-error-text" id="userNameError"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="userEmail"><span data-fr="Adresse e-mail" data-en="Email Address">Adresse e-mail</span> <span class="mandatory-star">*</span></label>
+                            <input type="email" id="userEmail" name="userEmail" required maxlength="100">
+                            <small class="form-error-text" id="userEmailError"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="userPhone"><span data-fr="Numéro de téléphone" data-en="Phone Number">Numéro de téléphone</span> <span class="mandatory-star">*</span></label>
+                            <input type="tel" id="userPhone" name="userPhone" required maxlength="20">
+                            <small class="form-error-text" id="userPhoneError"></small>
+                        </div>
+                    </fieldset>
+
+                    <fieldset id="menuSelectionGroup" style="display:none;">
+                        <legend data-fr="Choix du Menu" data-en="Menu Choice">Choix du Menu</legend>
+                        <div class="form-group">
+                            <label for="menuChoice"><span data-fr="Sélectionnez votre menu" data-en="Select your menu">Sélectionnez votre menu</span> <span class="mandatory-star">*</span></label>
+                            <select id="menuChoice" name="menuChoice">
+                                </select>
+                            <small class="form-error-text" id="menuChoiceError"></small>
+                        </div>
+                    </fieldset>
+
+                    <fieldset id="paymentOptionsGroup" class="paid-options-group" style="display:none;">
+                        <legend data-fr="Confirmation de Paiement" data-en="Payment Confirmation">Confirmation de Paiement</legend>
+                        <div class="form-group">
+                            <p id="paymentInstructions" style="font-size:1rem; margin-bottom:10px;"></p>
+                            <label><span data-fr="Avez-vous déjà réglé votre participation ?" data-en="Have you already paid for your participation?">Avez-vous déjà réglé votre participation ?</span> <span class="mandatory-star">*</span></label>
+                            <div class="form-group-radio">
+                                <input type="radio" id="paidYes" name="paidStatus" value="yes" required>
+                                <label for="paidYes" data-fr="Oui" data-en="Yes">Oui</label>
+                            </div>
+                            <div class="form-group-radio">
+                                <input type="radio" id="paidNo" name="paidStatus" value="no">
+                                <label for="paidNo" data-fr="Non, je réglerai sur place/plus tard" data-en="No, I will pay on site/later">Non</label>
+                            </div>
+                             <small class="form-error-text" id="paidStatusError"></small>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-submit-registration"><i class="fas fa-check-circle"></i> <span data-fr="S'inscrire à l'événement" data-en="Register for Event">S'inscrire à l'événement</span></button>
+                    </div>
+                </form>
+            </section>
+
+            <div id="registrationConfirmationMessage">
+                <h3 data-fr="Inscription Réussie !" data-en="Registration Successful!">Inscription Réussie !</h3>
+                <div id="confirmationDetails"></div>
+                <button onclick="window.print()" class="print-button"><i class="fas fa-print"></i> <span data-fr="Imprimer la confirmation" data-en="Print Confirmation">Imprimer</span></button>
+                </div>
+
+            <section class="share-section">
+                <h3 data-fr="Partagez cet Événement !" data-en="Share this Event!">Partagez cet Événement !</h3>
+                <button id="copyLinkButton" class="share-button copy-link-btn"><i class="fas fa-copy"></i> <span data-fr="Copier le lien" data-en="Copy Link">Copier le lien</span></button>
+                <a id="whatsappShareLink" href="#" class="share-button whatsapp-btn" target="_blank"><i class="fab fa-whatsapp"></i> <span data-fr="Partager sur WhatsApp" data-en="Share on WhatsApp">WhatsApp</span></a>
+                <p id="copyStatusMessage"></p>
+            </section>
+        </div> </main>
+
+    <div id="app-footer">
+        </div>
+
+    <script src="src/hf.js"></script>
+    <script>
+    // --- MonRdvFacile - Inline JS for event-display.html ---
+    document.addEventListener('DOMContentLoaded', function() {
+        const WORKER_EVENT_URL = 'https://monrdvfacile-api.qmpro.workers.dev/api/events'; // For fetching event details
+        const WORKER_REGISTER_URL = 'https://monrdvfacile-api.qmpro.workers.dev/api/register'; // For submitting registration
+
+        let currentLangDisplay = 'fr';
+        let currentEventData = null; // To store loaded event details
+
+        // UI Elements
+        const generalMessageArea = document.getElementById('generalMessageArea');
+        const eventContentDiv = document.getElementById('eventContent');
+        const eventTitleEl = document.getElementById('eventTitle');
+        const eventBadgeDisplayEl = document.getElementById('eventBadgeDisplay');
+        const eventStartDateEl = document.getElementById('eventStartDate');
+        const eventEndDateEl = document.getElementById('eventEndDate');
+        const eventStartTimeEl = document.getElementById('eventStartTime');
+        const eventEndTimeEl = document.getElementById('eventEndTime');
+        const eventDeadlineEl = document.getElementById('eventDeadline');
+        const eventPriceDisplayEl = document.getElementById('eventPriceDisplay');
+        const eventPriceEl = document.getElementById('eventPrice');
+        const eventDescriptionEl = document.getElementById('eventDescription');
+        const tablesDisplayContainerEl = document.getElementById('tablesDisplayContainer');
+        const totalCapacityInfoEl = document.getElementById('totalCapacityInfo');
+
+        const registrationForm = document.getElementById('registrationForm');
+        const menuSelectionGroup = document.getElementById('menuSelectionGroup');
+        const menuChoiceSelect = document.getElementById('menuChoice');
+        const paymentOptionsGroup = document.getElementById('paymentOptionsGroup');
+        const paymentInstructionsEl = document.getElementById('paymentInstructions');
+        
+        const registrationConfirmationMessageEl = document.getElementById('registrationConfirmationMessage');
+        const confirmationDetailsEl = document.getElementById('confirmationDetails');
+
+        const copyLinkButton = document.getElementById('copyLinkButton');
+        const whatsappShareLink = document.getElementById('whatsappShareLink');
+        const copyStatusMessageEl = document.getElementById('copyStatusMessage');
+
+        const errorFieldMapDisplay = { // For registration form
+            userName: 'userNameError', userEmail: 'userEmailError', userPhone: 'userPhoneError',
+            menuChoice: 'menuChoiceError', paidStatus: 'paidStatusError'
+        };
+        
+        // --- Language Switching Logic ---
+        const translatableItemsDisplay = [];
+        function queryTranslatableItemsDisplay() { /* ... (similar to create/edit page) ... */
+            translatableItemsDisplay.length = 0;
+            document.querySelectorAll('[data-fr], [data-en], [data-fr-placeholder], [data-en-placeholder]').forEach(el => {
+                // Simplified version for brevity, ensure it covers all cases as in create-event
+                 const item = {element: el, frText: el.dataset.fr, enText: el.dataset.en};
+                 if(!item.frText && el.textContent) item.frText = el.textContent.trim();
+                 if(!item.enText && el.textContent) item.enText = el.textContent.trim();
+                 translatableItemsDisplay.push(item);
+            });
+        }
+
+        function updateUIDisplayLanguage(lang) {
+            currentLangDisplay = lang;
+            document.documentElement.lang = lang;
+            translatableItemsDisplay.forEach(item => {
+                const text = lang === 'fr' ? item.frText : item.enText;
+                // More robust text setting needed (handle spans inside buttons, placeholders etc.)
+                if (item.element.querySelector('span') && (item.element.tagName === 'BUTTON' || item.element.tagName === 'A')) {
+                     item.element.querySelector('span').textContent = text;
+                } else if (item.element.tagName === 'TITLE' || item.element.tagName === 'H1' || item.element.tagName === 'H2' || item.element.tagName === 'H3' || item.element.tagName === 'P' || item.element.tagName === 'LABEL' || item.element.tagName === 'STRONG' || item.element.tagName === 'SMALL') {
+                    if(text) item.element.textContent = text;
+                } else if (item.element.tagName === 'INPUT' && (item.element.type === 'submit' || item.element.type === 'button')) {
+                    if(text) item.element.value = text;
+                }
+                // Add more conditions for placeholders, etc.
+            });
+            document.querySelectorAll('.lang-link').forEach(link => link.classList.remove('active'));
+            const activeLink = document.getElementById(`lang-${lang}-display`);
+            if (activeLink) activeLink.classList.add('active');
+            try { localStorage.setItem('preferredLang', lang); } catch (e) { console.warn("localStorage unavailable for lang pref."); }
+            
+            // If event data loaded, re-render parts with new language
+            if (currentEventData) {
+                populateEventDetails(currentEventData); // This will use new currentLangDisplay
+                // If form had errors, re-validate to update error messages
+                 validateRegistrationForm(false);
+            }
+        }
+        window.switchLanguageDisplay = function(lang) { if (lang !== currentLangDisplay) { updateUIDisplayLanguage(lang); } };
+        // --- End Language ---
+
+         const messagesDisplay = {
+            loading: { fr: "Chargement des détails de l'événement...", en: "Loading event details..." },
+            eventNotFound: { fr: "Événement non trouvé ou ID incorrect.", en: "Event not found or incorrect ID." },
+            apiError: { fr: "Une erreur est survenue. Veuillez réessayer plus tard.", en: "An error occurred. Please try again later." },
+            registrationSuccess: { fr: "Votre inscription a été enregistrée avec succès !", en: "Your registration was successful!" },
+            registrationError: { fr: "Erreur lors de l'inscription.", en: "Error during registration." },
+            formErrors: { fr: "Veuillez corriger les erreurs dans le formulaire.", en: "Please correct the errors in the form." },
+            required: { fr: "Ce champ est obligatoire.", en: "This field is required." },
+            emailInvalid: { fr: "Veuillez entrer une adresse e-mail valide.", en: "Please enter a valid email address." },
+            phoneInvalid: { fr: "Veuillez entrer un numéro de téléphone valide.", en: "Please enter a valid phone number." },
+            menuRequired: { fr: "Veuillez choisir un menu.", en: "Please select a menu." },
+            paymentOptionRequired: { fr: "Veuillez indiquer votre statut de paiement.", en: "Please indicate your payment status." },
+            linkCopied: { fr: "Lien copié dans le presse-papiers !", en: "Link copied to clipboard!" },
+            errorCopying: { fr: "Erreur lors de la copie du lien.", en: "Error copying link." },
+            totalCapacityText: { fr: "Capacité totale : {capacity} places ({tables} tables de {chairs} chaises).", en: "Total capacity: {capacity} seats ({tables} tables of {chairs} chairs)." },
+            paymentInstructionText: {fr: "Cet événement est payant. Coût : {price}.", en: "This is a paid event. Cost: {price}."},
+            selectMenuDefault: {fr: "-- Choisissez un menu --", en: "-- Select a menu --"},
+            // Confirmation details
+            confirmName: {fr: "Nom :", en: "Name:"},
+            confirmEmail: {fr: "Email :", en: "Email:"},
+            confirmPhone: {fr: "Téléphone :", en: "Phone:"},
+            confirmMenu: {fr: "Menu choisi :", en: "Menu Choice:"},
+            confirmPaidStatus: {fr: "Statut du paiement :", en: "Payment Status:"},
+            paidStatusYes: {fr: "J'ai déjà payé", en: "I have already paid"},
+            paidStatusNo: {fr: "Je paierai sur place/plus tard", en: "I will pay on site/later"},
+        };
+
+        function getMessageDisplay(key, replacements = {}) {
+             let messageSet = messagesDisplay[key];
+             if (!messageSet) return `Missing Display translation: ${key}`;
+             let message = messageSet[currentLangDisplay] || messageSet['fr'];
+             for (const placeholder in replacements) { message = message.replace(`{${placeholder}}`, replacements[placeholder]); }
+             return message;
+        }
+
+        function showGeneralMessage(messageKey, type = 'error', replacements = {}) {
+            generalMessageArea.textContent = getMessageDisplay(messageKey, replacements);
+            generalMessageArea.className = `general-message general-message-${type}`;
+            generalMessageArea.style.display = 'block';
+        }
+        function hideGeneralMessage() { generalMessageArea.style.display = 'none'; }
+
+        function displayFieldError(fieldId, messageKey, replacements = {}) {
+            const errorElId = errorFieldMapDisplay[fieldId];
+            if (errorElId) {
+                const errorEl = document.getElementById(errorElId);
+                if (errorEl) { errorEl.textContent = getMessageDisplay(messageKey, replacements); }
+            }
+        }
+        function clearAllFieldErrors() {
+            for (const fieldId in errorFieldMapDisplay) {
+                const errorEl = document.getElementById(errorFieldMapDisplay[fieldId]);
+                if (errorEl) errorEl.textContent = '';
+            }
+        }
+
+
+        function populateEventDetails(data) {
+            currentEventData = data; // Store for later use (e.g. form submission)
+
+            // Update page title and meta tags
+            document.title = `${data.eventName} - ${getMessageDisplay(currentLangDisplay === 'fr' ? 'pageTitleSuffixFR' : 'pageTitleSuffixEN', { eventName: data.eventName })}`; // Assuming you add these keys to messagesDisplay
+            // TODO: Update meta description, OG tags etc. using data.eventName, data.eventDescription
+
+            eventTitleEl.textContent = data.eventName;
+            if(data.eventBadge && data.eventBadge !== 'none') {
+                eventBadgeDisplayEl.textContent = data.eventBadge.charAt(0).toUpperCase() + data.eventBadge.slice(1); // Simple text badge
+                eventBadgeDisplayEl.className = `badge-display badge-${data.eventBadge}`; // CSS will style it
+                eventBadgeDisplayEl.style.display = 'inline-block';
+            } else {
+                eventBadgeDisplayEl.style.display = 'none';
+            }
+
+            eventStartDateEl.textContent = new Date(data.eventStartDate).toLocaleDateString(currentLangDisplay === 'fr' ? 'fr-FR' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            eventEndDateEl.textContent = new Date(data.eventEndDate).toLocaleDateString(currentLangDisplay === 'fr' ? 'fr-FR' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            eventStartTimeEl.textContent = data.eventStartTime;
+            eventEndTimeEl.textContent = data.eventEndTime;
+            eventDeadlineEl.textContent = new Date(data.registrationDeadlineDate + 'T' + data.registrationDeadlineTime).toLocaleString(currentLangDisplay === 'fr' ? 'fr-FR' : 'en-US', { dateStyle: 'full', timeStyle: 'short' });
+            eventDescriptionEl.textContent = data.eventDescription;
+
+            if (data.isPaidEvent) {
+                eventPriceEl.textContent = `${parseFloat(data.eventPrice).toFixed(2)} €`;
+                eventPriceDisplayEl.style.display = 'block';
+                paymentOptionsGroup.style.display = 'block';
+                paymentInstructionsEl.textContent = getMessageDisplay('paymentInstructionText', {price: `${parseFloat(data.eventPrice).toFixed(2)} €`});
+                // Ensure radio buttons for payment are required
+                document.querySelectorAll('input[name="paidStatus"]').forEach(rb => rb.required = true);
+            } else {
+                eventPriceDisplayEl.style.display = 'none';
+                paymentOptionsGroup.style.display = 'none';
+                 document.querySelectorAll('input[name="paidStatus"]').forEach(rb => rb.required = false);
+            }
+
+            // Populate Menu Choices
+            menuChoiceSelect.innerHTML = ''; // Clear existing
+            if (data.numMenus > 0 && data.menuNames && data.menuNames.length > 0) {
+                menuSelectionGroup.style.display = 'block';
+                menuChoiceSelect.required = true;
+                const defaultOption = document.createElement('option');
+                defaultOption.value = "";
+                defaultOption.textContent = getMessageDisplay('selectMenuDefault');
+                menuChoiceSelect.appendChild(defaultOption);
+                data.menuNames.forEach((menuName, index) => {
+                    const option = document.createElement('option');
+                    option.value = menuName; // Or an ID if menus are more complex
+                    option.textContent = menuName;
+                    menuChoiceSelect.appendChild(option);
+                });
+            } else {
+                menuSelectionGroup.style.display = 'none';
+                menuChoiceSelect.required = false;
+            }
+            
+            // Visual Table Layout
+            renderVisualTableLayout(data.numTables, data.chairsPerTable);
+
+            // Setup Share Links
+            const pageUrl = window.location.href;
+            copyLinkButton.onclick = function() { /* ... copy logic ... */ 
+                navigator.clipboard.writeText(pageUrl).then(() => {
+                    copyStatusMessageEl.textContent = getMessageDisplay('linkCopied');
+                    setTimeout(() => { copyStatusMessageEl.textContent = ''; }, 3000);
+                }).catch(err => {
+                    copyStatusMessageEl.textContent = getMessageDisplay('errorCopying');
+                    console.error('Failed to copy link: ', err);
+                });
+            };
+            whatsappShareLink.href = `whatsapp://send?text=${encodeURIComponent(data.eventName + " - " + pageUrl)}`;
+
+            eventContentDiv.style.display = 'block'; // Show content now
+            hideGeneralMessage();
+        }
+
+        function renderVisualTableLayout(numTables, chairsPerTable) {
+            tablesDisplayContainerEl.innerHTML = '';
+            if (numTables > 0 && chairsPerTable > 0) {
+                for (let i = 0; i < numTables; i++) {
+                    const tableBox = document.createElement('div');
+                    tableBox.className = 'display-table-box';
+                    tableBox.innerHTML = `<strong>${getMessageDisplay('tableLabel', {num: i+1})} ${i + 1}</strong><br><span class="display-table-chairs">${chairsPerTable} ${getMessageDisplay('chairsLabel', {count: chairsPerTable})}</span>`;
+                    tablesDisplayContainerEl.appendChild(tableBox);
+                }
+                totalCapacityInfoEl.textContent = getMessageDisplay('totalCapacityText', { capacity: numTables * chairsPerTable, tables: numTables, chairs: chairsPerTable });
+            } else {
+                document.getElementById('eventTableLayout').style.display = 'none';
+            }
+        }
+        
+        async function fetchEventDetails(eventId) {
+            showGeneralMessage('loading', 'loading');
+            try {
+                const response = await fetch(`${WORKER_EVENT_URL}/${eventId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                if (data && data.success && data.event) { // Assuming worker returns { success: true, event: {...} }
+                    populateEventDetails(data.event);
+                } else {
+                    showGeneralMessage('eventNotFound', 'error');
+                     eventContentDiv.style.display = 'none';
+                }
+            } catch (error) {
+                console.error("Fetch event error:", error);
+                showGeneralMessage('apiError', 'error');
+                 eventContentDiv.style.display = 'none';
+            }
+        }
+
+        function validateRegistrationForm(showGeneralMsg = true) {
+            let isValid = true;
+            clearAllFieldErrors();
+
+            const userName = document.getElementById('userName').value.trim();
+            const userEmail = document.getElementById('userEmail').value.trim();
+            const userPhone = document.getElementById('userPhone').value.trim();
+
+            if (!userName) { displayFieldError('userName', 'required'); isValid = false; }
+            if (!userEmail) { displayFieldError('userEmail', 'required'); isValid = false; }
+            else if (!/^\S+@\S+\.\S+$/.test(userEmail)) { displayFieldError('userEmail', 'emailInvalid'); isValid = false; }
+            if (!userPhone) { displayFieldError('userPhone', 'required'); isValid = false; }
+            // Add more specific phone validation if needed
+
+            if (currentEventData.numMenus > 0) {
+                if (!menuChoiceSelect.value) { displayFieldError('menuChoice', 'required'); isValid = false; }
+            }
+
+            if (currentEventData.isPaidEvent) {
+                const paidStatusSelected = document.querySelector('input[name="paidStatus"]:checked');
+                if (!paidStatusSelected) { displayFieldError('paidStatus', 'paymentOptionRequired'); isValid = false; }
+            }
+            
+            if(!isValid && showGeneralMsg) showGeneralMessage('formErrors', 'error');
+            return isValid;
+        }
+
+        registrationForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            hideGeneralMessage();
+
+            if (!validateRegistrationForm()) {
+                return;
+            }
+
+            const formData = new FormData(this);
+            const registrationData = {
+                eventId: currentEventData.id,
+                eventName: currentEventData.eventName // Good to send for backend logging/confirmation emails
+            };
+            formData.forEach((value, key) => {
+                registrationData[key] = value;
+            });
+
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalButtonHTML = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${(currentLangDisplay === 'fr' ? 'Envoi...' : 'Submitting...')}`;
+
+            try {
+                const response = await fetch(WORKER_REGISTER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(registrationData)
+                });
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    showGeneralMessage('registrationSuccess', 'success');
+                    registrationForm.style.display = 'none'; // Hide form
+                    // Display confirmation details
+                    confirmationDetailsEl.innerHTML = `
+                        <p><strong>${getMessageDisplay('confirmName')}</strong> ${registrationData.userName}</p>
+                        <p><strong>${getMessageDisplay('confirmEmail')}</strong> ${registrationData.userEmail}</p>
+                        <p><strong>${getMessageDisplay('confirmPhone')}</strong> ${registrationData.userPhone}</p>
+                        ${currentEventData.numMenus > 0 ? `<p><strong>${getMessageDisplay('confirmMenu')}</strong> ${registrationData.menuChoice}</p>` : ''}
+                        ${currentEventData.isPaidEvent ? `<p><strong>${getMessageDisplay('confirmPaidStatus')}</strong> ${registrationData.paidStatus === 'yes' ? getMessageDisplay('paidStatusYes') : getMessageDisplay('paidStatusNo')}</p>` : ''}
+                    `;
+                    registrationConfirmationMessageEl.style.display = 'block';
+
+                } else {
+                    showGeneralMessage('registrationError', 'error', { error: result.error || 'Unknown error' });
+                }
+            } catch (error) {
+                console.error("Registration submission error:", error);
+                showGeneralMessage('apiError', 'error');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonHTML;
+            }
+        });
+
+
+        // --- Initial Page Load ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+
+        queryTranslatableItemsDisplay(); // Initial scan for elements
+        const preferredLang = detectLanguagePreferenceEdit(); // Same logic for lang detection
+        updateUIDisplayLanguage(preferredLang);
+
+        if (eventId) {
+            fetchEventDetails(eventId);
+        } else {
+            showGeneralMessage('eventNotFound', 'error');
+            eventContentDiv.style.display = 'none';
+        }
+        
+        // hf.js loading
+        if (typeof createHeader === "function" && typeof createFooter === "function") {
+            createHeader('app-header', currentLangDisplay); createFooter('app-footer', currentLangDisplay);
+        } else if (typeof loadHf === "function") { loadHf(currentLangDisplay);
+        } else { /* fallback for hf.js */ 
+            const headerDiv = document.getElementById('app-header'); const footerDiv = document.getElementById('app-footer');
+            if(headerDiv && !headerDiv.innerHTML.trim()) headerDiv.innerHTML = `<div class="header-container"><div class="logo"><a href="index.html">MonRdvFacile</a></div><nav class="main-nav"><ul><li><a href="index.html">Accueil</a></li></ul></nav><button class="mobile-nav-toggle"><i class="fas fa-bars"></i></button></div>`;
+            if(footerDiv && !footerDiv.innerHTML.trim()) footerDiv.innerHTML = `<div class="footer-container"><p>&copy; ${new Date().getFullYear()} MonRdvFacile</p></div>`;
+        }
+        // Re-query and update language after hf.js might have added elements
+        setTimeout(() => { queryTranslatableItemsDisplay(); updateUIDisplayLanguage(currentLangDisplay); }, 200);
+
+        console.log("event-display.html JS loaded.");
+    });
+    </script>
+</body>
+</html>
