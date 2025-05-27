@@ -8,8 +8,7 @@
     <meta name="description" content="Page de création d'événements pour MonRdvFacile. Configurez tous les détails de votre prochain rassemblement à Royan et alentours.">
     <meta name="keywords" content="créer événement, organisation, planification, royan, 17000, mon rdv facile">
     <meta name="author" content="MonRdvFacile">
-    <meta name="robots" content="noindex, nofollow">
-    <meta property="og:type" content="website">
+    <meta name="robots" content="noindex, nofollow"> <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.monrdvfacile.lpp.ovh/create-event.html">
     <meta property="og:title" content="Créer un Nouvel Événement - MonRdvFacile">
     <meta property="og:description" content="Utilisez notre formulaire simple pour créer et configurer votre événement.">
@@ -73,10 +72,9 @@
         #app-footer a:hover { color: #FFFFFF; text-decoration: underline; }
         .footer-container { max-width: 1200px; margin: 0 auto; width: 90%; }
 
-
         /* --- 5. Language Toggle (from style.css) --- */
         .lang-toggle { text-align: right; margin-bottom: 1rem; font-size: 0.9rem; }
-        .lang-link { color: #555555; text-decoration: none; padding: 0.2rem 0.4rem; border-radius: 3px; }
+        .lang-link { color: #555555; text-decoration: none; padding: 0.2rem 0.4rem; border-radius: 3px; cursor:pointer; }
         .lang-link.active { font-weight: bold; color: #005A9C; background-color: #e9ecef; }
         .lang-link:hover { background-color: #dee2e6; text-decoration: none; }
 
@@ -95,28 +93,34 @@
             box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
             transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
-        input[type="date"], input[type="time"] { min-height: calc(1.5em + 1.5rem + 2px); }
+        input[type="date"], input[type="time"] { min-height: calc(1.5em + 1.5rem + 2px); } /* Match Bootstrap's approx height */
         textarea { resize: vertical; min-height: 80px; }
         select {
             appearance: none; -webkit-appearance: none; -moz-appearance: none;
             background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23005A9C%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
             background-repeat: no-repeat; background-position: right 1rem center; background-size: 0.8em; padding-right: 2.5rem;
         }
-        select::-ms-expand { display: none; }
+        select::-ms-expand { display: none; } /* For IE11 */
         input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="password"]:focus,
         input[type="date"]:focus, input[type="time"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
             border-color: #005A9C; outline: 0; box-shadow: 0 0 0 0.2rem rgba(0, 90, 156, 0.25);
         }
+        input:invalid { border-color: #dc3545; } /* Highlight invalid fields */
+        textarea:invalid { border-color: #dc3545; }
+        select:invalid { border-color: #dc3545; }
+
         ::placeholder { color: #6C757D; opacity: 1; }
         .form-group-checkbox { display: flex; align-items: center; gap: 0.5rem; }
         .form-group-checkbox input[type="checkbox"] { width: auto; margin-right: 8px; transform: scale(1.3); accent-color: #005A9C; }
         .form-group-checkbox label { margin-bottom: 0; font-weight: normal; }
         small, .form-text { display: block; margin-top: 0.35rem; font-size: 0.875rem; color: #6C757D; }
+        .form-error-text { display: block; margin-top: 0.35rem; font-size: 0.875rem; color: #dc3545; } /* For specific field errors */
+
         .form-actions { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #E9ECEF; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: flex-end; }
         .btn {
             display: inline-block; font-weight: 500; color: #FFFFFF; text-align: center; vertical-align: middle;
             cursor: pointer; user-select: none; background-color: #007BFF; border: 1px solid transparent;
-            padding: 0.5rem 1rem; font-size: 1rem; line-height: 1.5; border-radius: 0.3rem;
+            padding: 0.75rem 1.25rem; font-size: 1rem; line-height: 1.5; border-radius: 0.3rem;
             transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
         .btn:hover { background-color: #0056b3; text-decoration: none; color: #FFFFFF; }
@@ -129,10 +133,16 @@
         #menuNameInputsContainer .form-group:last-child { margin-bottom: 0; }
 
         /* Message Area Styling */
-        .form-message { padding: 10px 15px; margin-top:15px; margin-bottom: 15px; border-radius: 5px; border: 1px solid transparent; font-size: 0.95rem; display: none; /* Hidden by default */ }
-        .form-message-error { color: #721C24; background-color: #F8D7DA; border-color: #F5C6CB; display: block; }
-        .form-message-success { color: #155724; background-color: #D4EDDA; border-color: #C3E6CB; display: block; }
-        .form-message-info { color: #0C5460; background-color: #D1ECF1; border-color: #BEE5EB; display: block; }
+        .form-message { padding: 15px 20px; margin-top:15px; margin-bottom: 20px; border-radius: 5px; border: 1px solid transparent; font-size: 1rem; display: none; /* Hidden by default */ line-height: 1.5; }
+        .form-message-error { color: #721C24; background-color: #F8D7DA; border-color: #F5C6CB; }
+        .form-message-success { color: #155724; background-color: #D4EDDA; border-color: #C3E6CB; }
+        .form-message-info { color: #0C5460; background-color: #D1ECF1; border-color: #BEE5EB; }
+        .form-message ul { margin-top: 0.5rem; margin-left: 20px; }
+
+        /* Password Strength Indicator (Optional visual cue) */
+        .password-strength { margin-top: 5px; font-size: 0.8em; }
+        .strength-bar { height: 5px; background: #eee; margin-top: 2px; border-radius: 3px; }
+        .strength-bar-fill { height: 100%; width: 0%; background: #dc3545; transition: width 0.3s, background-color 0.3s; border-radius: 3px;}
 
 
         /* --- 7. Responsive --- */
@@ -158,9 +168,9 @@
         @media (max-width: 480px) {
             html { font-size: 15px; }
             label, input[type="text"], input[type="email"], input[type="tel"], input[type="password"],
-            input[type="date"], input[type="time"], input[type="number"], textarea, select { font-size: 0.95rem; }
+            input[type="date"], input[type="time"], input[type="number"], textarea, select { font-size: 0.95rem; padding: 0.6rem 0.8rem;}
             .form-container { padding: 15px 10px; }
-            .form-actions .btn { padding: 0.6rem 1.2rem; }
+            .form-actions .btn { padding: 0.7rem 1.2rem; }
         }
     </style>
 </head>
@@ -177,45 +187,55 @@
                 <a href="#" onclick="inlineChangeLang('en'); return false;" class="lang-link" id="lang-en-create">EN</a>
             </p>
 
-            <div id="formGeneralMessage" class="form-message"></div> <form id="createEventForm"> <fieldset>
+            <div id="formGeneralMessage" class="form-message"></div>
+
+            <form id="createEventForm" novalidate> <fieldset>
                     <legend data-fr="Détails de l'Événement" data-en="Event Details">Détails de l'Événement</legend>
                     <div class="form-group">
                         <label for="eventName" data-fr="Nom de l'événement :" data-en="Event Name:">Nom de l'événement :</label>
-                        <input type="text" id="eventName" name="eventName" required maxlength="100">
+                        <input type="text" id="eventName" name="eventName" required maxlength="100" data-fr-placeholder="Ex: Grand Loto de Printemps" data-en-placeholder="Ex: Spring Big Bingo">
+                        <small class="form-error-text" id="eventNameError"></small>
                     </div>
                     <div class="form-group">
                         <label for="eventDescription" data-fr="Description de l'événement :" data-en="Event Description:">Description de l'événement :</label>
-                        <textarea id="eventDescription" name="eventDescription" rows="4" maxlength="250" required></textarea>
-                        <small id="charCount" data-fr="250 caractères restants" data-en="250 characters remaining">250 caractères restants</small>
+                        <textarea id="eventDescription" name="eventDescription" rows="4" maxlength="250" required data-fr-placeholder="Décrivez votre événement en quelques mots..." data-en-placeholder="Describe your event in a few words..."></textarea>
+                        <small id="charCount" class="form-text" data-fr="250 caractères restants" data-en="250 characters remaining">250 caractères restants</small>
+                        <small class="form-error-text" id="eventDescriptionError"></small>
                     </div>
                     <div class="form-group-inline">
                         <div class="form-group">
                             <label for="eventStartDate" data-fr="Date de début :" data-en="Start Date:">Date de début :</label>
                             <input type="date" id="eventStartDate" name="eventStartDate" required>
+                            <small class="form-error-text" id="eventStartDateError"></small>
                         </div>
                         <div class="form-group">
                             <label for="eventStartTime" data-fr="Heure de début :" data-en="Start Time:">Heure de début :</label>
                             <input type="time" id="eventStartTime" name="eventStartTime" required>
+                            <small class="form-error-text" id="eventStartTimeError"></small>
                         </div>
                     </div>
                     <div class="form-group-inline">
                         <div class="form-group">
                             <label for="eventEndDate" data-fr="Date de fin :" data-en="End Date:">Date de fin :</label>
                             <input type="date" id="eventEndDate" name="eventEndDate" required>
+                            <small class="form-error-text" id="eventEndDateError"></small>
                         </div>
                         <div class="form-group">
                             <label for="eventEndTime" data-fr="Heure de fin :" data-en="End Time:">Heure de fin :</label>
                             <input type="time" id="eventEndTime" name="eventEndTime" required>
+                            <small class="form-error-text" id="eventEndTimeError"></small>
                         </div>
                     </div>
                     <div class="form-group-inline">
                         <div class="form-group">
                             <label for="registrationDeadlineDate" data-fr="Date limite d'inscription :" data-en="Registration Deadline Date:">Date limite d'inscription :</label>
                             <input type="date" id="registrationDeadlineDate" name="registrationDeadlineDate" required>
+                            <small class="form-error-text" id="registrationDeadlineDateError"></small>
                         </div>
                         <div class="form-group">
                             <label for="registrationDeadlineTime" data-fr="Heure limite d'inscription :" data-en="Registration Deadline Time:">Heure limite d'inscription :</label>
                             <input type="time" id="registrationDeadlineTime" name="registrationDeadlineTime" required>
+                             <small class="form-error-text" id="registrationDeadlineTimeError"></small>
                         </div>
                     </div>
                 </fieldset>
@@ -226,10 +246,12 @@
                         <div class="form-group">
                             <label for="numTables" data-fr="Nombre de tables :" data-en="Number of Tables:">Nombre de tables :</label>
                             <input type="number" id="numTables" name="numTables" min="1" value="1" required>
+                             <small class="form-error-text" id="numTablesError"></small>
                         </div>
                         <div class="form-group">
-                            <label for="chairsPerTable" data-fr="Chaises par table :" data-en="Chairs per Table:">Chaises par table :</label>
+                            <label for="chairsPerTable" data-fr="Chaises par table (1-50) :" data-en="Chairs per Table (1-50):">Chaises par table (1-50) :</label>
                             <input type="number" id="chairsPerTable" name="chairsPerTable" min="1" max="50" value="4" required>
+                            <small class="form-error-text" id="chairsPerTableError"></small>
                         </div>
                     </div>
                 </fieldset>
@@ -237,9 +259,9 @@
                 <fieldset>
                     <legend data-fr="Options de Menu" data-en="Menu Options">Options de Menu</legend>
                     <div class="form-group">
-                        <label for="numMenus" data-fr="Nombre de menus proposés (1-5) :" data-en="Number of Menu Options (1-5):">Nombre de menus proposés (1-5) :</label>
+                        <label for="numMenus" data-fr="Nombre de menus proposés (0-5) :" data-en="Number of Menu Options (0-5):">Nombre de menus proposés (0-5) :</label>
                         <select id="numMenus" name="numMenus">
-                            <option value="0" data-fr="Aucun menu" data-en="No menus">0</option>
+                            <option value="0" data-fr="Aucun menu" data-en="No menus">0 (Aucun menu)</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3" selected>3</option>
@@ -251,6 +273,31 @@
                         </div>
                 </fieldset>
 
+                 <fieldset>
+                    <legend data-fr="Options Avancées" data-en="Advanced Options">Options Avancées</legend>
+                     <div class="form-group">
+                        <label for="maxRegistrationsPerUser" data-fr="Inscriptions max par utilisateur (0 = illimité) :" data-en="Max registrations per user (0 = unlimited):">Inscriptions max par utilisateur :</label>
+                        <input type="number" id="maxRegistrationsPerUser" name="maxRegistrationsPerUser" min="0" value="0" required>
+                        <small class="form-text" data-fr="Indiquez combien de fois une personne (basé sur e-mail/IP - logique côté serveur) peut s'inscrire. 0 pour aucune limite." data-en="Specify how many times one person (based on email/IP - server-side logic) can register. 0 for no limit.">Indiquez combien de fois une personne peut s'inscrire. 0 pour aucune limite.</small>
+                        <small class="form-error-text" id="maxRegistrationsPerUserError"></small>
+                    </div>
+                    <div class="form-group form-group-checkbox">
+                        <input type="checkbox" id="enableWaitlist" name="enableWaitlist">
+                        <label for="enableWaitlist" data-fr="Activer la liste d'attente si complet ?" data-en="Enable waitlist if event is full?">Activer la liste d'attente si complet ?</label>
+                    </div>
+                     <div class="form-group">
+                        <label for="eventBadge" data-fr="Choisir un badge (optionnel) :" data-en="Choose a badge (optional):">Choisir un badge (optionnel) :</label>
+                        <select id="eventBadge" name="eventBadge">
+                            <option value="none" data-fr="Aucun" data-en="None">Aucun</option>
+                            <option value="new" data-fr="Nouveau" data-en="New">Nouveau</option>
+                            <option value="popular" data-fr="Populaire" data-en="Popular">Populaire</option>
+                            <option value="special" data-fr="Spécial" data-en="Special">Spécial</option>
+                             <option value="promo" data-fr="Promotion" data-en="Promotion">Promotion</option>
+                             <option value="soon" data-fr="Bientôt Complet" data-en="Nearly Full">Bientôt Complet</option>
+                        </select>
+                    </div>
+                </fieldset>
+
                 <fieldset>
                     <legend data-fr="Tarification et Accès Admin" data-en="Pricing & Admin Access">Tarification et Accès Admin</legend>
                     <div class="form-group form-group-checkbox">
@@ -259,35 +306,29 @@
                     </div>
                     <div class="form-group" id="eventPriceGroup" style="display: none;">
                         <label for="eventPrice" data-fr="Prix de l'événement (€) :" data-en="Event Price (€):">Prix de l'événement (€) :</label>
-                        <input type="number" id="eventPrice" name="eventPrice" min="0" step="0.01" placeholder="Ex: 25.50">
+                        <input type="number" id="eventPrice" name="eventPrice" min="0" step="0.01" data-fr-placeholder="Ex: 25.50" data-en-placeholder="Ex: 25.50">
+                        <small class="form-error-text" id="eventPriceError"></small>
                     </div>
                     <div class="form-group">
-                        <label for="adminPassword" data-fr="Mot de passe administrateur (pour modifier/supprimer) :" data-en="Admin Password (to edit/delete):">Mot de passe administrateur (pour modifier/supprimer) :</label>
-                        <input type="password" id="adminPassword" name="adminPassword" required minlength="8">
-                        <small data-fr="Minimum 8 caractères." data-en="Minimum 8 characters.">Minimum 8 caractères.</small>
+                        <label for="adminPassword" data-fr="Mot de passe administrateur :" data-en="Admin Password:">Mot de passe administrateur :</label>
+                        <input type="password" id="adminPassword" name="adminPassword" required minlength="8" autocomplete="new-password">
+                        <small class="form-text" data-fr="Minimum 8 caractères. Choisissez un mot de passe robuste." data-en="Minimum 8 characters. Choose a strong password.">Minimum 8 caractères. Choisissez un mot de passe robuste.</small>
+                        <div class="password-strength">
+                            <div class="strength-bar"><div class="strength-bar-fill" id="strength-bar-fill"></div></div>
+                            <span id="password-strength-text" class="form-text"></span>
+                        </div>
+                        <small class="form-error-text" id="adminPasswordError"></small>
                     </div>
                     <div class="form-group">
                         <label for="confirmAdminPassword" data-fr="Confirmer le mot de passe admin :" data-en="Confirm Admin Password:">Confirmer le mot de passe admin :</label>
-                        <input type="password" id="confirmAdminPassword" name="confirmAdminPassword" required>
-                    </div>
-                </fieldset>
-
-                <fieldset>
-                    <legend data-fr="Badge de l'Événement (Optionnel)" data-en="Event Badge (Optional)">Badge de l'Événement (Optionnel)</legend>
-                    <div class="form-group">
-                        <label for="eventBadge" data-fr="Choisir un badge :" data-en="Choose a badge:">Choisir un badge :</label>
-                        <select id="eventBadge" name="eventBadge">
-                            <option value="none" data-fr="Aucun" data-en="None">Aucun</option>
-                            <option value="new" data-fr="Nouveau" data-en="New">Nouveau</option>
-                            <option value="popular" data-fr="Populaire" data-en="Popular">Populaire</option>
-                            <option value="special" data-fr="Spécial" data-en="Special">Spécial</option>
-                        </select>
+                        <input type="password" id="confirmAdminPassword" name="confirmAdminPassword" required autocomplete="new-password">
+                        <small class="form-error-text" id="confirmAdminPasswordError"></small>
                     </div>
                 </fieldset>
 
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary" data-fr="Créer l'Événement" data-en="Create Event"><i class="fas fa-plus-circle"></i> <span data-fr="Créer l'Événement" data-en="Create Event">Créer l'Événement</span></button>
-                    <button type="reset" class="btn btn-secondary" data-fr="Réinitialiser" data-en="Reset"><i class="fas fa-undo"></i> <span data-fr="Réinitialiser" data-en="Reset">Réinitialiser</span></button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle"></i> <span data-fr="Créer l'Événement" data-en="Create Event">Créer l'Événement</span></button>
+                    <button type="reset" class="btn btn-secondary"><i class="fas fa-undo"></i> <span data-fr="Réinitialiser" data-en="Reset">Réinitialiser</span></button>
                 </div>
             </form>
         </div>
@@ -299,71 +340,63 @@
     <script src="src/hf.js"></script>
     <script>
     // --- MonRdvFacile - Inline JS for create-event.html ---
-    // --- Combined and adapted from main.js and create-event.js ---
 
     document.addEventListener('DOMContentLoaded', function() {
-        // --- START: Language Switching Logic (Inline) ---
-        let currentLangCreate = 'fr';
-        const translatableElementsCreate = []; // Store elements and their translations
+        // --- START: Language Switching Logic (Inline - enhanced) ---
+        let currentLangCreate = 'fr'; // Default language
+        const translatableItems = [];
 
-        function queryTranslatableElementsCreate() {
-            translatableElementsCreate.length = 0; // Clear array before re-populating
-            document.querySelectorAll('[data-fr], [data-en]').forEach(el => {
-                const frText = el.dataset.fr || (el.tagName === 'INPUT' && el.type === 'submit' ? el.value : el.textContent);
-                const enText = el.dataset.en || (el.tagName === 'INPUT' && el.type === 'submit' ? el.value : el.textContent);
-                let isButton = (el.tagName === 'INPUT' && (el.type === 'submit' || el.type === 'button')) || el.tagName === 'BUTTON';
-                let isButtonSpan = isButton && el.querySelector('span');
-
-
-                translatableElementsCreate.push({
+        function queryTranslatableItems() {
+            translatableItems.length = 0; // Clear before re-populating
+            document.querySelectorAll('[data-fr], [data-en], [data-fr-placeholder], [data-en-placeholder]').forEach(el => {
+                const item = {
                     element: el,
-                    frText: frText,
-                    enText: enText,
-                    isTitle: el.tagName === 'TITLE',
-                    isPlaceholder: el.placeholder && (el.dataset.frPlaceholder || el.dataset.enPlaceholder),
+                    frText: el.dataset.fr,
+                    enText: el.dataset.en,
                     frPlaceholder: el.dataset.frPlaceholder,
                     enPlaceholder: el.dataset.enPlaceholder,
-                    isButtonSpan: isButtonSpan,
-                    isButtonDirectText: isButton && !isButtonSpan,
-                });
+                    isTitle: el.tagName === 'TITLE',
+                    isButtonSpan: el.tagName === 'BUTTON' && el.querySelector('span'),
+                    isDirectButton: el.tagName === 'BUTTON' && !el.querySelector('span') && (el.dataset.fr || el.dataset.en)
+                };
+                // Ensure we capture original text if only one lang attribute is present
+                if (!item.frText && !item.isPlaceholder) item.frText = el.textContent.trim();
+                if (!item.enText && !item.isPlaceholder) item.enText = el.textContent.trim();
+                if (!item.frPlaceholder && el.placeholder) item.frPlaceholder = el.placeholder;
+                if (!item.enPlaceholder && el.placeholder) item.enPlaceholder = el.placeholder;
+                
+                translatableItems.push(item);
             });
         }
 
-
-        function updateTextForLanguageCreate(lang) {
+        function updateUIForLanguageCreate(lang) {
             currentLangCreate = lang;
             document.documentElement.lang = lang;
 
-            translatableElementsCreate.forEach(item => {
+            translatableItems.forEach(item => {
                 const text = lang === 'fr' ? item.frText : item.enText;
+                const placeholderText = lang === 'fr' ? item.frPlaceholder : item.enPlaceholder;
+
                 if (item.isTitle) {
-                    item.element.textContent = text;
-                } else if (item.isPlaceholder) {
-                    item.element.placeholder = lang === 'fr' ? item.frPlaceholder : item.enPlaceholder;
+                    if(text) item.element.textContent = text;
+                } else if (item.frPlaceholder || item.enPlaceholder) {
+                    if(placeholderText) item.element.placeholder = placeholderText;
                 } else if (item.isButtonSpan) {
                     const span = item.element.querySelector('span');
-                    if (span) span.textContent = text;
-                } else if (item.isButtonDirectText) {
-                     item.element.firstChild.textContent = text + " "; // Keep icon
-                }
-                 else {
-                    // Handle elements where text might be mixed with icons
-                    if (item.element.childNodes.length > 1 && item.element.querySelector('i')) {
-                        // If there's an icon, assume the text is the last child node (or first if icon is last)
-                        // This part needs to be robust. For now, target specific text node more reliably if possible.
-                        // For simplicity, if a direct data-fr/en is on a span inside, that's better.
-                        // Here, we assume the main text of the element (excluding children unless they are text nodes)
-                        // For buttons with icons and text, wrap text in span and translate span.
-                        item.element.childNodes.forEach(child => {
-                            if (child.nodeType === Node.TEXT_NODE && child.textContent.trim() !== '') {
-                                child.textContent = text;
-                            }
-                        });
-                         // If the button has text directly and an icon, the above might not work perfectly.
-                        // Prefer structure <button><i class="icon"></i> <span data-fr="FR" data-en="EN">Text</span></button>
-                    } else {
-                         item.element.textContent = text;
+                    if (span && text) span.textContent = text;
+                } else if (item.isDirectButton) {
+                     // For buttons like <button data-fr="Texte FR" data-en="Texte EN"><i class="icon"></i> </button>
+                    // This assumes text is the first child node AFTER the icon, or the only text node.
+                    // A more robust way is to ensure text content is wrapped in a span.
+                    // For current structure, let's assume if data-fr/en exists on button, it's the main text.
+                    const icon = item.element.querySelector('i');
+                    if (icon) {
+                        item.element.innerHTML = icon.outerHTML + " " + (text || "");
+                    } else if (text) {
+                        item.element.textContent = text;
                     }
+                } else {
+                    if(text) item.element.textContent = text;
                 }
             });
 
@@ -375,16 +408,17 @@
                 localStorage.setItem('preferredLang', lang);
             } catch (e) { console.warn("localStorage unavailable for lang pref."); }
 
-            // Update dynamic text like char counter and menu labels
-            if (eventDescriptionTextarea) eventDescriptionTextarea.dispatchEvent(new Event('input')); // Update char count language
-            if (numMenusSelect) generateMenuInputs(parseInt(numMenusSelect.value, 10)); // Update menu labels
+            // Update dynamic text like char counter and menu labels which depend on currentLangCreate
+            if (eventDescriptionTextarea) eventDescriptionTextarea.dispatchEvent(new Event('input'));
+            if (numMenusSelect) generateMenuInputs(parseInt(numMenusSelect.value, 10));
+            // Update any error messages if they are language-dependent and displayed
+            validateForm(false); // Re-run validation to update messages language if form was submitted
         }
 
-        window.inlineChangeLang = function(lang) {
+        window.inlineChangeLang = function(lang) { // Make it global
             if (lang !== currentLangCreate) {
-                updateTextForLanguageCreate(lang);
+                updateUIForLanguageCreate(lang);
             }
-            return false;
         };
 
         function detectLanguagePreferenceCreate() {
@@ -392,13 +426,15 @@
                 const storedLang = localStorage.getItem('preferredLang');
                 if (storedLang && (storedLang === 'fr' || storedLang === 'en')) return storedLang;
             } catch (e) { /* ignore */ }
+            const browserLang = navigator.language || navigator.userLanguage;
+            if (browserLang && browserLang.toLowerCase().startsWith('en')) return 'en';
             return 'fr'; // Default
         }
-        // --- END: Language Switching Logic (Inline) ---
+        // --- END: Language Switching Logic ---
 
-
-        // --- START: Form Logic (from create-event.js) ---
+        // --- START: Form Elements and Logic ---
         const createEventForm = document.getElementById('createEventForm');
+        const eventNameInput = document.getElementById('eventName');
         const eventDescriptionTextarea = document.getElementById('eventDescription');
         const charCountDisplay = document.getElementById('charCount');
         const numMenusSelect = document.getElementById('numMenus');
@@ -409,36 +445,104 @@
         const adminPasswordInput = document.getElementById('adminPassword');
         const confirmAdminPasswordInput = document.getElementById('confirmAdminPassword');
         const formGeneralMessage = document.getElementById('formGeneralMessage');
+        const strengthBarFill = document.getElementById('strength-bar-fill');
+        const passwordStrengthText = document.getElementById('password-strength-text');
 
-        const WORKER_URL = 'https://monrdvfacile-api.qmpro.workers.dev/api/events';
+        // Dates
+        const eventStartDateInput = document.getElementById('eventStartDate');
+        const eventStartTimeInput = document.getElementById('eventStartTime');
+        const eventEndDateInput = document.getElementById('eventEndDate');
+        const eventEndTimeInput = document.getElementById('eventEndTime');
+        const registrationDeadlineDateInput = document.getElementById('registrationDeadlineDate');
+        const registrationDeadlineTimeInput = document.getElementById('registrationDeadlineTime');
+
+
+        const WORKER_URL = 'https://monrdvfacile-api.qmpro.workers.dev/api/events'; // Ensure this is correct
+
+        const errorFieldMap = {
+            eventName: 'eventNameError',
+            eventDescription: 'eventDescriptionError',
+            eventStartDate: 'eventStartDateError',
+            eventStartTime: 'eventStartTimeError',
+            eventEndDate: 'eventEndDateError',
+            eventEndTime: 'eventEndTimeError',
+            registrationDeadlineDate: 'registrationDeadlineDateError',
+            registrationDeadlineTime: 'registrationDeadlineTimeError',
+            numTables: 'numTablesError',
+            chairsPerTable: 'chairsPerTableError',
+            eventPrice: 'eventPriceError',
+            adminPassword: 'adminPasswordError',
+            confirmAdminPassword: 'confirmAdminPasswordError',
+            maxRegistrationsPerUser: 'maxRegistrationsPerUserError'
+        };
+
 
         // Bilingual messages for JS-driven parts
         const messages = {
+            required: { fr: "Ce champ est obligatoire.", en: "This field is required." },
+            minLength: { fr: "Doit contenir au moins {min} caractères.", en: "Must be at least {min} characters." },
+            maxLength: { fr: "Ne peut pas dépasser {max} caractères.", en: "Cannot exceed {max} characters." },
+            numberMin: { fr: "Doit être au moins {min}.", en: "Must be at least {min}." },
+            numberMax: { fr: "Ne doit pas dépasser {max}.", en: "Must not exceed {max}." },
             passwordMismatch: { fr: "Les mots de passe ne correspondent pas.", en: "Passwords do not match." },
-            endDateBeforeStart: { fr: "La date de fin ne peut pas être antérieure à la date de début.", en: "End date cannot be before start date." },
-            deadlineAfterStart: { fr: "La date limite d'inscription ne peut pas être postérieure à la date de début.", en: "Registration deadline cannot be after the event start date." },
-            formErrors: { fr: "Veuillez corriger les erreurs dans le formulaire.", en: "Please correct the errors in the form." },
-            eventCreatedSuccess: { fr: "Événement créé avec succès ! L'ID de votre événement est : ", en: "Event created successfully! Your Event ID is: " },
-            eventCreatedNote: { fr: "Veuillez conserver cet ID précieusement pour toute modification future.", en: "Please keep this ID safe for future edits." },
+            endDateBeforeStart: { fr: "La date/heure de fin ne peut être antérieure à la date/heure de début.", en: "End date/time cannot be before start date/time." },
+            deadlineAfterStart: { fr: "La date/heure limite d'inscription ne peut être postérieure à la date/heure de début de l'événement.", en: "Registration deadline cannot be after the event start date/time." },
+            deadlineTooCloseToEnd: { fr: "La date/heure limite d'inscription doit être avant la date/heure de fin de l'événement.", en: "Registration deadline must be before the event end date/time."},
+            genericFormError: { fr: "Veuillez corriger les erreurs en surbrillance dans le formulaire.", en: "Please correct the highlighted errors in the form." },
+            eventCreatedSuccess: { fr: "Événement créé avec succès !", en: "Event created successfully!" },
+            eventCreatedDetails: { fr: "ID de l'événement : <strong>{eventId}</strong><br>Lien de partage : <a href='{shareLink}' target='_blank'>{shareLink}</a><br>Lien d'édition : <a href='{editLink}' target='_blank'>{editLink}</a> (Conservez ce lien et votre mot de passe précieusement).<br>Vous allez être redirigé vers la page de l'événement dans {countdown} secondes...", en: "Event ID: <strong>{eventId}</strong><br>Share Link: <a href='{shareLink}' target='_blank'>{shareLink}</a><br>Edit Link: <a href='{editLink}' 'target=_blank'>{editLink}</a> (Keep this link and your password safe).<br>You will be redirected to the event page in {countdown} seconds..." },
             creationError: { fr: "Erreur lors de la création de l'événement.", en: "Error creating event." },
             charRemaining: { fr: "{count} caractères restants", en: "{count} characters remaining" },
             menuLabel: { fr: "Nom du Menu {letter}:", en: "Menu Name {letter}:" },
-            menuPlaceholder: { fr: "Détail du Menu {letter}", en: "Details for Menu {letter}" }
+            menuPlaceholder: { fr: "Ex: Sandwich Poulet, Option Végétarienne...", en: "Ex: Chicken Sandwich, Vegetarian Option..." },
+            passwordStrength: {
+                0: { fr: "Très faible", en: "Very Weak" }, 1: { fr: "Faible", en: "Weak" },
+                2: { fr: "Moyen", en: "Medium" }, 3: { fr: "Fort", en: "Strong" }, 4: { fr: "Très fort", en: "Very Strong" }
+            }
         };
 
         function getMessage(key, lang, replacements = {}) {
             lang = lang || currentLangCreate;
-            let message = (messages[key] ? (messages[key][lang] || messages[key]['fr']) : "Message not defined.");
+            let messageSet = messages[key];
+            if (typeof messageSet === 'function') return messageSet(lang, replacements); // For complex messages
+
+            let message = (messageSet ? (messageSet[lang] || messageSet['fr']) : `Missing translation for: ${key}`);
             for (const placeholder in replacements) {
                 message = message.replace(`{${placeholder}}`, replacements[placeholder]);
             }
             return message;
         }
 
-        function displayFormMessage(message, type = 'error') {
-            formGeneralMessage.innerHTML = message;
-            formGeneralMessage.className = `form-message form-message-${type}`; // This will trigger display via CSS
-            formGeneralMessage.style.display = 'block'; // Explicitly show
+        function displayFormMessage(message, type = 'error', isHtml = false) {
+            if (isHtml) {
+                formGeneralMessage.innerHTML = message;
+            } else {
+                formGeneralMessage.textContent = message;
+            }
+            formGeneralMessage.className = `form-message form-message-${type}`;
+            formGeneralMessage.style.display = 'block';
+            formGeneralMessage.setAttribute('role', type === 'error' ? 'alert' : 'status');
+        }
+        
+        function clearFieldErrors() {
+            for (const fieldId in errorFieldMap) {
+                const errorEl = document.getElementById(errorFieldMap[fieldId]);
+                if (errorEl) errorEl.textContent = '';
+                const inputEl = document.getElementById(fieldId);
+                if (inputEl) inputEl.removeAttribute('aria-invalid');
+            }
+        }
+
+        function displayFieldError(fieldId, messageKey, replacements = {}) {
+            const errorElId = errorFieldMap[fieldId];
+            if (errorElId) {
+                const errorEl = document.getElementById(errorElId);
+                if (errorEl) {
+                     errorEl.textContent = getMessage(messageKey, currentLangCreate, replacements);
+                     const inputEl = document.getElementById(fieldId);
+                     if (inputEl) inputEl.setAttribute('aria-invalid', 'true');
+                }
+            }
         }
 
         // Character Counter
@@ -448,7 +552,7 @@
                 const currentLength = this.value.length;
                 const remaining = maxLength - currentLength;
                 charCountDisplay.textContent = getMessage('charRemaining', currentLangCreate, {count: remaining});
-                charCountDisplay.style.color = remaining < 0 ? 'red' : '#6C757D';
+                charCountDisplay.style.color = remaining < 0 ? '#dc3545' : '#6C757D';
             });
         }
 
@@ -458,7 +562,7 @@
             if (count === 0) return;
 
             for (let i = 0; i < count; i++) {
-                const menuLetter = String.fromCharCode(65 + i);
+                const menuLetter = String.fromCharCode(65 + i); // A, B, C...
                 const formGroup = document.createElement('div');
                 formGroup.classList.add('form-group');
 
@@ -469,13 +573,20 @@
                 const input = document.createElement('input');
                 input.type = 'text';
                 input.id = `menuName${i}`;
-                input.name = `menuName${i}`; // Critical for FormData
+                input.name = `menuName${i}`;
                 input.required = true;
-                input.maxLength = 50;
+                input.maxLength = 70;
                 input.placeholder = getMessage('menuPlaceholder', currentLangCreate, {letter: menuLetter});
+                input.dataset.menuIndex = i; // For validation messages
+
+                const errorSmall = document.createElement('small');
+                errorSmall.classList.add('form-error-text');
+                errorSmall.id = `menuName${i}Error`;
+
 
                 formGroup.appendChild(label);
                 formGroup.appendChild(input);
+                formGroup.appendChild(errorSmall);
                 menuNameInputsContainer.appendChild(formGroup);
             }
         }
@@ -490,56 +601,144 @@
             isPaidEventCheckbox.addEventListener('change', function() {
                 eventPriceGroup.style.display = this.checked ? 'block' : 'none';
                 eventPriceInput.required = this.checked;
-                if (!this.checked) eventPriceInput.value = '';
+                if (!this.checked) {
+                    eventPriceInput.value = '';
+                    const priceErrorEl = document.getElementById(errorFieldMap.eventPrice);
+                    if(priceErrorEl) priceErrorEl.textContent = ''; // Clear error if unchecked
+                }
             });
         }
 
-        // Password Confirmation Validation
-        function validatePasswords() {
-            if (adminPasswordInput.value !== confirmAdminPasswordInput.value) {
-                confirmAdminPasswordInput.setCustomValidity(getMessage('passwordMismatch', currentLangCreate));
-                return false;
-            } else {
-                confirmAdminPasswordInput.setCustomValidity('');
-                return true;
-            }
-        }
-        if (adminPasswordInput && confirmAdminPasswordInput) {
-            adminPasswordInput.addEventListener('input', validatePasswords);
-            confirmAdminPasswordInput.addEventListener('input', validatePasswords);
+        // Password Strength
+        if (adminPasswordInput && strengthBarFill && passwordStrengthText) {
+            adminPasswordInput.addEventListener('input', function() {
+                const pass = this.value;
+                let score = 0;
+                if (!pass) {
+                    strengthBarFill.style.width = "0%";
+                    passwordStrengthText.textContent = "";
+                    return;
+                }
+                if (pass.length >= 8) score++;
+                if (pass.match(/[a-z]/)) score++;
+                if (pass.match(/[A-Z]/)) score++;
+                if (pass.match(/[0-9]/)) score++;
+                if (pass.match(/[^a-zA-Z0-9]/)) score++; // Special character
+
+                strengthBarFill.style.width = (score * 20) + "%";
+                if (score <= 1) strengthBarFill.style.backgroundColor = '#dc3545'; // red
+                else if (score <= 2) strengthBarFill.style.backgroundColor = '#ffc107'; // orange
+                else if (score <= 3) strengthBarFill.style.backgroundColor = '#fd7e14'; // yellow-orange
+                else if (score === 4) strengthBarFill.style.backgroundColor = '#20c997'; // teal
+                else strengthBarFill.style.backgroundColor = '#28a745'; // green
+                
+                passwordStrengthText.textContent = getMessage('passwordStrength', currentLangCreate)[Math.min(score, 4)];
+            });
         }
 
-        // Date Validation
-        function validateDates() {
-            const startDateInput = document.getElementById('eventStartDate');
-            const startTimeInput = document.getElementById('eventStartTime');
-            const endDateInput = document.getElementById('eventEndDate');
-            const endTimeInput = document.getElementById('eventEndTime');
-            const deadlineDateInput = document.getElementById('registrationDeadlineDate');
-            const deadlineTimeInput = document.getElementById('registrationDeadlineTime');
+        function validateForm(showGeneralMessage = true) {
             let isValid = true;
+            clearFieldErrors(); // Clear previous specific field errors
 
-            const startDate = new Date(`${startDateInput.value}T${startTimeInput.value || "00:00"}`);
-            const endDate = new Date(`${endDateInput.value}T${endTimeInput.value || "00:00"}`);
-            const deadlineDate = new Date(`${deadlineDateInput.value}T${deadlineTimeInput.value || "00:00"}`);
-
-            endDateInput.setCustomValidity("");
-            deadlineDateInput.setCustomValidity("");
-
-            if (startDateInput.value && endDateInput.value && startTimeInput.value && endTimeInput.value && endDate < startDate) {
-                endDateInput.setCustomValidity(getMessage('endDateBeforeStart', currentLangCreate));
-                isValid = false;
+            // Validate Event Name
+            if (!eventNameInput.value.trim()) {
+                displayFieldError('eventName', 'required'); isValid = false;
+            } else if (eventNameInput.value.length > 100) {
+                 displayFieldError('eventName', 'maxLength', {max: 100}); isValid = false;
             }
-            if (startDateInput.value && deadlineDateInput.value && startTimeInput.value && deadlineTimeInput.value && deadlineDate > startDate) {
-                deadlineDateInput.setCustomValidity(getMessage('deadlineAfterStart', currentLangCreate));
-                isValid = false;
+
+            // Validate Event Description
+            if (!eventDescriptionTextarea.value.trim()) {
+                displayFieldError('eventDescription', 'required'); isValid = false;
+            } else if (eventDescriptionTextarea.value.length > 250) {
+                 displayFieldError('eventDescription', 'maxLength', {max: 250}); isValid = false;
+            }
+
+            // Date/Time fields (basic required check, specific logic below)
+            [eventStartDateInput, eventStartTimeInput, eventEndDateInput, eventEndTimeInput, registrationDeadlineDateInput, registrationDeadlineTimeInput].forEach(input => {
+                if (!input.value) {
+                    displayFieldError(input.id, 'required'); isValid = false;
+                }
+            });
+            
+            // Venue Setup
+            const numTables = parseInt(document.getElementById('numTables').value, 10);
+            const chairsPerTable = parseInt(document.getElementById('chairsPerTable').value, 10);
+            if (isNaN(numTables) || numTables < 1) { displayFieldError('numTables', 'numberMin', {min: 1}); isValid = false; }
+            if (isNaN(chairsPerTable) || chairsPerTable < 1) { displayFieldError('chairsPerTable', 'numberMin', {min: 1}); isValid = false; }
+            if (chairsPerTable > 50) { displayFieldError('chairsPerTable', 'numberMax', {max: 50}); isValid = false; }
+
+            // Menu names if numMenus > 0
+            const numMenus = parseInt(numMenusSelect.value, 10);
+            if (numMenus > 0) {
+                for (let i = 0; i < numMenus; i++) {
+                    const menuInput = document.getElementById(`menuName${i}`);
+                    if (!menuInput.value.trim()) {
+                        displayFieldError(menuInput.id, 'required'); isValid = false;
+                    } else if (menuInput.value.length > 70) {
+                        displayFieldError(menuInput.id, 'maxLength', {max: 70}); isValid = false;
+                    }
+                }
+            }
+
+            // Paid Event Price
+            if (isPaidEventCheckbox.checked) {
+                if (!eventPriceInput.value) {
+                    displayFieldError('eventPrice', 'required'); isValid = false;
+                } else if (parseFloat(eventPriceInput.value) < 0) {
+                    displayFieldError('eventPrice', 'numberMin', {min: 0}); isValid = false;
+                }
+            }
+
+            // Admin Password
+            if (!adminPasswordInput.value) {
+                displayFieldError('adminPassword', 'required'); isValid = false;
+            } else if (adminPasswordInput.value.length < 8) {
+                displayFieldError('adminPassword', 'minLength', {min: 8}); isValid = false;
+            }
+            if (!confirmAdminPasswordInput.value) {
+                displayFieldError('confirmAdminPassword', 'required'); isValid = false;
+            } else if (adminPasswordInput.value !== confirmAdminPasswordInput.value) {
+                displayFieldError('confirmAdminPassword', 'passwordMismatch'); isValid = false;
+            }
+
+            // Max Registrations Per User
+            const maxRegs = document.getElementById('maxRegistrationsPerUser');
+            if (maxRegs.value === '' || parseInt(maxRegs.value, 10) < 0) {
+                displayFieldError('maxRegistrationsPerUser', 'numberMin', {min: 0}); isValid = false;
+            }
+
+
+            // Complex Date Validations
+            if (eventStartDateInput.value && eventStartTimeInput.value && eventEndDateInput.value && eventEndTimeInput.value) {
+                const startDateTime = new Date(`${eventStartDateInput.value}T${eventStartTimeInput.value}`);
+                const endDateTime = new Date(`${eventEndDateInput.value}T${eventEndTimeInput.value}`);
+                if (endDateTime <= startDateTime) {
+                    displayFieldError('eventEndDate', 'endDateBeforeStart'); isValid = false;
+                }
+
+                if (registrationDeadlineDateInput.value && registrationDeadlineTimeInput.value) {
+                    const deadlineDateTime = new Date(`${registrationDeadlineDateInput.value}T${registrationDeadlineTimeInput.value}`);
+                    if (deadlineDateTime >= startDateTime) {
+                        displayFieldError('registrationDeadlineDate', 'deadlineAfterStart'); isValid = false;
+                    }
+                    if (deadlineDateTime >= endDateTime) { // Also check against end date for logic
+                        displayFieldError('registrationDeadlineDate', 'deadlineTooCloseToEnd'); isValid = false;
+                    }
+                }
+            }
+            
+            if (!isValid && showGeneralMessage) {
+                displayFormMessage(getMessage('genericFormError', currentLangCreate), 'error');
+                const firstInvalidField = createEventForm.querySelector('[aria-invalid="true"], :invalid:not(fieldset)');
+                if (firstInvalidField) {
+                    firstInvalidField.focus({preventScroll:true});
+                    firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
             }
             return isValid;
         }
-        ['eventStartDate', 'eventStartTime', 'eventEndDate', 'eventEndTime', 'registrationDeadlineDate', 'registrationDeadlineTime'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.addEventListener('change', validateDates);
-        });
+
 
         // Form Submission
         if (createEventForm) {
@@ -548,114 +747,166 @@
                 formGeneralMessage.style.display = 'none'; // Hide previous messages
                 formGeneralMessage.className = 'form-message';
 
-
-                const passwordsValid = validatePasswords();
-                const datesValid = validateDates();
-
-                if (!this.checkValidity() || !passwordsValid || !datesValid) {
-                    displayFormMessage(getMessage('formErrors', currentLangCreate), 'error');
-                    const firstInvalidField = this.querySelector(':invalid:not(fieldset)');
-                    if (firstInvalidField) {
-                        firstInvalidField.focus();
-                        firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
+                if (!validateForm()) {
                     return;
                 }
 
                 const formData = new FormData(this);
                 const eventData = {};
+                const menuNames = [];
+
                 formData.forEach((value, key) => {
-                    if (key === 'isPaidEvent') {
-                        eventData[key] = true; // FormData sends 'on' for checkbox
+                    if (key.startsWith('menuName')) {
+                        menuNames.push(value);
+                    } else if (key === 'isPaidEvent' || key === 'enableWaitlist') {
+                        eventData[key] = true; // Checkbox is present means true
                     } else {
                         eventData[key] = value;
                     }
                 });
-                if (!formData.has('isPaidEvent')) { // If checkbox not checked, it's not in FormData
-                    eventData.isPaidEvent = false;
+                // Handle checkboxes not present in FormData if unchecked
+                if (!formData.has('isPaidEvent')) eventData.isPaidEvent = false;
+                if (!formData.has('enableWaitlist')) eventData.enableWaitlist = false;
+                
+                if (menuNames.length > 0) eventData.menuNames = menuNames;
+                else eventData.menuNames = []; // ensure it's an array even if empty
+
+                // Convert numbers where appropriate
+                eventData.numTables = parseInt(eventData.numTables, 10);
+                eventData.chairsPerTable = parseInt(eventData.chairsPerTable, 10);
+                eventData.numMenus = parseInt(eventData.numMenus, 10);
+                eventData.maxRegistrationsPerUser = parseInt(eventData.maxRegistrationsPerUser, 10);
+                if (eventData.isPaidEvent && eventData.eventPrice) {
+                    eventData.eventPrice = parseFloat(eventData.eventPrice);
+                } else if (eventData.isPaidEvent && !eventData.eventPrice) {
+                    eventData.eventPrice = 0.0; // Default price if paid but not set
                 }
 
+                // Note on password: The password (eventData.adminPassword) is sent in plain text over HTTPS.
+                // The Cloudflare Worker (WORKER_URL) *MUST* securely hash this password with a unique salt before storing it.
+                // Client-side hashing alone is not sufficient for production security.
 
-                // Convert numMenus to integer
-                if(eventData.numMenus) eventData.numMenus = parseInt(eventData.numMenus, 10);
-
-
-                // Add loading indicator to submit button
                 const submitButton = createEventForm.querySelector('button[type="submit"]');
-                const originalButtonText = submitButton.innerHTML;
+                const originalButtonHTML = submitButton.innerHTML; // Store full HTML to preserve icon
                 submitButton.disabled = true;
-                submitButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${currentLangCreate === 'fr' ? 'Création...' : 'Creating...'}`;
-
+                const loadingText = currentLangCreate === 'fr' ? 'Création...' : 'Creating...';
+                submitButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${loadingText}`;
 
                 try {
                     const response = await fetch(WORKER_URL, {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(eventData),
                     });
 
                     const result = await response.json();
 
-                    if (response.ok && result.success) {
-                        let successMsg = `${getMessage('eventCreatedSuccess', currentLangCreate)} <strong>${result.eventId}</strong>`;
-                        successMsg += `<br><small>${getMessage('eventCreatedNote', currentLangCreate)}</small>`;
-                        displayFormMessage(successMsg, 'success');
-                        createEventForm.reset(); // Reset form fields
-                        // Manually trigger updates for fields that need it after reset
-                        if (eventDescriptionTextarea) eventDescriptionTextarea.dispatchEvent(new Event('input'));
-                        if (numMenusSelect) numMenusSelect.dispatchEvent(new Event('change')); // will call generateMenuInputs
-                        if (isPaidEventCheckbox) isPaidEventCheckbox.dispatchEvent(new Event('change'));
+                    if (response.ok && result.success && result.eventId) {
+                        const eventId = result.eventId;
+                        const shareLink = `${window.location.origin}/event-display.html?id=${eventId}`; // Adjust if your display page is elsewhere
+                        const editLink = `${window.location.origin}/edit-event.html?id=${eventId}`; // Admin should be prompted for password on edit page
+
+                        let countdown = 10;
+                        displayFormMessage(getMessage('eventCreatedDetails', currentLangCreate, { eventId, shareLink, editLink, countdown }), 'success', true);
+                        
+                        const countdownInterval = setInterval(() => {
+                            countdown--;
+                            if (countdown <=0) {
+                                clearInterval(countdownInterval);
+                                window.location.href = shareLink; // Redirect to event display page
+                            } else {
+                                // Update countdown in message if needed, or just let it be static after first display
+                                 displayFormMessage(getMessage('eventCreatedDetails', currentLangCreate, { eventId, shareLink, editLink, countdown }), 'success', true);
+                            }
+                        }, 1000);
+
+                        createEventForm.reset(); // Reset form visually
+                         // Manually dispatch events to update UI elements after reset
+                        setTimeout(() => {
+                            if (eventDescriptionTextarea) eventDescriptionTextarea.dispatchEvent(new Event('input'));
+                            if (numMenusSelect) {
+                                const defaultNumMenus = createEventForm.querySelector('#numMenus option[selected]')?.value || '3';
+                                numMenusSelect.value = defaultNumMenus;
+                                generateMenuInputs(parseInt(defaultNumMenus, 10));
+                            }
+                            if (isPaidEventCheckbox) {
+                                isPaidEventCheckbox.checked = false;
+                                isPaidEventCheckbox.dispatchEvent(new Event('change'));
+                            }
+                            if (adminPasswordInput) adminPasswordInput.dispatchEvent(new Event('input')); // To reset strength meter
+                            document.getElementById('maxRegistrationsPerUser').value = "0"; // Reset to default
+                            document.getElementById('eventBadge').value = "none";
+                            document.getElementById('enableWaitlist').checked = false;
+                        }, 0);
+
 
                     } else {
-                        displayFormMessage(`${getMessage('creationError', currentLangCreate)}: ${result.error || response.statusText}`, 'error');
+                        displayFormMessage(`${getMessage('creationError', currentLangCreate)}: ${result.error || result.message || response.statusText}`, 'error');
                     }
                 } catch (error) {
                     console.error("Fetch error:", error);
                     displayFormMessage(`${getMessage('creationError', currentLangCreate)}: ${error.message}`, 'error');
                 } finally {
                     submitButton.disabled = false;
-                    submitButton.innerHTML = originalButtonText;
+                    submitButton.innerHTML = originalButtonHTML;
                 }
             });
 
             createEventForm.addEventListener('reset', function() {
                 formGeneralMessage.style.display = 'none';
                 formGeneralMessage.className = 'form-message';
-                if(confirmAdminPasswordInput) confirmAdminPasswordInput.setCustomValidity('');
-                 document.getElementById('eventEndDate').setCustomValidity("");
-                 document.getElementById('registrationDeadlineDate').setCustomValidity("");
-
+                clearFieldErrors();
+                
                 setTimeout(() => { // Allow native reset to complete
                     if (eventDescriptionTextarea) eventDescriptionTextarea.dispatchEvent(new Event('input'));
                     if (numMenusSelect) {
-                        // Reset to default selected value (e.g., 3) and regenerate
-                        const defaultNumMenus = createEventForm.querySelector('#numMenus option[selected]')?.value || '0';
-                        numMenusSelect.value = defaultNumMenus;
+                        const defaultNumMenus = createEventForm.querySelector('#numMenus option[selected]')?.value || '3';
+                        numMenusSelect.value = defaultNumMenus; // Explicitly set to default selected
                         generateMenuInputs(parseInt(defaultNumMenus, 10));
                     }
                     if (isPaidEventCheckbox) {
-                        isPaidEventCheckbox.checked = false; // Ensure it's visually unchecked
+                        isPaidEventCheckbox.checked = false;
                         isPaidEventCheckbox.dispatchEvent(new Event('change'));
                     }
+                    if(adminPasswordInput) adminPasswordInput.dispatchEvent(new Event('input')); // Clears strength bar
+                    document.getElementById('maxRegistrationsPerUser').value = "0"; // Reset to default
+                    document.getElementById('eventBadge').value = "none";
+                    document.getElementById('enableWaitlist').checked = false;
+
                 }, 0);
             });
         }
         // --- END: Form Logic ---
 
         // --- Initial Page Setup ---
-        queryTranslatableElementsCreate(); // Populate translatable elements array
-        const preferredLangCreate = detectLanguagePreferenceCreate();
-        updateTextForLanguageCreate(preferredLangCreate); // Apply language
+        queryTranslatableItems(); // Populate translatable elements array
+        const initialLang = detectLanguagePreferenceCreate();
+        updateUIForLanguageCreate(initialLang); // Apply language
 
         // Initial call for dynamic fields based on default form values
-        if (eventDescriptionTextarea) eventDescriptionTextarea.dispatchEvent(new Event('input'));
-        if (numMenusSelect) generateMenuInputs(parseInt(numMenusSelect.value, 10));
-        if (isPaidEventCheckbox) isPaidEventCheckbox.dispatchEvent(new Event('change'));
+        if (eventDescriptionTextarea) eventDescriptionTextarea.dispatchEvent(new Event('input')); // Update char count
+        if (numMenusSelect) generateMenuInputs(parseInt(numMenusSelect.value, 10)); // Generate default menu inputs
+        if (isPaidEventCheckbox) isPaidEventCheckbox.dispatchEvent(new Event('change')); // Ensure price field is hidden if not checked
+        if (adminPasswordInput) adminPasswordInput.dispatchEvent(new Event('input')); // Init strength meter if needed
 
 
-        console.log("create-event.html inline JS loaded.");
+        console.log("create-event.html inline JS improved and loaded.");
+
+        // Call hf.js functions if they exist globally after hf.js is loaded
+        // Assuming hf.js defines createHeader and createFooter globally
+        if (typeof createHeader === "function" && typeof createFooter === "function") {
+            createHeader('app-header', currentLangCreate); // Pass current lang
+            createFooter('app-footer', currentLangCreate); // Pass current lang
+        } else if (typeof loadHf === "function") { // If hf.js has a single load function
+            loadHf(currentLangCreate);
+        } else {
+            // Fallback or manual population if hf.js is not structured for this
+            const headerDiv = document.getElementById('app-header');
+            const footerDiv = document.getElementById('app-footer');
+            if(headerDiv && !headerDiv.innerHTML.trim()) headerDiv.innerHTML = `<div class="header-container"><div class="logo"><a href="index.html">MonRdvFacile</a></div><nav class="main-nav"><ul><li><a href="index.html">Accueil</a></li></ul></nav><button class="mobile-nav-toggle"><i class="fas fa-bars"></i></button></div>`;
+            if(footerDiv && !footerDiv.innerHTML.trim()) footerDiv.innerHTML = `<div class="footer-container"><p>&copy; ${new Date().getFullYear()} MonRdvFacile</p></div>`;
+        }
+
     });
     </script>
 </body>
